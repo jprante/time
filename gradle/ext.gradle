@@ -1,7 +1,7 @@
 ext {
     user = 'xbib'
     projectName = 'time'
-    projectDescription = 'A collection of date/time methods for Java 8'
+    projectDescription = 'A bundle of Chronic, Prettytime, and  org.joda.time.format optimized for Java 8 Time API'
     scmUrl = 'https://github.com/xbib/time'
     scmConnection = 'scm:git:git://github.com/xbib/time.git'
     scmDeveloperConnection = 'scm:git:git://github.com/xbib/time.git'
