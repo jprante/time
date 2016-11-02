@@ -47,6 +47,19 @@ public class Span extends Range {
     }
 
     @Override
+    public int hashCode() {
+        return super.hashCode() ^ zoneId.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof Span &&
+                ((Span) obj).getBegin().equals(getBegin()) &&
+                ((Span) obj).getEnd().equals(getEnd()) &&
+                ((Span) obj).zoneId.equals(zoneId);
+    }
+
+    @Override
     public String toString() {
         return "(" + DateTimeFormatter.ISO_INSTANT.format(getBeginCalendar())
                 + ".." + DateTimeFormatter.ISO_INSTANT.format(getEndCalendar()) + ")";

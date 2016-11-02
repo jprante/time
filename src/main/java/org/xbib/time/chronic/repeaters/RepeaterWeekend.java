@@ -16,25 +16,34 @@ public class RepeaterWeekend extends RepeaterUnit {
 
     @Override
     protected Span internalNextSpan(PointerType pointer) {
-        if (currentWeekStart == null) {
-            if (pointer == PointerType.FUTURE) {
-                RepeaterDayName saturdayRepeater = new RepeaterDayName(RepeaterDayName.DayName.SATURDAY);
-                saturdayRepeater.setNow(getNow());
-                Span nextSaturdaySpan = saturdayRepeater.nextSpan(PointerType.FUTURE);
-                currentWeekStart = nextSaturdaySpan.getBeginCalendar();
-            } else if (pointer == PointerType.PAST) {
+        if (currentWeekStart != null) {
+            long direction = pointer == PointerType.FUTURE ? 1L : -1L;
+            currentWeekStart = currentWeekStart.plus(direction * RepeaterWeek.WEEK_SECONDS, ChronoUnit.SECONDS);
+            ZonedDateTime c = currentWeekStart.plus(RepeaterWeekend.WEEKEND_SECONDS, ChronoUnit.SECONDS);
+            return new Span(currentWeekStart, c);
+        }
+        ZonedDateTime c;
+        switch (pointer) {
+            case PAST: {
                 RepeaterDayName saturdayRepeater = new RepeaterDayName(RepeaterDayName.DayName.SATURDAY);
                 saturdayRepeater.setNow(getNow().plus(RepeaterDay.DAY_SECONDS, ChronoUnit.SECONDS));
                 Span lastSaturdaySpan = saturdayRepeater.nextSpan(PointerType.PAST);
                 currentWeekStart = lastSaturdaySpan.getBeginCalendar();
+                c = currentWeekStart.plus(RepeaterWeekend.WEEKEND_SECONDS, ChronoUnit.SECONDS);
+                return new Span(currentWeekStart, c);
             }
-        } else {
-            long direction = pointer == PointerType.FUTURE ? 1L : -1L;
-            currentWeekStart = currentWeekStart.plus(direction * RepeaterWeek.WEEK_SECONDS, ChronoUnit.SECONDS);
+            case FUTURE: {
+                RepeaterDayName saturdayRepeater = new RepeaterDayName(RepeaterDayName.DayName.SATURDAY);
+                saturdayRepeater.setNow(getNow());
+                Span nextSaturdaySpan = saturdayRepeater.nextSpan(PointerType.FUTURE);
+                currentWeekStart = nextSaturdaySpan.getBeginCalendar();
+                c = currentWeekStart.plus(RepeaterWeekend.WEEKEND_SECONDS, ChronoUnit.SECONDS);
+                return new Span(currentWeekStart, c);
+            }
+            default:
+                break;
         }
-        assert currentWeekStart != null;
-        ZonedDateTime c = currentWeekStart.plus(RepeaterWeekend.WEEKEND_SECONDS, ChronoUnit.SECONDS);
-        return new Span(currentWeekStart, c);
+        throw new IllegalArgumentException("pointer type not expected");
     }
 
     @Override
@@ -71,6 +80,18 @@ public class RepeaterWeekend extends RepeaterUnit {
     @Override
     public int getWidth() {
         return (int) RepeaterWeekend.WEEKEND_SECONDS;
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode() ^ getWidth();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other instanceof RepeaterWeekend &&
+                ((Repeater) other).getType().equals(getType()) &&
+                ((Repeater) other).getNow().equals(getNow());
     }
 
     @Override

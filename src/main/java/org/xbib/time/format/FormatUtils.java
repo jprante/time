@@ -2,12 +2,16 @@ package org.xbib.time.format;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Utility methods used by formatters.
  * FormatUtils is thread-safe and immutable.
  */
 public class FormatUtils {
+
+    private static final Logger logger = Logger.getLogger(FormatUtils.class.getName());
 
     private static final double LOG_10 = Math.log(10);
 
@@ -31,7 +35,7 @@ public class FormatUtils {
         try {
             appendPaddedInteger((Appendable) buf, value, size);
         } catch (IOException e) {
-            // StringBuilder does not throw IOException
+            logger.log(Level.FINE, e.getMessage(), e);
         }
     }
 
@@ -42,11 +46,13 @@ public class FormatUtils {
      * This method is optimized for converting small values to strings.
      *
      * @param appenadble receives integer converted to a string
-     * @param value      value to convert to a string
-     * @param size       minimum amount of digits to append
+     * @param intvalue      value to convert to a string
+     * @param digits       minimum amount of digits to append
      * @throws IOException exception
      */
-    public static void appendPaddedInteger(Appendable appenadble, int value, int size) throws IOException {
+    public static void appendPaddedInteger(Appendable appenadble, int intvalue, int digits) throws IOException {
+        int value = intvalue;
+        int size = digits;
         if (value < 0) {
             appenadble.append('-');
             if (value != Integer.MIN_VALUE) {
@@ -55,7 +61,8 @@ public class FormatUtils {
                 for (; size > 10; size--) {
                     appenadble.append('0');
                 }
-                appenadble.append("" + -(long) Integer.MIN_VALUE);
+                appenadble.append(Long.toString(Integer.MIN_VALUE));
+                        //.append("" + -(long) Integer.MIN_VALUE)
                 return;
             }
         }
@@ -76,15 +83,15 @@ public class FormatUtils {
             // Append remainder by calculating (value - d * 10).
             appenadble.append((char) (value - (d << 3) - (d << 1) + '0'));
         } else {
-            int digits;
+            int d;
             if (value < 1000) {
-                digits = 3;
+                d = 3;
             } else if (value < 10000) {
-                digits = 4;
+                d = 4;
             } else {
-                digits = (int) (Math.log(value) / LOG_10) + 1;
+                d = (int) (Math.log(value) / LOG_10) + 1;
             }
-            for (; size > digits; size--) {
+            for (; size > d; size--) {
                 appenadble.append('0');
             }
             appenadble.append(Integer.toString(value));
@@ -105,7 +112,7 @@ public class FormatUtils {
         try {
             appendPaddedInteger((Appendable) buf, value, size);
         } catch (IOException e) {
-            // StringBuilder does not throw IOException
+            logger.log(Level.FINE, e.getMessage(), e);
         }
     }
 
@@ -116,12 +123,14 @@ public class FormatUtils {
      * This method is optimized for converting small values to strings.
      *
      * @param appendable receives integer converted to a string
-     * @param value      value to convert to a string
-     * @param size       minimum amount of digits to append
+     * @param longvalue      value to convert to a string
+     * @param digits       minimum amount of digits to append
      * @throws IOException exception
      */
-    public static void appendPaddedInteger(Appendable appendable, long value, int size) throws IOException {
+    public static void appendPaddedInteger(Appendable appendable, long longvalue, int digits) throws IOException {
+        long value = longvalue;
         int intValue = (int) value;
+        int size = digits;
         if (intValue == value) {
             appendPaddedInteger(appendable, intValue, size);
         } else if (size <= 19) {
@@ -139,8 +148,8 @@ public class FormatUtils {
                     return;
                 }
             }
-            int digits = (int) (Math.log(value) / LOG_10) + 1;
-            for (; size > digits; size--) {
+            int d = (int) (Math.log(value) / LOG_10) + 1;
+            for (; size > d; size--) {
                 appendable.append('0');
             }
             appendable.append(Long.toString(value));
@@ -154,12 +163,14 @@ public class FormatUtils {
      * This method is optimized for converting small values to strings.
      *
      * @param out   receives integer converted to a string
-     * @param value value to convert to a string
-     * @param size  minimum amount of digits to append
+     * @param val value to convert to a string
+     * @param digits  minimum amount of digits to append
      * @throws IOException exception
      */
-    public static void writePaddedInteger(Writer out, int value, int size)
+    public static void writePaddedInteger(Writer out, int val, int digits)
             throws IOException {
+        int value = val;
+        int size = digits;
         if (value < 0) {
             out.write('-');
             if (value != Integer.MIN_VALUE) {
@@ -168,7 +179,8 @@ public class FormatUtils {
                 for (; size > 10; size--) {
                     out.write('0');
                 }
-                out.write("" + -(long) Integer.MIN_VALUE);
+                //out.write("" + -(long) Integer.MIN_VALUE);
+                out.write(Long.toString(Integer.MIN_VALUE));
                 return;
             }
         }
@@ -189,15 +201,15 @@ public class FormatUtils {
             // Append remainder by calculating (value - d * 10).
             out.write(value - (d << 3) - (d << 1) + '0');
         } else {
-            int digits;
+            int d;
             if (value < 1000) {
-                digits = 3;
+                d = 3;
             } else if (value < 10000) {
-                digits = 4;
+                d = 4;
             } else {
-                digits = (int) (Math.log(value) / LOG_10) + 1;
+                d = (int) (Math.log(value) / LOG_10) + 1;
             }
-            for (; size > digits; size--) {
+            for (; size > d; size--) {
                 out.write('0');
             }
             out.write(Integer.toString(value));
@@ -211,12 +223,13 @@ public class FormatUtils {
      * This method is optimized for converting small values to strings.
      *
      * @param out   receives integer converted to a string
-     * @param value value to convert to a string
-     * @param size  minimum amount of digits to append
+     * @param longvalue value to convert to a string
+     * @param digits  minimum amount of digits to append
      * @throws IOException exception
      */
-    public static void writePaddedInteger(Writer out, long value, int size)
-            throws IOException {
+    public static void writePaddedInteger(Writer out, long longvalue, int digits) throws IOException {
+        long value = longvalue;
+        int size = digits;
         int intValue = (int) value;
         if (intValue == value) {
             writePaddedInteger(out, intValue, size);
@@ -235,8 +248,8 @@ public class FormatUtils {
                     return;
                 }
             }
-            int digits = (int) (Math.log(value) / LOG_10) + 1;
-            for (; size > digits; size--) {
+            int d = (int) (Math.log(value) / LOG_10) + 1;
+            for (; size > d; size--) {
                 out.write('0');
             }
             out.write(Long.toString(value));
@@ -254,7 +267,7 @@ public class FormatUtils {
         try {
             appendUnpaddedInteger((Appendable) buf, value);
         } catch (IOException e) {
-            // StringBuilder do not throw IOException
+            logger.log(Level.FINE, e.getMessage(), e);
         }
     }
 
@@ -264,16 +277,17 @@ public class FormatUtils {
      * This method is optimized for converting small values to strings.
      *
      * @param appendable receives integer converted to a string
-     * @param value      value to convert to a string
+     * @param val      value to convert to a string
      * @throws IOException exception
      */
-    public static void appendUnpaddedInteger(Appendable appendable, int value) throws IOException {
+    public static void appendUnpaddedInteger(Appendable appendable, int val) throws IOException {
+        int value = val;
         if (value < 0) {
             appendable.append('-');
             if (value != Integer.MIN_VALUE) {
                 value = -value;
             } else {
-                appendable.append("" + -(long) Integer.MIN_VALUE);
+                appendable.append(Long.toString(Integer.MIN_VALUE));
                 return;
             }
         }
@@ -303,7 +317,7 @@ public class FormatUtils {
         try {
             appendUnpaddedInteger((Appendable) buf, value);
         } catch (IOException e) {
-            // StringBuilder do not throw IOException
+            logger.log(Level.FINE, e.getMessage(), e);
         }
     }
 
@@ -331,17 +345,18 @@ public class FormatUtils {
      * This method is optimized for converting small values to strings.
      *
      * @param out   receives integer converted to a string
-     * @param value value to convert to a string
+     * @param val value to convert to a string
      * @throws IOException exception
      */
-    public static void writeUnpaddedInteger(Writer out, int value)
+    public static void writeUnpaddedInteger(Writer out, int val)
             throws IOException {
+        int value = val;
         if (value < 0) {
             out.write('-');
             if (value != Integer.MIN_VALUE) {
                 value = -value;
             } else {
-                out.write("" + -(long) Integer.MIN_VALUE);
+                out.write(Long.toString(Integer.MIN_VALUE));
                 return;
             }
         }
@@ -394,12 +409,8 @@ public class FormatUtils {
                 return 20;
             }
         }
-        return
-                (value < 10 ? 1 :
-                        (value < 100 ? 2 :
-                                (value < 1000 ? 3 :
-                                        (value < 10000 ? 4 :
-                                                ((int) (Math.log(value) / LOG_10) + 1)))));
+        return value < 10 ? 1 : value < 100 ? 2 : value < 1000 ? 3 : value < 10000 ? 4 :
+                                                ((int) (Math.log(value) / LOG_10) + 1);
     }
 
     static int parseTwoDigits(CharSequence text, int position) {

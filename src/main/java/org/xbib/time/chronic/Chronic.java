@@ -3,16 +3,25 @@ package org.xbib.time.chronic;
 import org.xbib.time.chronic.handlers.Handler;
 import org.xbib.time.chronic.numerizer.Numerizer;
 import org.xbib.time.chronic.repeaters.Repeater;
-import org.xbib.time.chronic.tags.*;
+import org.xbib.time.chronic.tags.Grabber;
+import org.xbib.time.chronic.tags.Ordinal;
+import org.xbib.time.chronic.tags.Pointer;
+import org.xbib.time.chronic.tags.Scalar;
+import org.xbib.time.chronic.tags.Separator;
+import org.xbib.time.chronic.tags.TimeZone;
 
 import java.text.ParseException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  */
 public class Chronic {
+
+    private static final Logger logger = Logger.getLogger(Chronic.class.getName());
 
     private Chronic() {
     }
@@ -74,7 +83,8 @@ public class Chronic {
             try {
                 tokens = (List<Token>) optionScannerClass.getMethod("scan", List.class, Options.class)
                         .invoke(null, tokens, options);
-            } catch (Throwable e) {
+            } catch (Exception e) {
+                logger.log(Level.FINE, e.getMessage(), e);
                 throw new ParseException("failed to scan tokens", 0);
             }
         }
@@ -89,7 +99,8 @@ public class Chronic {
             try {
                 tokens = (List<Token>) scannerClass.getMethod("scan", List.class, Options.class)
                         .invoke(null, tokens, options);
-            } catch (Throwable e) {
+            } catch (Exception e) {
+                logger.log(Level.FINE, e.getMessage(), e);
                 throw new ParseException("failed to scan tokens", 0);
             }
         }

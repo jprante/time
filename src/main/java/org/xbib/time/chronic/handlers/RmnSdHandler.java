@@ -12,6 +12,8 @@ import java.util.List;
  *
  */
 public class RmnSdHandler extends MDHandler {
+
+    @Override
     public Span handle(List<Token> tokens, Options options) {
         return handle(tokens.get(0).getTag(RepeaterMonthName.class),
                 tokens.get(1).getTag(ScalarDay.class), tokens.subList(2, tokens.size()), options);

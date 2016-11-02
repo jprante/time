@@ -58,7 +58,6 @@ public abstract class RepeaterDayPortion<T> extends Repeater<T> {
     @Override
     protected Span internalNextSpan(PointerType pointer) {
         ZonedDateTime rangeStart;
-        ZonedDateTime rangeEnd;
         if (currentSpan == null) {
             long nowSeconds = getNow().toInstant().getEpochSecond() - ymd(getNow()).toInstant().getEpochSecond();
             if (nowSeconds < range.getBegin()) {
@@ -132,6 +131,18 @@ public abstract class RepeaterDayPortion<T> extends Repeater<T> {
     protected abstract long getWidth(Range range);
 
     protected abstract Range createRange(T type);
+
+    @Override
+    public int hashCode() {
+        return super.hashCode() ^ getWidth();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other instanceof RepeaterDayPortion &&
+                ((Repeater) other).getType().equals(getType()) &&
+                ((Repeater) other).getNow().equals(getNow());
+    }
 
     @Override
     public String toString() {

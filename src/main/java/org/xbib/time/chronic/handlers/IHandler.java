@@ -9,6 +9,7 @@ import java.util.List;
 /**
  *
  */
+@FunctionalInterface
 public interface IHandler {
     Span handle(List<Token> tokens, Options options);
 }

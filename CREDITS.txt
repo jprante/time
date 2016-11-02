@@ -1,0 +1,18 @@
+
+org.xbib.time is based upon the following software:
+
+- Chronic https://github.com/samtingleff/jchronic (MIT License)
+
+- org.joda.time.format https://github.com/JodaOrg/joda-time (Apache 2.0)
+
+- prettytime https://github.com/ocpsoft/prettytime (Apache 2.0)
+
+with improvements by Jörg Prante including
+
+- converted to Java 8 java.time API
+
+- fixing bugs reported by Sonarqube
+
+- refactoring classes
+
+- rewritten code to simplify and ease development

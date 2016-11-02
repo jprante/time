@@ -10,7 +10,7 @@ import java.time.temporal.ChronoUnit;
  *
  */
 public class RepeaterWeek extends RepeaterUnit {
-    public static final int WEEK_SECONDS = 604800; // (7 * 24 * 60 * 60);
+    public static final int WEEK_SECONDS = 604800;
     public static final int WEEK_DAYS = 7;
 
     private ZonedDateTime currentWeekStart;
@@ -38,7 +38,7 @@ public class RepeaterWeek extends RepeaterUnit {
                 throw new IllegalArgumentException("Unable to handle pointer " + pointer + ".");
             }
         } else {
-            int direction = (pointer == PointerType.FUTURE) ? 1 : -1;
+            long direction = pointer == PointerType.FUTURE ? 1L : -1L;
             currentWeekStart = currentWeekStart.plus(RepeaterWeek.WEEK_DAYS * direction, ChronoUnit.DAYS);
         }
 
@@ -86,6 +86,18 @@ public class RepeaterWeek extends RepeaterUnit {
     @Override
     public int getWidth() {
         return RepeaterWeek.WEEK_SECONDS;
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode() ^ getWidth();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other instanceof RepeaterWeek &&
+                ((Repeater) other).getType().equals(getType()) &&
+                ((Repeater) other).getNow().equals(getNow());
     }
 
     @Override

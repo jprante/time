@@ -71,6 +71,18 @@ public class RepeaterYear extends RepeaterUnit {
     }
 
     @Override
+    public int hashCode() {
+        return super.hashCode() ^ getWidth();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other instanceof RepeaterYear &&
+                ((Repeater) other).getType().equals(getType()) &&
+                ((Repeater) other).getNow().equals(getNow());
+    }
+
+    @Override
     public String toString() {
         return super.toString() + "-year";
     }

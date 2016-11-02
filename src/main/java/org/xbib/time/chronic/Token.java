@@ -62,7 +62,7 @@ public class Token {
     public <T extends Tag<?>> T getTag(Class<T> tagClass) {
         List<T> matches = getTags(tagClass);
         T matchingTag = null;
-        if (matches.size() > 0) {
+        if (!matches.isEmpty()) {
             matchingTag = matches.get(0);
         }
         return matchingTag;

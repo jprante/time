@@ -30,11 +30,7 @@ import org.xbib.time.chronic.tags.TimeZone;
 import java.text.ParseException;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  *
@@ -57,7 +53,7 @@ public class Handler {
 
     public static synchronized Map<HandlerType, List<Handler>> definitions() {
         if (definitions == null) {
-            Map<HandlerType, List<Handler>> definitions = new HashMap<>();
+            Map<HandlerType, List<Handler>> definitions = new EnumMap<>(HandlerType.class);
 
             List<Handler> timeHandlers = new LinkedList<>();
             timeHandlers.add(new Handler(null, new TagPattern(RepeaterTime.class),
@@ -227,7 +223,7 @@ public class Handler {
         if (grabberType == Grabber.Relative.LAST) {
             outerSpan = head.nextSpan(PointerType.PAST);
         } else if (grabberType == Grabber.Relative.THIS) {
-            if (repeaters.size() > 0) {
+            if (!repeaters.isEmpty()) {
                 outerSpan = head.thisSpan(PointerType.NONE);
             } else {
                 outerSpan = head.thisSpan(options.getContext());
@@ -273,11 +269,11 @@ public class Handler {
     }
 
     @SuppressWarnings("unchecked")
-    public static List<Token> dealiasAndDisambiguateTimes(List<Token> tokens, Options options) {
+    public static List<Token> dealiasAndDisambiguateTimes(List<Token> tokenList, Options options) {
         // handle aliases of am/pm
         // 5:00 in the morning => 5:00 am
         // 7:00 in the evening => 7:00 pm
-
+        List<Token> tokens = tokenList;
         int dayPortionIndex = -1;
         int tokenSize = tokens.size();
         for (int i = 0; dayPortionIndex == -1 && i < tokenSize; i++) {
@@ -347,8 +343,8 @@ public class Handler {
         for (HandlerPattern pattern : patterns) {
             boolean optional = pattern.isOptional();
             if (pattern instanceof TagPattern) {
-                boolean match = (tokenIndex < tokens.size() &&
-                        tokens.get(tokenIndex).getTags(((TagPattern) pattern).getTagClass()).size() > 0);
+                boolean match = tokenIndex < tokens.size() &&
+                        tokens.get(tokenIndex).getTags(((TagPattern) pattern).getTagClass()).size() > 0;
                 if (!match && !optional) {
                     return false;
                 }

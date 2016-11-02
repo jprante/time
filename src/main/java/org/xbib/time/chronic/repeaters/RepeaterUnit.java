@@ -47,9 +47,21 @@ public abstract class RepeaterUnit extends Repeater<Object> {
                 }
             }
             return null;
-        } catch (Throwable t) {
-            throw new RuntimeException("Failed to create RepeaterUnit.", t);
+        } catch (Exception e) {
+            throw new IllegalStateException("Failed to create RepeaterUnit", e);
         }
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode() ^ getWidth();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other instanceof RepeaterUnit &&
+                ((Repeater) other).getType().equals(getType()) &&
+                ((Repeater) other).getNow().equals(getNow());
     }
 
     /**

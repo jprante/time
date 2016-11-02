@@ -112,10 +112,7 @@ public class PrettyTime {
      * @return time unit quantity
      */
     public TimeUnitQuantity approximateDuration(LocalDateTime then) {
-        if (then == null) {
-            then = LocalDateTime.now();
-        }
-        long difference = ChronoUnit.MILLIS.between(localDateTime, then);
+        long difference = ChronoUnit.MILLIS.between(localDateTime, then == null ? LocalDateTime.now() : then);
         return calculateDuration(difference);
     }
 
@@ -163,11 +160,8 @@ public class PrettyTime {
      * between compared dates.
      */
     public List<TimeUnitQuantity> calculatePreciseDuration(LocalDateTime then) {
-        if (then == null) {
-            then = LocalDateTime.now();
-        }
         List<TimeUnitQuantity> result = new ArrayList<>();
-        long difference = ChronoUnit.MILLIS.between(localDateTime, then);
+        long difference = ChronoUnit.MILLIS.between(localDateTime, then == null ? LocalDateTime.now() : then);
         TimeUnitQuantity timeUnitQuantity = calculateDuration(difference);
         result.add(timeUnitQuantity);
         while (timeUnitQuantity.getDelta() != 0L) {
@@ -191,10 +185,7 @@ public class PrettyTime {
      * @return A formatted string representing {@code then}
      */
     public String format(LocalDateTime then) {
-        if (then == null) {
-            then = LocalDateTime.now();
-        }
-        return format(approximateDuration(then));
+        return format(approximateDuration(then == null ? LocalDateTime.now() : then));
     }
 
     /**

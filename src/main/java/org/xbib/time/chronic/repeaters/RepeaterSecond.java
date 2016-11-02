@@ -10,7 +10,7 @@ import java.time.temporal.ChronoUnit;
  *
  */
 public class RepeaterSecond extends RepeaterUnit {
-    public static final int SECOND_SECONDS = 1; // (60 * 60);
+    private static final int SECOND_SECONDS = 1;
 
     private ZonedDateTime secondStart;
 
@@ -40,6 +40,18 @@ public class RepeaterSecond extends RepeaterUnit {
     @Override
     public int getWidth() {
         return RepeaterSecond.SECOND_SECONDS;
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode() ^ getWidth();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other instanceof RepeaterSecond &&
+                ((Repeater) other).getType().equals(getType()) &&
+                ((Repeater) other).getNow().equals(getNow());
     }
 
     @Override

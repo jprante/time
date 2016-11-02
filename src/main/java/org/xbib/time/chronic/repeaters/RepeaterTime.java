@@ -37,8 +37,8 @@ public class RepeaterTime extends Repeater<Tick> {
             int minutesInSeconds = Integer.parseInt(t.substring(1)) * 60;
             type = new Tick(hoursInSeconds + minutesInSeconds, true);
         } else if (length == 4) {
-            boolean ambiguous = (time.contains(":") && Integer.parseInt(t.substring(0, 1)) != 0 &&
-                    Integer.parseInt(t.substring(0, 2)) <= 12);
+            boolean ambiguous = time.contains(":") && Integer.parseInt(t.substring(0, 1)) != 0 &&
+                    Integer.parseInt(t.substring(0, 2)) <= 12;
             int hours = Integer.parseInt(t.substring(0, 2));
             int hoursInSeconds = hours * 60 * 60;
             int minutesInSeconds = Integer.parseInt(t.substring(2)) * 60;
@@ -53,8 +53,8 @@ public class RepeaterTime extends Repeater<Tick> {
             int seconds = Integer.parseInt(t.substring(3));
             type = new Tick(hoursInSeconds + minutesInSeconds + seconds, true);
         } else if (length == 6) {
-            boolean ambiguous = (time.contains(":") && Integer.parseInt(t.substring(0, 1)) != 0 &&
-                    Integer.parseInt(t.substring(0, 2)) <= 12);
+            boolean ambiguous = time.contains(":") && Integer.parseInt(t.substring(0, 1)) != 0 &&
+                    Integer.parseInt(t.substring(0, 2)) <= 12;
             int hours = Integer.parseInt(t.substring(0, 2));
             int hoursInSeconds = hours * 60 * 60;
             int minutesInSeconds = Integer.parseInt(t.substring(2, 4)) * 60;
@@ -136,7 +136,7 @@ public class RepeaterTime extends Repeater<Tick> {
                 if (tick.isAmbiguous()) {
                     List<ZonedDateTime> futureDates = new LinkedList<>();
                     futureDates.add(midnight.plus(tick.intValue(), ChronoUnit.SECONDS));
-                    futureDates.add(midnight.plus(halfDay + tick.intValue(), ChronoUnit.SECONDS));
+                    futureDates.add(midnight.plus(halfDay + (long) tick.intValue(), ChronoUnit.SECONDS));
                     futureDates.add(tomorrowMidnight.plus(tick.intValue(), ChronoUnit.SECONDS));
                     for (ZonedDateTime futureDate : futureDates) {
                         if (futureDate.isAfter(now) || futureDate.equals(now)) {
@@ -160,9 +160,9 @@ public class RepeaterTime extends Repeater<Tick> {
             } else {
                 if (tick.isAmbiguous()) {
                     List<ZonedDateTime> pastDates = new LinkedList<>();
-                    pastDates.add(midnight.plus(halfDay + tick.intValue(), ChronoUnit.SECONDS));
+                    pastDates.add(midnight.plus(halfDay + (long) tick.intValue(), ChronoUnit.SECONDS));
                     pastDates.add(midnight.plus(tick.intValue(), ChronoUnit.SECONDS));
-                    pastDates.add(yesterdayMidnight.plus(tick.intValue() * 2, ChronoUnit.SECONDS));
+                    pastDates.add(yesterdayMidnight.plus(tick.intValue() * 2L, ChronoUnit.SECONDS));
                     for (ZonedDateTime pastDate : pastDates) {
                         if (pastDate.isBefore(now) || pastDate.equals(now)) {
                             currentTime = pastDate;
@@ -190,8 +190,8 @@ public class RepeaterTime extends Repeater<Tick> {
         }
 
         if (!first) {
-            int increment = (tick.isAmbiguous()) ? halfDay : fullDay;
-            int direction = (pointer == PointerType.FUTURE) ? 1 : -1;
+            int increment = tick.isAmbiguous() ? halfDay : fullDay;
+            long direction = pointer == PointerType.FUTURE ? 1L : -1L;
             currentTime = currentTime.plus(direction * increment, ChronoUnit.SECONDS);
         }
 
@@ -200,10 +200,7 @@ public class RepeaterTime extends Repeater<Tick> {
 
     @Override
     protected Span internalThisSpan(PointerType pointer) {
-        if (pointer == PointerType.NONE) {
-            pointer = PointerType.FUTURE;
-        }
-        return nextSpan(pointer);
+        return nextSpan(pointer == PointerType.NONE ? PointerType.FUTURE : pointer);
     }
 
     @Override
@@ -214,6 +211,18 @@ public class RepeaterTime extends Repeater<Tick> {
     @Override
     public int getWidth() {
         return 1;
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode() ^ getWidth();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other instanceof RepeaterTime &&
+                ((Repeater) other).getType().equals(getType()) &&
+                ((Repeater) other).getNow().equals(getNow());
     }
 
     @Override

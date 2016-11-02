@@ -35,7 +35,7 @@ public class RepeaterFortnight extends RepeaterUnit {
                 Span lastSundaySpan = sundayRepeater.nextSpan(PointerType.PAST);
                 currentFortnightStart = lastSundaySpan.getBeginCalendar();
             } else {
-                throw new IllegalArgumentException("Unable to handle pointer " + pointer + ".");
+                throw new IllegalArgumentException("Unable to handle pointer " + pointer);
             }
         } else {
             long direction = (pointer == PointerType.FUTURE) ? 1L : -1L;
@@ -47,11 +47,11 @@ public class RepeaterFortnight extends RepeaterUnit {
     }
 
     @Override
-    protected Span internalThisSpan(PointerType pointer) {
+    protected Span internalThisSpan(PointerType pointerType) {
+        PointerType pointer = pointerType;
         if (pointer == null) {
             pointer = PointerType.FUTURE;
         }
-
         Span span;
         if (pointer == PointerType.FUTURE) {
             ZonedDateTime thisFortnightStart = ymdh(getNow()).plus(RepeaterHour.HOUR_SECONDS, ChronoUnit.SECONDS);
@@ -84,6 +84,18 @@ public class RepeaterFortnight extends RepeaterUnit {
     @Override
     public int getWidth() {
         return RepeaterFortnight.FORTNIGHT_SECONDS;
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode() ^ getWidth();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other instanceof RepeaterFortnight &&
+                ((Repeater) other).getType().equals(getType()) &&
+                ((Repeater) other).getNow().equals(getNow());
     }
 
     @Override

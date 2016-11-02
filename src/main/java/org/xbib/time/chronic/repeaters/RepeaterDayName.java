@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
  *
  */
 public class RepeaterDayName extends Repeater<RepeaterDayName.DayName> {
-    public static final int DAY_SECONDS = 86400; // (24 * 60 * 60);
+    private static final int DAY_SECONDS = 86400;
     private static final Pattern MON_PATTERN = Pattern.compile("^m[ou]n(day)?$");
     private static final Pattern TUE_PATTERN = Pattern.compile("^t(ue|eu|oo|u|)s(day)?$");
     private static final Pattern TUE_PATTERN_1 = Pattern.compile("^tue$");
@@ -69,17 +69,14 @@ public class RepeaterDayName extends Repeater<RepeaterDayName.DayName> {
                 currentDayStart = currentDayStart.plus(direction, ChronoUnit.DAYS);
             }
         } else {
-            currentDayStart = currentDayStart.plus(direction * 7, ChronoUnit.DAYS);
+            currentDayStart = currentDayStart.plus(direction * 7L, ChronoUnit.DAYS);
         }
         return new Span(currentDayStart, ChronoUnit.DAYS, 1);
     }
 
     @Override
     protected Span internalThisSpan(PointerType pointer) {
-        if (pointer == PointerType.NONE) {
-            pointer = PointerType.FUTURE;
-        }
-        return super.nextSpan(pointer);
+        return super.nextSpan(pointer == PointerType.NONE ? PointerType.FUTURE : pointer);
     }
 
     @Override
@@ -90,6 +87,18 @@ public class RepeaterDayName extends Repeater<RepeaterDayName.DayName> {
     @Override
     public int getWidth() {
         return RepeaterDayName.DAY_SECONDS;
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode() ^ getWidth();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other instanceof RepeaterDayName &&
+                ((Repeater) other).getType().equals(getType()) &&
+                ((Repeater) other).getNow().equals(getNow());
     }
 
     @Override

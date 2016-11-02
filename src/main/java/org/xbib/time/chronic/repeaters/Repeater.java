@@ -49,6 +49,7 @@ public abstract class Repeater<T> extends Tag<T> implements Comparable<Repeater<
         return tokens;
     }
 
+    @Override
     public int compareTo(Repeater<?> other) {
         return Integer.compare(getWidth(), other.getWidth());
     }
@@ -83,6 +84,18 @@ public abstract class Repeater<T> extends Tag<T> implements Comparable<Repeater<
     protected abstract Span internalThisSpan(Pointer.PointerType pointer);
 
     public abstract Span getOffset(Span span, int amount, Pointer.PointerType pointer);
+
+    @Override
+    public int hashCode() {
+        return getType().hashCode() ^ getNow().hashCode();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other instanceof Repeater &&
+                ((Repeater) other).getType().equals(getType()) &&
+                ((Repeater) other).getNow().equals(getNow());
+    }
 
     @Override
     public String toString() {

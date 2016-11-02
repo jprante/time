@@ -103,7 +103,7 @@ public class Resources_fi extends ListResourceBundle implements TimeFormatProvid
             {"MillenniumPastSuffix", "sitten"},
             {"MillenniumFutureSuffix", "päästä"},
     };
-    private volatile ConcurrentMap<TimeUnit, TimeFormat> formatMap = new ConcurrentHashMap<TimeUnit, TimeFormat>();
+    private volatile ConcurrentMap<TimeUnit, TimeFormat> formatMap = new ConcurrentHashMap<>();
 
     public Resources_fi() {
     }
@@ -229,7 +229,7 @@ public class Resources_fi extends ListResourceBundle implements TimeFormatProvid
 
         @Override
         public String decorate(TimeUnitQuantity timeUnitQuantity, String time) {
-            String result = "";
+            String result;
             if (timeUnitQuantity.getUnit() instanceof Day && Math.abs(timeUnitQuantity.getQuantity()) == 1) {
                 result = time;
             } else {

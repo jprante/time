@@ -76,14 +76,14 @@ public class RepeaterMonthName extends Repeater<RepeaterMonthName.MonthName> {
             } else if (pointer == PointerType.NONE) {
                 if (nowMonth <= targetMonth) {
                     currentMonthBegin = ZonedDateTime.of(getNow().getYear(), targetMonth, 1, 0, 0, 0, 0, getNow().getZone());
-                } else if (nowMonth > targetMonth) {
+                } else {
                     currentMonthBegin = ZonedDateTime.of(getNow().getYear(), targetMonth, 1, 0, 0, 0, 0, getNow().getZone())
                             .plus(1, ChronoUnit.YEARS);
                 }
             } else if (pointer == PointerType.PAST) {
                 if (nowMonth > targetMonth) {
                     currentMonthBegin = ZonedDateTime.of(getNow().getYear(), targetMonth, 1, 0, 0, 0, 0, getNow().getZone());
-                } else if (nowMonth <= targetMonth) {
+                } else {
                     currentMonthBegin = ZonedDateTime.of(getNow().getYear(), targetMonth, 1, 0, 0, 0, 0, getNow().getZone())
                             .minus(1, ChronoUnit.YEARS);
                 }
@@ -127,6 +127,18 @@ public class RepeaterMonthName extends Repeater<RepeaterMonthName.MonthName> {
     @Override
     public int getWidth() {
         return RepeaterMonthName.MONTH_SECONDS;
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode() ^ getWidth();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other instanceof RepeaterMonthName &&
+                ((Repeater) other).getType().equals(getType()) &&
+                ((Repeater) other).getNow().equals(getNow());
     }
 
     @Override

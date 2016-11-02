@@ -125,10 +125,10 @@ public class Numerizer {
     }
 
     private static String andition(String str) {
-        StringBuffer anditionStr = new StringBuffer(str);
+        StringBuilder anditionStr = new StringBuilder(str);
         Matcher matcher = Numerizer.ANDITION_PATTERN.matcher(anditionStr);
         while (matcher.find()) {
-            if (matcher.group(2).equalsIgnoreCase(" and ") || matcher.group(1).length() > matcher.group(3).length()) {
+            if (" and ".equalsIgnoreCase(matcher.group(2)) || matcher.group(1).length() > matcher.group(3).length()) {
                 anditionStr.replace(matcher.start(), matcher.end(),
                         String.valueOf(Integer.parseInt(matcher.group(1).trim()) +
                                 Integer.parseInt(matcher.group(3).trim())));
@@ -141,7 +141,7 @@ public class Numerizer {
     /**
      *
      */
-    static class DirectNum {
+    private static class DirectNum {
         private Pattern name;
         private String number;
 

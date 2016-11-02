@@ -14,6 +14,8 @@ import java.util.List;
  *
  */
 public class SmSdHandler implements IHandler {
+
+    @Override
     public Span handle(List<Token> tokens, Options options) {
         int month = tokens.get(0).getTag(ScalarMonth.class).getType();
         int day = tokens.get(1).getTag(ScalarDay.class).getType();

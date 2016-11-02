@@ -10,7 +10,7 @@ import java.time.ZonedDateTime;
 
 public class ParserTest extends Assert {
 
-    private final static ZoneId ZONE_ID = ZoneId.of("GMT");
+    private static final ZoneId ZONE_ID = ZoneId.of("GMT");
     private ZonedDateTime time_2006_08_16_14_00_00 = construct(2006, 8, 16, 14, 0, 0);
 
     public static ZonedDateTime construct(int year, int month) {

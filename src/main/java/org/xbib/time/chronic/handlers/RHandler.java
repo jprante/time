@@ -11,6 +11,7 @@ import java.util.List;
  */
 public class RHandler implements IHandler {
 
+    @Override
     public Span handle(List<Token> tokens, Options options) {
         List<Token> ddTokens = Handler.dealiasAndDisambiguateTimes(tokens, options);
         return Handler.getAnchor(ddTokens, options);
