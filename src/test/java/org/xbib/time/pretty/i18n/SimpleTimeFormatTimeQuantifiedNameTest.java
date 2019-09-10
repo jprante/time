@@ -12,12 +12,16 @@ import java.time.ZoneId;
 import java.util.Locale;
 
 public class SimpleTimeFormatTimeQuantifiedNameTest {
+
+    private Locale defaultLocale;
+
     private Locale locale;
 
     @Before
     public void setUp() throws Exception {
-        locale = Locale.getDefault();
-        Locale.setDefault(new Locale("yy"));
+        defaultLocale = Locale.getDefault();
+        locale = new Locale("yy");
+        Locale.setDefault(locale);
     }
 
     @Test
@@ -76,10 +80,8 @@ public class SimpleTimeFormatTimeQuantifiedNameTest {
         Assert.assertEquals("1 hour ago", p.format(0));
     }
 
-    // Method tearDown() is called automatically after every test method
     @After
     public void tearDown() throws Exception {
-        Locale.setDefault(locale);
+        Locale.setDefault(defaultLocale);
     }
-
 }

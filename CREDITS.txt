@@ -7,6 +7,8 @@ org.xbib.time is based upon the following software:
 
 - prettytime https://github.com/ocpsoft/prettytime (Apache 2.0)
 
+- cron expression https://github.com/anderswisch/cron-expression/ (MIT License)
+
 with improvements by Jörg Prante including
 
 - converted to Java 8 java.time API
@@ -16,3 +18,5 @@ with improvements by Jörg Prante including
 - refactoring classes
 
 - rewritten code to simplify and ease development
+
+- added nextExecution() method to cron expression and scheduling via Callable

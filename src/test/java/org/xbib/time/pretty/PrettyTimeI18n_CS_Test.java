@@ -1,8 +1,8 @@
 package org.xbib.time.pretty;
 
-import org.junit.AfterClass;
+import org.junit.After;
 import org.junit.Assert;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
 import org.xbib.time.pretty.units.JustNow;
 import org.xbib.time.pretty.units.Month;
@@ -17,16 +17,15 @@ import java.util.Locale;
 import static org.junit.Assert.assertEquals;
 
 public class PrettyTimeI18n_CS_Test {
-    private static Locale locale;
 
-    @BeforeClass
-    public static void setUp() throws Exception {
-        locale = Locale.getDefault();
-        Locale.setDefault(new Locale("cs"));
-    }
+    private Locale defaultLocale;
 
-    @AfterClass
-    public static void tearDown() throws Exception {
+    private Locale locale;
+
+    @Before
+    public void setUp() throws Exception {
+        defaultLocale = Locale.getDefault();
+        locale = new Locale("cs");
         Locale.setDefault(locale);
     }
 
@@ -213,7 +212,7 @@ public class PrettyTimeI18n_CS_Test {
     /**
      * Tests formatApproximateDuration and by proxy, formatDuration.
      *
-     * @throws Exception
+     * @throws Exception exception
      */
     @Test
     public void testFormatApproximateDuration() throws Exception {
@@ -224,4 +223,8 @@ public class PrettyTimeI18n_CS_Test {
         Assert.assertEquals("10 minutami", result);
     }
 
+    @After
+    public void tearDown() throws Exception {
+        Locale.setDefault(defaultLocale);
+    }
 }

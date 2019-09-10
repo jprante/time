@@ -15,13 +15,15 @@ import static org.junit.Assert.assertTrue;
 
 public class PrettyTimeI18n_KO_Test {
 
+    private Locale defaultLocale;
+
     private Locale locale;
 
-    // Method setUp() is called automatically before every test method
     @Before
     public void setUp() throws Exception {
-        locale = Locale.getDefault();
-        Locale.setDefault(Locale.KOREA);
+        defaultLocale = Locale.getDefault();
+        locale = Locale.KOREA;
+        Locale.setDefault(locale);
     }
 
     @Test
@@ -227,10 +229,8 @@ public class PrettyTimeI18n_KO_Test {
         assertEquals("vor 3 Jahrzehnten", t.format((0)));
     }
 
-    // Method tearDown() is called automatically after every test method
     @After
     public void tearDown() throws Exception {
-        Locale.setDefault(locale);
+        Locale.setDefault(defaultLocale);
     }
-
 }

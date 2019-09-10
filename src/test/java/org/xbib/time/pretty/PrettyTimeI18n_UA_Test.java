@@ -13,10 +13,13 @@ import static org.junit.Assert.assertEquals;
 
 public class PrettyTimeI18n_UA_Test {
 
+    private Locale defaultLocale;
+
     private Locale locale;
 
     @Before
     public void setUp() throws Exception {
+        defaultLocale = Locale.getDefault();
         locale = new Locale("ua");
         Locale.setDefault(locale);
     }
@@ -189,6 +192,6 @@ public class PrettyTimeI18n_UA_Test {
 
     @After
     public void tearDown() throws Exception {
-        Locale.setDefault(locale);
+        Locale.setDefault(defaultLocale);
     }
 }

@@ -15,12 +15,13 @@ import static org.junit.Assert.assertTrue;
 
 public class PrettyTimeI18n_FA_Test {
 
-    // Stores current locale so that it can be restored
+    private Locale defaultLocale;
+
     private Locale locale;
 
-    // Method setUp() is called automatically before every test method
     @Before
     public void setUp() throws Exception {
+        defaultLocale = Locale.getDefault();
         locale = new Locale("fa");
         Locale.setDefault(locale);
     }
@@ -230,10 +231,8 @@ public class PrettyTimeI18n_FA_Test {
         assertEquals("3 دهه پیش", t.format((0)));
     }
 
-    // Method tearDown() is called automatically after every test method
     @After
     public void tearDown() throws Exception {
-        Locale.setDefault(locale);
+        Locale.setDefault(defaultLocale);
     }
-
 }

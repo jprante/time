@@ -1,7 +1,7 @@
 package org.xbib.time.pretty;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.time.Instant;
@@ -15,16 +15,14 @@ import static org.junit.Assert.assertTrue;
 
 public class PrettyTimeI18n_CA_Test {
 
-    protected static Locale locale;
+    private Locale defaultLocale;
 
-    @BeforeClass
-    public static void setUp() throws Exception {
-        locale = Locale.getDefault();
-        Locale.setDefault(new Locale("ca"));
-    }
+    private Locale locale;
 
-    @AfterClass
-    public static void tearDown() throws Exception {
+    @Before
+    public void setUp() throws Exception {
+        defaultLocale = Locale.getDefault();
+        locale = new Locale("ca");
         Locale.setDefault(locale);
     }
 
@@ -230,4 +228,8 @@ public class PrettyTimeI18n_CA_Test {
         assertEquals("vor 3 Jahrzehnten", t.format((0)));
     }
 
+    @After
+    public void tearDown() throws Exception {
+        Locale.setDefault(defaultLocale);
+    }
 }

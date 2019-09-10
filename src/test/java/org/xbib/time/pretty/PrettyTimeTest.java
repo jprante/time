@@ -15,11 +15,11 @@ import static org.junit.Assert.assertTrue;
 
 public class PrettyTimeTest {
 
-    private Locale locale;
+    private Locale defaultLocale;
 
     @Before
     public void setUp() throws Exception {
-        locale = Locale.getDefault();
+        defaultLocale = Locale.getDefault();
         Locale.setDefault(Locale.ROOT);
     }
 
@@ -236,7 +236,6 @@ public class PrettyTimeTest {
 
     @After
     public void tearDown() throws Exception {
-        Locale.setDefault(locale);
+        Locale.setDefault(defaultLocale);
     }
-
 }

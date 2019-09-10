@@ -13,10 +13,13 @@ import static org.junit.Assert.assertEquals;
 
 public class PrettyTimeI18n_RU_Test {
 
+    private Locale defaultLocale;
+
     private Locale locale;
 
     @Before
     public void setUp() throws Exception {
+        defaultLocale = Locale.getDefault();
         locale = new Locale("ru");
         Locale.setDefault(locale);
     }
@@ -163,9 +166,8 @@ public class PrettyTimeI18n_RU_Test {
         assertEquals("3 века назад", t.format((0)));
     }
 
-
     @After
     public void tearDown() throws Exception {
-        Locale.setDefault(locale);
+        Locale.setDefault(defaultLocale);
     }
 }

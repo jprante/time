@@ -1,5 +1,6 @@
 package org.xbib.time.pretty;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.xbib.time.pretty.units.JustNow;
@@ -14,11 +15,16 @@ import java.util.Locale;
 import static org.junit.Assert.assertEquals;
 
 public class PrettyTimeI18n_ET_Test {
+
+    private Locale defaultLocale;
+
     private Locale locale;
 
     @Before
     public void setUp() throws Exception {
+        defaultLocale = Locale.getDefault();
         locale = new Locale("et");
+        Locale.setDefault(locale);
     }
 
     @Test
@@ -333,4 +339,8 @@ public class PrettyTimeI18n_ET_Test {
         return t;
     }
 
+    @After
+    public void tearDown() throws Exception {
+        Locale.setDefault(defaultLocale);
+    }
 }

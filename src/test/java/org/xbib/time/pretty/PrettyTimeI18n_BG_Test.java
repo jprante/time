@@ -14,14 +14,15 @@ import static org.junit.Assert.assertEquals;
 
 public class PrettyTimeI18n_BG_Test {
 
-    // Stores current locale so that it can be restored
+    private Locale defaultLocale;
+
     private Locale locale;
 
-    // Method setUp() is called automatically before every test method
     @Before
     public void setUp() throws Exception {
-        locale = Locale.getDefault();
-        Locale.setDefault(new Locale("bg"));
+        defaultLocale = Locale.getDefault();
+        locale = new Locale("bg");
+        Locale.setDefault(locale);
     }
 
     @Test
@@ -215,10 +216,9 @@ public class PrettyTimeI18n_BG_Test {
         assertEquals("след 3 дни 15 часа 38 минути", t.format(timeUnitQuantities));
     }
 
-    // Method tearDown() is called automatically after every test method
     @After
     public void tearDown() throws Exception {
-        Locale.setDefault(locale);
+        Locale.setDefault(defaultLocale);
     }
 
 }

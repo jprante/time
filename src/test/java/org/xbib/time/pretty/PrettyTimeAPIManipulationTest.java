@@ -10,8 +10,10 @@ import static org.junit.Assert.assertNotNull;
 
 public class PrettyTimeAPIManipulationTest {
 
-    List<TimeUnitQuantity> list = null;
-    PrettyTime t = new PrettyTime();
+    private List<TimeUnitQuantity> list = null;
+
+    private PrettyTime t = new PrettyTime();
+
     private TimeUnitQuantity timeUnitQuantity = null;
 
     @Test

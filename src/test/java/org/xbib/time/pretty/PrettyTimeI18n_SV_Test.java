@@ -1,5 +1,6 @@
 package org.xbib.time.pretty;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -12,11 +13,15 @@ import static org.junit.Assert.assertEquals;
 
 public class PrettyTimeI18n_SV_Test {
 
+    private Locale defaultLocale;
+
     private Locale locale;
 
     @Before
     public void setUp() throws Exception {
+        defaultLocale = Locale.getDefault();
         locale = new Locale("sv");
+        Locale.setDefault(locale);
     }
 
     @Test
@@ -160,5 +165,10 @@ public class PrettyTimeI18n_SV_Test {
     public void testCenturiesAgo() throws Exception {
         PrettyTime t = new PrettyTime((3155692597470L * 3L), locale);
         assertEquals("3 århundraden sedan", t.format((0)));
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        Locale.setDefault(defaultLocale);
     }
 }

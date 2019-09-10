@@ -15,10 +15,13 @@ import static org.junit.Assert.assertTrue;
 
 public class PrettyTimeI18n_hi_IN_Test {
 
+    private Locale defaultLocale;
+
     private Locale locale;
 
     @Before
     public void setUp() throws Exception {
+        defaultLocale = Locale.getDefault();
         locale = new Locale("hi", "IN");
         Locale.setDefault(locale);
     }
@@ -27,7 +30,7 @@ public class PrettyTimeI18n_hi_IN_Test {
     public void testLocaleISOCorrectness() {
         assertEquals("hi", this.locale.getLanguage());
         assertEquals("IN", this.locale.getCountry());
-        assertEquals("हिंदी", this.locale.getDisplayLanguage());
+        assertEquals("हिन्दी", this.locale.getDisplayLanguage());
         assertEquals("भारत", this.locale.getDisplayCountry());
     }
 
@@ -243,6 +246,6 @@ public class PrettyTimeI18n_hi_IN_Test {
 
     @After
     public void tearDown() throws Exception {
-        Locale.setDefault(Locale.ENGLISH);
+        Locale.setDefault(defaultLocale);
     }
 }

@@ -43,7 +43,9 @@ public abstract class RepeaterUnit extends Repeater<Object> {
                     String unitName = unitNameEnum.name();
                     String capitalizedUnitName = unitName.substring(0, 1) + unitName.substring(1).toLowerCase();
                     String repeaterClassName = RepeaterUnit.class.getPackage().getName() + ".Repeater" + capitalizedUnitName;
-                    return Class.forName(repeaterClassName).asSubclass(RepeaterUnit.class).newInstance();
+                    return Class.forName(repeaterClassName)
+                            .asSubclass(RepeaterUnit.class)
+                            .getConstructor().newInstance();
                 }
             }
             return null;

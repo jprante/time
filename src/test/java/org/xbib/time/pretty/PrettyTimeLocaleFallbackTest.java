@@ -11,13 +11,11 @@ import static org.junit.Assert.assertEquals;
 
 public class PrettyTimeLocaleFallbackTest {
 
-    // Stores current locale so that it can be restored
-    private Locale locale;
+    private Locale defaultLocale;
 
-    // Method setUp() is called automatically before every test method
     @Before
     public void setUp() throws Exception {
-        locale = Locale.getDefault();
+        defaultLocale = Locale.getDefault();
         Locale.setDefault(new Locale("Foo", "Bar"));
     }
 
@@ -32,7 +30,7 @@ public class PrettyTimeLocaleFallbackTest {
 
     @After
     public void tearDown() throws Exception {
-        Locale.setDefault(locale);
+        Locale.setDefault(defaultLocale);
     }
 
 }

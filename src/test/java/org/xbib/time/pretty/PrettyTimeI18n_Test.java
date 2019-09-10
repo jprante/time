@@ -10,13 +10,12 @@ import java.time.ZoneId;
 import java.util.Locale;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class PrettyTimeI18n_Test {
 
-    // Stores current locale so that it can be restored
     private Locale locale;
 
-    // Method setUp() is called automatically before every test method
     @Before
     public void setUp() throws Exception {
         locale = Locale.getDefault();
@@ -105,7 +104,7 @@ public class PrettyTimeI18n_Test {
         PrettyTime p = new PrettyTime(0, Locale.ROOT);
         LocalDateTime localDateTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(0), ZoneId.systemDefault());
         while (1000L * 60L * 60L * 24L * 365L * 1000000L > t) {
-            assertEquals(p.format(localDateTime).endsWith("now"), true);
+            assertTrue(p.format(localDateTime).endsWith("now"));
             t *= 2L;
         }
     }
@@ -116,12 +115,11 @@ public class PrettyTimeI18n_Test {
         PrettyTime p = new PrettyTime(0, Locale.GERMAN);
         LocalDateTime localDateTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(0), ZoneId.systemDefault());
         while (1000L * 60L * 60L * 24L * 365L * 1000000L > t) {
-            assertEquals(p.format(localDateTime).startsWith("in") || p.format(localDateTime).startsWith("Jetzt"), true);
+            assertTrue(p.format(localDateTime).startsWith("in") || p.format(localDateTime).startsWith("Jetzt"));
             t *= 2L;
         }
     }
 
-    // Method tearDown() is called automatically after every test method
     @After
     public void tearDown() throws Exception {
         Locale.setDefault(locale);

@@ -33,39 +33,39 @@ public class Chronic {
     /**
      * Parses a string containing a natural language date or time. If the parser
      * can find a date or time, either a Time or Chronic::Span will be returned
-     * (depending on the value of <tt>:guess</tt>). If no date or time can be found,
+     * (depending on the value of {@code :guess}). If no date or time can be found,
      * +nil+ will be returned.
      * <p>
      * Options are:
      * <p>
-     * [<tt>:context</tt>]
-     * <tt>:past</tt> or <tt>:future</tt> (defaults to <tt>:future</tt>)
+     * [{@code :context}]
+     * {@code :past} or {@code :future} (defaults to {@code :future})
      * <p>
-     * If your string represents a birthday, you can set <tt>:context</tt> to <tt>:past</tt>
+     * If your string represents a birthday, you can set {@code :context} to {@code :past}
      * and if an ambiguous string is given, it will assume it is in the
-     * past. Specify <tt>:future</tt> or omit to set a future context.
+     * past. Specify {@code :future<} or omit to set a future context.
      * <p>
-     * [<tt>:now</tt>]
+     * [{@code :now}]
      * Time (defaults to Time.now)
      * <p>
-     * By setting <tt>:now</tt> to a Time, all computations will be based off
+     * By setting {@code :now} to a Time, all computations will be based off
      * of that time instead of Time.now
      * <p>
-     * [<tt>:guess</tt>]
+     * [{@code :guess<}]
      * +true+ or +false+ (defaults to +true+)
      * <p>
      * By default, the parser will guess a single point in time for the
      * given date or time. If you'd rather have the entire time span returned,
-     * set <tt>:guess</tt> to +false+ and a Chronic::Span will be returned.
+     * set {@code :guess} to +false+ and a Chronic::Span will be returned.
      * <p>
-     * [<tt>:ambiguous_time_range</tt>]
-     * Integer or <tt>:none</tt> (defaults to <tt>6</tt> (6am-6pm))
+     * [{@code :ambiguous_time_range}]
+     * Integer or {@code :none} (defaults to {@code 6} (6am-6pm))
      * <p>
      * If an Integer is given, ambiguous times (like 5:00) will be
      * assumed to be within the range of that time in the AM to that time
-     * in the PM. For example, if you set it to <tt>7</tt>, then the parser will
+     * in the PM. For example, if you set it to {@code 7}, then the parser will
      * look for the time between 7am and 7pm. In the case of 5:00, it would
-     * assume that means 5:00pm. If <tt>:none</tt> is given, no assumption
+     * assume that means 5:00pm. If {@code :none} is given, no assumption
      * will be made, and the first matching instance of that time will
      * be used.
      * @param text text

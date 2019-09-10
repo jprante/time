@@ -11,12 +11,15 @@ import static org.junit.Assert.assertEquals;
 
 public class PrettyTimeI18n_zh_TW_Test {
 
+    private Locale defaultLocale;
+
     private Locale locale;
 
     @Before
     public void setUp() throws Exception {
+        defaultLocale = Locale.getDefault();
         locale = Locale.TRADITIONAL_CHINESE;
-        Locale.setDefault(Locale.TRADITIONAL_CHINESE);
+        Locale.setDefault(locale);
     }
 
     @Test
@@ -185,6 +188,6 @@ public class PrettyTimeI18n_zh_TW_Test {
 
     @After
     public void tearDown() throws Exception {
-        Locale.setDefault(locale);
+        Locale.setDefault(defaultLocale);
     }
 }
