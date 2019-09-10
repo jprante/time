@@ -40,6 +40,10 @@ public class CronSchedule<T> implements Closeable {
         entries.removeIf(entry -> name.equals(entry.getName()));
     }
 
+    public  List<Entry<T>> getEntries() {
+        return entries;
+    }
+
     public void start() {
         long initialDelay = periodInMilliseconds - (Clock.systemDefaultZone().millis() % periodInMilliseconds);
         this.future = executor.scheduleAtFixedRate(CronSchedule.this::run,
