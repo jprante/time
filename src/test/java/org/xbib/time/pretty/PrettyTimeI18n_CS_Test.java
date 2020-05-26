@@ -1,12 +1,11 @@
 package org.xbib.time.pretty;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.xbib.time.pretty.units.JustNow;
 import org.xbib.time.pretty.units.Month;
-
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -14,23 +13,19 @@ import java.time.temporal.ChronoField;
 import java.util.List;
 import java.util.Locale;
 
-import static org.junit.Assert.assertEquals;
-
 public class PrettyTimeI18n_CS_Test {
 
     private Locale defaultLocale;
 
-    private Locale locale;
-
-    @Before
-    public void setUp() throws Exception {
+    @BeforeEach
+    public void setUp() {
         defaultLocale = Locale.getDefault();
-        locale = new Locale("cs");
+        Locale locale = new Locale("cs");
         Locale.setDefault(locale);
     }
 
     @Test
-    public void testCeilingInterval() throws Exception {
+    public void testCeilingInterval() {
         LocalDateTime then = LocalDateTime.of(2009, 5, 20, 0, 0);
         LocalDateTime ref = LocalDateTime.of(2009, 6, 17, 0, 0);
         PrettyTime t = new PrettyTime(ref);
@@ -38,19 +33,19 @@ public class PrettyTimeI18n_CS_Test {
     }
 
     @Test
-    public void testRightNow() throws Exception {
+    public void testRightNow() {
         PrettyTime t = new PrettyTime();
         assertEquals("za chvíli", t.format(LocalDateTime.now()));
     }
 
     @Test
-    public void testRightNowVariance() throws Exception {
+    public void testRightNowVariance() {
         PrettyTime t = new PrettyTime(0);
         assertEquals("za chvíli", t.format(600));
     }
 
     @Test
-    public void testMinutesFromNow() throws Exception {
+    public void testMinutesFromNow() {
         PrettyTime t = new PrettyTime(0);
         for (TimeUnit u : t.getUnits()) {
             if (u instanceof JustNow) {
@@ -63,7 +58,7 @@ public class PrettyTimeI18n_CS_Test {
     }
 
     @Test
-    public void testHoursFromNow() throws Exception {
+    public void testHoursFromNow() {
 
         PrettyTime t = new PrettyTime(0);
         assertEquals("za 1 hodinu", t.format(1000 * 60 * 60));
@@ -72,7 +67,7 @@ public class PrettyTimeI18n_CS_Test {
     }
 
     @Test
-    public void testDaysFromNow() throws Exception {
+    public void testDaysFromNow() {
         PrettyTime t = new PrettyTime(0);
         assertEquals("za 1 den", t.format(1000 * 60 * 60 * 24));
         assertEquals("za 3 dny", t.format(1000 * 60 * 60 * 24 * 3));
@@ -80,7 +75,7 @@ public class PrettyTimeI18n_CS_Test {
     }
 
     @Test
-    public void testWeeksFromNow() throws Exception {
+    public void testWeeksFromNow() {
         PrettyTime t = new PrettyTime(0);
         for (TimeUnit u : t.getUnits()) {
             if (u instanceof Month) {
@@ -93,7 +88,7 @@ public class PrettyTimeI18n_CS_Test {
     }
 
     @Test
-    public void testMonthsFromNow() throws Exception {
+    public void testMonthsFromNow() {
         PrettyTime t = new PrettyTime(0);
         assertEquals("za 1 měsíc", t.format(2629743830L));
         assertEquals("za 3 měsíce", t.format(2629743830L * 3L));
@@ -101,7 +96,7 @@ public class PrettyTimeI18n_CS_Test {
     }
 
     @Test
-    public void testYearsFromNow() throws Exception {
+    public void testYearsFromNow() {
         PrettyTime t = new PrettyTime(0);
         assertEquals("za 1 rok", t.format(2629743830L * 12L));
         assertEquals("za 3 roky", t.format(2629743830L * 12L * 3L));
@@ -109,13 +104,13 @@ public class PrettyTimeI18n_CS_Test {
     }
 
     @Test
-    public void testDecadesFromNow() throws Exception {
+    public void testDecadesFromNow() {
         PrettyTime t = new PrettyTime(0);
         assertEquals("za 3 desetiletí", t.format(315569259747L * 3L));
     }
 
     @Test
-    public void testCenturiesFromNow() throws Exception {
+    public void testCenturiesFromNow() {
         PrettyTime t = new PrettyTime(0);
         assertEquals("za 3 století", t.format(3155692597470L * 3L));
     }
@@ -124,19 +119,19 @@ public class PrettyTimeI18n_CS_Test {
      * Past
      */
     @Test
-    public void testMomentsAgo() throws Exception {
+    public void testMomentsAgo() {
         PrettyTime t = new PrettyTime(6000);
         assertEquals("před chvílí", t.format(0));
     }
 
     @Test
-    public void testMinutesAgo() throws Exception {
+    public void testMinutesAgo() {
         PrettyTime t = new PrettyTime(1000 * 60 * 12);
         assertEquals("před 12 minutami", t.format(0));
     }
 
     @Test
-    public void testHoursAgo() throws Exception {
+    public void testHoursAgo() {
         LocalDateTime base = LocalDateTime.now();
         PrettyTime t = new PrettyTime(base);
         assertEquals("před 1 hodinou", t.format(base.minusHours(1)));
@@ -144,7 +139,7 @@ public class PrettyTimeI18n_CS_Test {
     }
 
     @Test
-    public void testDaysAgo() throws Exception {
+    public void testDaysAgo() {
         LocalDateTime base = LocalDateTime.now();
         PrettyTime t = new PrettyTime(base);
         assertEquals("před 1 dnem", t.format(base.minusDays(1)));
@@ -152,7 +147,7 @@ public class PrettyTimeI18n_CS_Test {
     }
 
     @Test
-    public void testWeeksAgo() throws Exception {
+    public void testWeeksAgo() {
         LocalDateTime base = LocalDateTime.now();
         PrettyTime t = new PrettyTime(base);
         assertEquals("před 1 týdnem", t.format(base.minusWeeks(1)));
@@ -160,7 +155,7 @@ public class PrettyTimeI18n_CS_Test {
     }
 
     @Test
-    public void testMonthsAgo() throws Exception {
+    public void testMonthsAgo() {
         LocalDateTime base = LocalDateTime.now();
         PrettyTime t = new PrettyTime(base);
 
@@ -169,7 +164,7 @@ public class PrettyTimeI18n_CS_Test {
     }
 
     @Test
-    public void testYearsAgo() throws Exception {
+    public void testYearsAgo() {
         LocalDateTime base = LocalDateTime.now();
         PrettyTime t = new PrettyTime(base);
         for (TimeUnit u : t.getUnits()) {
@@ -182,19 +177,19 @@ public class PrettyTimeI18n_CS_Test {
     }
 
     @Test
-    public void testDecadesAgo() throws Exception {
+    public void testDecadesAgo() {
         PrettyTime t = new PrettyTime(315569259747L * 3L);
         assertEquals("před 3 desetiletími", t.format(0));
     }
 
     @Test
-    public void testCenturiesAgo() throws Exception {
+    public void testCenturiesAgo() {
         PrettyTime t = new PrettyTime(3155692597470L * 3L);
         assertEquals("před 3 stoletími", t.format(0));
     }
 
     @Test
-    public void testFormattingDurationListInThePast() throws Exception {
+    public void testFormattingDurationListInThePast() {
         PrettyTime t = new PrettyTime(1000 * 60 * 60 * 24 * 3 + 1000 * 60 * 60 * 15 + 1000 * 60 * 38);
         LocalDateTime localDateTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(0), ZoneId.systemDefault());
         List<TimeUnitQuantity> timeUnitQuantities = t.calculatePreciseDuration(localDateTime);
@@ -202,29 +197,24 @@ public class PrettyTimeI18n_CS_Test {
     }
 
     @Test
-    public void testFormattingDurationListInTheFuture() throws Exception {
+    public void testFormattingDurationListInTheFuture() {
         PrettyTime t = new PrettyTime(0);
         LocalDateTime localDateTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(1000 * 60 * 60 * 24 * 3 + 1000 * 60 * 60 * 15 + 1000 * 60 * 38), ZoneId.systemDefault());
         List<TimeUnitQuantity> timeUnitQuantities = t.calculatePreciseDuration(localDateTime);
         assertEquals("za 3 dny 15 hodin 38 minut", t.format(timeUnitQuantities));
     }
 
-    /**
-     * Tests formatApproximateDuration and by proxy, formatDuration.
-     *
-     * @throws Exception exception
-     */
     @Test
-    public void testFormatApproximateDuration() throws Exception {
+    public void testFormatApproximateDuration() {
         LocalDateTime localDateTime = LocalDateTime.now();
         LocalDateTime tenMinAgo = localDateTime.minus(10, ChronoField.MINUTE_OF_DAY.getBaseUnit());
         PrettyTime t = new PrettyTime();
         String result = t.formatApproximateDuration(tenMinAgo);
-        Assert.assertEquals("10 minutami", result);
+        assertEquals("10 minutami", result);
     }
 
-    @After
-    public void tearDown() throws Exception {
+    @AfterEach
+    public void tearDown() {
         Locale.setDefault(defaultLocale);
     }
 }

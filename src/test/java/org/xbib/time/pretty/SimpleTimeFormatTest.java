@@ -1,28 +1,26 @@
 package org.xbib.time.pretty;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Locale;
 
-import static org.junit.Assert.assertEquals;
-
 public class SimpleTimeFormatTest {
 
     private Locale defaultLocale;
 
-    @Before
-    public void setUp() throws Exception {
+    @BeforeEach
+    public void setUp() {
         defaultLocale = Locale.getDefault();
         Locale.setDefault(Locale.ROOT);
     }
 
     @Test
-    public void testRounding() throws Exception {
+    public void testRounding() {
         PrettyTime t = new PrettyTime(1000 * 60 * 60 * 3 + 1000 * 60 * 45);
         LocalDateTime localDateTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(0), ZoneId.systemDefault());
         TimeUnitQuantity timeUnitQuantity = t.approximateDuration(localDateTime);
@@ -31,7 +29,7 @@ public class SimpleTimeFormatTest {
     }
 
     @Test
-    public void testDecorating() throws Exception {
+    public void testDecorating() {
         PrettyTime t = new PrettyTime();
         TimeFormat format = new SimpleTimeFormat().setFutureSuffix("from now").setPastSuffix("ago");
 
@@ -44,9 +42,8 @@ public class SimpleTimeFormatTest {
         assertEquals("some time ago", format.decorate(timeUnitQuantity, "some time"));
     }
 
-    @After
-    public void tearDown() throws Exception {
+    @AfterEach
+    public void tearDown() {
         Locale.setDefault(defaultLocale);
     }
-
 }

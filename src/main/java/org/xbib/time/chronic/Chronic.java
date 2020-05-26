@@ -13,15 +13,11 @@ import org.xbib.time.chronic.tags.TimeZone;
 import java.text.ParseException;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
  */
 public class Chronic {
-
-    private static final Logger logger = Logger.getLogger(Chronic.class.getName());
 
     private Chronic() {
     }
@@ -84,7 +80,6 @@ public class Chronic {
                 tokens = (List<Token>) optionScannerClass.getMethod("scan", List.class, Options.class)
                         .invoke(null, tokens, options);
             } catch (Exception e) {
-                logger.log(Level.FINE, e.getMessage(), e);
                 throw new ParseException("failed to scan tokens", 0);
             }
         }
@@ -100,7 +95,6 @@ public class Chronic {
                 tokens = (List<Token>) scannerClass.getMethod("scan", List.class, Options.class)
                         .invoke(null, tokens, options);
             } catch (Exception e) {
-                logger.log(Level.FINE, e.getMessage(), e);
                 throw new ParseException("failed to scan tokens", 0);
             }
         }

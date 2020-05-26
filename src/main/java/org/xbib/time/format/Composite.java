@@ -35,6 +35,7 @@ class Composite implements PeriodPrinter, PeriodParser {
         }
     }
 
+    @Override
     public int countFieldsToPrint(Period period, int stopAt, Locale locale) {
         int sum = 0;
         PeriodPrinter[] printers = iPrinters;
@@ -44,6 +45,7 @@ class Composite implements PeriodPrinter, PeriodParser {
         return sum;
     }
 
+    @Override
     public int calculatePrintedLength(Period period, Locale locale) {
         int sum = 0;
         PeriodPrinter[] printers = iPrinters;
@@ -53,18 +55,21 @@ class Composite implements PeriodPrinter, PeriodParser {
         return sum;
     }
 
-    public void printTo(StringBuilder buf, Period period, Locale locale) {
+    @Override
+    public void printTo(StringBuilder buf, Period period, Locale locale) throws IOException {
         for (PeriodPrinter printer : iPrinters) {
             printer.printTo(buf, period, locale);
         }
     }
 
+    @Override
     public void printTo(Writer out, Period period, Locale locale) throws IOException {
         for (PeriodPrinter printer : iPrinters) {
             printer.printTo(out, period, locale);
         }
     }
 
+    @Override
     public int parseInto(PeriodAmount period, String periodStr, int pos, Locale locale) {
         int position = pos;
         PeriodParser[] parsers = iParsers;

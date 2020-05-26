@@ -1,4 +1,4 @@
-package org.xbib.time.schedule;
+package org.xbib.time.schedule.util;
 
 import com.google.common.collect.ImmutableSortedSet;
 import java.time.DayOfWeek;
@@ -11,7 +11,7 @@ import java.util.NavigableSet;
 
 public class Times {
 
-    final Integers
+    public final Integers
             seconds,
             minutes,
             hours,
@@ -20,7 +20,7 @@ public class Times {
             years,
             daysOfMonth;
 
-    Times() {
+    public Times() {
         seconds = new Integers();
         minutes = new Integers();
         hours = new Integers();
@@ -30,7 +30,7 @@ public class Times {
         daysOfMonth = new Integers();
     }
 
-    NavigableSet<ZonedDateTime> dateTimes() {
+    public NavigableSet<ZonedDateTime> dateTimes() {
         if (seconds.isEmpty()) {
             seconds.withRange(0, 1);
         }

@@ -1,14 +1,12 @@
 package org.xbib.time;
 
-import org.junit.Test;
-
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
-
-import static org.junit.Assert.assertEquals;
 
 public class DateTimeFormatterTest {
 

@@ -39,8 +39,9 @@ public interface PeriodPrinter {
      * @param buf    the formatted period is appended to this buffer
      * @param period the period to format
      * @param locale the locale to use
+     * @throws IOException if print fails
      */
-    void printTo(StringBuilder buf, Period period, Locale locale);
+    void printTo(StringBuilder buf, Period period, Locale locale) throws IOException;
 
     /**
      * Prints a ReadablePeriod to a Writer.

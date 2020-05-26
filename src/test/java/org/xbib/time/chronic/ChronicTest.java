@@ -1,7 +1,7 @@
 package org.xbib.time.chronic;
 
-import org.junit.Assert;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
 import org.xbib.time.chronic.handlers.Handler;
 import org.xbib.time.chronic.repeaters.EnumRepeaterDayPortion;
 import org.xbib.time.chronic.repeaters.RepeaterDayName;
@@ -14,7 +14,7 @@ import java.time.ZonedDateTime;
 import java.util.LinkedList;
 import java.util.List;
 
-public class ChronicTest extends Assert {
+public class ChronicTest {
 
     private final static ZoneId ZONE_ID = ZoneId.of("GMT");
 

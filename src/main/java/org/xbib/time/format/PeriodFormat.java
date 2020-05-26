@@ -341,7 +341,7 @@ public class PeriodFormat {
         }
 
         @Override
-        public void printTo(StringBuilder buf, Period period, Locale locale) {
+        public void printTo(StringBuilder buf, Period period, Locale locale) throws IOException {
             getPrinter(locale).printTo(buf, period, locale);
         }
 

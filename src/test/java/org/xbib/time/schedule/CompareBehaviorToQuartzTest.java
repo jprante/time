@@ -1,10 +1,12 @@
 package org.xbib.time.schedule;
 
-import static org.junit.Assert.assertTrue;
-import static org.xbib.time.schedule.DateTimes.toDates;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.xbib.time.schedule.util.DateTimes.toDates;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+import org.xbib.time.schedule.util.DateTimes;
+import org.xbib.time.schedule.util.Times;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -23,14 +25,18 @@ public class CompareBehaviorToQuartzTest {
             .withSecondsField(true)
             .withOneBasedDayOfWeek(true)
             .allowBothDayFields(false);
+
     private static final String timeFormatString = "s m H d M E yyyy";
+
     private static final DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern(timeFormatString);
+
     private final DateFormat dateFormat = new SimpleDateFormat(timeFormatString);
 
     protected String string;
+
     private Times expected;
 
-    @Before
+    @BeforeEach
     public void before() {
         expected = new Times();
     }
@@ -201,7 +207,7 @@ public class CompareBehaviorToQuartzTest {
 
 
     @Test
-    @Ignore
+    @Disabled
     // TODO let's see if we can make this more reliably faster than the respective quartz run
     public void at_10_15am_on_the_third_friday_of_every_month() throws Exception {
         string = "0 15 10 ? * 6#3";
@@ -248,14 +254,14 @@ public class CompareBehaviorToQuartzTest {
     private void checkQuartzImplementation(Iterable<Date> times) throws ParseException {
         org.quartz.CronExpression quartz = new org.quartz.CronExpression(string);
         for (Date time : times) {
-            assertTrue(dateFormat.format(time).toUpperCase() + " doesn't match expression: " + string, quartz.isSatisfiedBy(time));
+            assertTrue(quartz.isSatisfiedBy(time), dateFormat.format(time).toUpperCase() + " doesn't match expression: " + string);
         }
     }
 
     private void checkLocalImplementation(Iterable<ZonedDateTime> times) {
         CronExpression expr = quartzLike.parse(string);
         for (ZonedDateTime time : times) {
-            assertTrue(time.format(dateTimeFormat).toUpperCase() + " doesn't match expression: " + string, expr.matches(time));
+            assertTrue(expr.matches(time), time.format(dateTimeFormat).toUpperCase() + " doesn't match expression: " + string);
         }
     }
 }

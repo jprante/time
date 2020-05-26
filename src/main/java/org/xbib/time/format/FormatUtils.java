@@ -2,16 +2,12 @@ package org.xbib.time.format;
 
 import java.io.IOException;
 import java.io.Writer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Utility methods used by formatters.
  * FormatUtils is thread-safe and immutable.
  */
 public class FormatUtils {
-
-    private static final Logger logger = Logger.getLogger(FormatUtils.class.getName());
 
     private static final double LOG_10 = Math.log(10);
 
@@ -24,25 +20,20 @@ public class FormatUtils {
     /**
      * Converts an integer to a string, prepended with a variable amount of '0'
      * pad characters, and appends it to the given buffer.
-     * <p>
      * This method is optimized for converting small values to strings.
      *
      * @param buf   receives integer converted to a string
      * @param value value to convert to a string
      * @param size  minimum amount of digits to append
+     * @throws IOException if appending fails
      */
-    public static void appendPaddedInteger(StringBuilder buf, int value, int size) {
-        try {
-            appendPaddedInteger((Appendable) buf, value, size);
-        } catch (IOException e) {
-            logger.log(Level.FINE, e.getMessage(), e);
-        }
+    public static void appendPaddedInteger(StringBuilder buf, int value, int size) throws IOException {
+        appendPaddedInteger((Appendable) buf, value, size);
     }
 
     /**
      * Converts an integer to a string, prepended with a variable amount of '0'
      * pad characters, and appends it to the given appendable.
-     * <p>
      * This method is optimized for converting small values to strings.
      *
      * @param appenadble receives integer converted to a string
@@ -101,25 +92,20 @@ public class FormatUtils {
     /**
      * Converts an integer to a string, prepended with a variable amount of '0'
      * pad characters, and appends it to the given buffer.
-     * <p>
      * This method is optimized for converting small values to strings.
      *
      * @param buf   receives integer converted to a string
      * @param value value to convert to a string
      * @param size  minimum amount of digits to append
+     * @throws IOException if appending fails
      */
-    public static void appendPaddedInteger(StringBuilder buf, long value, int size) {
-        try {
-            appendPaddedInteger((Appendable) buf, value, size);
-        } catch (IOException e) {
-            logger.log(Level.FINE, e.getMessage(), e);
-        }
+    public static void appendPaddedInteger(StringBuilder buf, long value, int size) throws IOException {
+        appendPaddedInteger((Appendable) buf, value, size);
     }
 
     /**
      * Converts an integer to a string, prepended with a variable amount of '0'
      * pad characters, and appends it to the given buffer.
-     * <p>
      * This method is optimized for converting small values to strings.
      *
      * @param appendable receives integer converted to a string
@@ -159,7 +145,6 @@ public class FormatUtils {
     /**
      * Converts an integer to a string, prepended with a variable amount of '0'
      * pad characters, and writes it to the given writer.
-     * <p>
      * This method is optimized for converting small values to strings.
      *
      * @param out   receives integer converted to a string
@@ -219,7 +204,6 @@ public class FormatUtils {
     /**
      * Converts an integer to a string, prepended with a variable amount of '0'
      * pad characters, and writes it to the given writer.
-     * <p>
      * This method is optimized for converting small values to strings.
      *
      * @param out   receives integer converted to a string
@@ -258,22 +242,18 @@ public class FormatUtils {
 
     /**
      * Converts an integer to a string, and appends it to the given buffer.
-     * <p>This method is optimized for converting small values to strings.
+     * This method is optimized for converting small values to strings.
      *
      * @param buf   receives integer converted to a string
      * @param value value to convert to a string
+     * @throws IOException if appending fails
      */
-    public static void appendUnpaddedInteger(StringBuilder buf, int value) {
-        try {
-            appendUnpaddedInteger((Appendable) buf, value);
-        } catch (IOException e) {
-            logger.log(Level.FINE, e.getMessage(), e);
-        }
+    public static void appendUnpaddedInteger(StringBuilder buf, int value) throws IOException {
+        appendUnpaddedInteger((Appendable) buf, value);
     }
 
     /**
      * Converts an integer to a string, and appends it to the given appendable.
-     * <p>
      * This method is optimized for converting small values to strings.
      *
      * @param appendable receives integer converted to a string
@@ -308,22 +288,18 @@ public class FormatUtils {
 
     /**
      * Converts an integer to a string, and appends it to the given buffer.
-     * <p>This method is optimized for converting small values to strings.
+     * This method is optimized for converting small values to strings.
      *
      * @param buf   receives integer converted to a string
      * @param value value to convert to a string
+     * @throws IOException if appending fails
      */
-    public static void appendUnpaddedInteger(StringBuilder buf, long value) {
-        try {
-            appendUnpaddedInteger((Appendable) buf, value);
-        } catch (IOException e) {
-            logger.log(Level.FINE, e.getMessage(), e);
-        }
+    public static void appendUnpaddedInteger(StringBuilder buf, long value) throws IOException {
+        appendUnpaddedInteger((Appendable) buf, value);
     }
 
     /**
      * Converts an integer to a string, and appends it to the given appendable.
-     * <p>
      * This method is optimized for converting small values to strings.
      *
      * @param appendable receives integer converted to a string
@@ -341,7 +317,6 @@ public class FormatUtils {
 
     /**
      * Converts an integer to a string, and writes it to the given writer.
-     * <p>
      * This method is optimized for converting small values to strings.
      *
      * @param out   receives integer converted to a string
@@ -377,7 +352,6 @@ public class FormatUtils {
 
     /**
      * Converts an integer to a string, and writes it to the given writer.
-     * <p>
      * This method is optimized for converting small values to strings.
      *
      * @param out   receives integer converted to a string

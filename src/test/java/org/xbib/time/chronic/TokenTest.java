@@ -1,11 +1,13 @@
 package org.xbib.time.chronic;
 
-import org.junit.Assert;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Test;
 import org.xbib.time.chronic.tags.Scalar;
 import org.xbib.time.chronic.tags.StringTag;
 
-public class TokenTest extends Assert {
+public class TokenTest {
 
     @Test
     public void testToken() {

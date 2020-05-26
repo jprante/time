@@ -1,79 +1,78 @@
 package org.xbib.time.pretty;
 
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.xbib.time.pretty.units.JustNow;
-
 import java.util.List;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 public class PrettyTimeAPIManipulationTest {
 
     private List<TimeUnitQuantity> list = null;
 
-    private PrettyTime t = new PrettyTime();
+    private final PrettyTime t = new PrettyTime();
 
-    private TimeUnitQuantity timeUnitQuantity = null;
+    private final TimeUnitQuantity timeUnitQuantity = null;
 
     @Test
-    public void testApiMisuse3() throws Exception {
+    public void testApiMisuse3() {
         t.clearUnits();
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testApiMisuse6() throws Exception {
-        t.format(list);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testApiMisuse8() throws Exception {
-        t.formatUnrounded(timeUnitQuantity);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testApiMisuse9() throws Exception {
-        t.getFormat(null);
+    @Test
+    public void testApiMisuse6() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> t.format(list));
     }
 
     @Test
-    public void testApiMisuse10() throws Exception {
+    public void testApiMisuse8() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> t.formatUnrounded(timeUnitQuantity));
+    }
+
+    @Test
+    public void testApiMisuse9() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> t.getFormat(null));
+    }
+
+    @Test
+    public void testApiMisuse10() {
         t.getLocale();
     }
 
     @Test
-    public void testApiMisuse12() throws Exception {
+    public void testApiMisuse12() {
         t.getUnits();
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testApiMisuse13() throws Exception {
-        t.registerUnit(null, null);
+    @Test
+    public void testApiMisuse13() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> t.registerUnit(null, null));
     }
 
     @Test
-    public void testApiMisuse15() throws Exception {
+    public void testApiMisuse15() {
         t.toString();
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testApiMisuse16() throws Exception {
-        t.removeUnit((Class<TimeUnit>) null);
+    @Test
+    public void testApiMisuse16() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> t.removeUnit((Class<TimeUnit>) null));
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testApiMisuse17() throws Exception {
-        t.removeUnit((TimeUnit) null);
+    @Test
+    public void testApiMisuse17() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> t.removeUnit((TimeUnit) null));
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testApiMisuse18() throws Exception {
-        t.getUnit(null);
+    @Test
+    public void testApiMisuse18() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> t.getUnit(null));
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testApiMisuse19() throws Exception {
-        t.getUnit(null);
+    @Test
+    public void testApiMisuse19() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> t.getUnit(null));
     }
 
     @Test

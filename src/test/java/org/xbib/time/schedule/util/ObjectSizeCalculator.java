@@ -1,4 +1,4 @@
-package org.xbib.time.schedule;
+package org.xbib.time.schedule.util;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;

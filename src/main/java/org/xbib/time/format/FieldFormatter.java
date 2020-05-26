@@ -74,6 +74,7 @@ class FieldFormatter implements PeriodPrinter, PeriodParser {
         }
     }
 
+    @Override
     public int countFieldsToPrint(Period period, int stopAt, Locale locale) {
         if (stopAt <= 0) {
             return 0;
@@ -84,6 +85,7 @@ class FieldFormatter implements PeriodPrinter, PeriodParser {
         return 0;
     }
 
+    @Override
     public int calculatePrintedLength(Period period, Locale locale) {
         long valueLong = getFieldValue(period);
         if (valueLong == Long.MAX_VALUE) {
@@ -103,7 +105,8 @@ class FieldFormatter implements PeriodPrinter, PeriodParser {
         return sum;
     }
 
-    public void printTo(StringBuilder buf, Period period, Locale locale) {
+    @Override
+    public void printTo(StringBuilder buf, Period period, Locale locale) throws IOException {
         long valueLong = getFieldValue(period);
         if (valueLong == Long.MAX_VALUE) {
             return;
@@ -123,6 +126,7 @@ class FieldFormatter implements PeriodPrinter, PeriodParser {
         }
     }
 
+    @Override
     public void printTo(Writer out, Period period, Locale locale) throws IOException {
         long valueLong = getFieldValue(period);
         if (valueLong == Long.MAX_VALUE) {

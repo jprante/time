@@ -1,17 +1,18 @@
 package org.xbib.time.chronic;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.xbib.time.chronic.tags.Pointer;
 
 import java.text.ParseException;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
-public class ParserTest extends Assert {
+public class ParserTest {
 
     private static final ZoneId ZONE_ID = ZoneId.of("GMT");
-    private ZonedDateTime time_2006_08_16_14_00_00 = construct(2006, 8, 16, 14, 0, 0);
+
+    private final ZonedDateTime time_2006_08_16_14_00_00 = construct(2006, 8, 16, 14, 0, 0);
 
     public static ZonedDateTime construct(int year, int month) {
         return ZonedDateTime.of(year, month, 1, 0, 0, 0, 0, ZONE_ID);
@@ -33,10 +34,9 @@ public class ParserTest extends Assert {
         return ZonedDateTime.of(year, month, day, hour, minutes, seconds, 0, ZONE_ID);
     }
 
-
     protected void assertEquals(ZonedDateTime ec, Span ac) {
         if (ec != null) {
-            assertEquals(ec, ac.getBeginCalendar());
+            Assertions.assertEquals(ec, ac.getBeginCalendar());
         }
     }
 
@@ -642,24 +642,24 @@ public class ParserTest extends Assert {
     public void test_parse_span() throws ParseException {
         Span span;
         span = parse_now("friday", new Options().setGuess(false));
-        assertEquals(construct(2006, 8, 18), span.getBeginCalendar());
-        assertEquals(construct(2006, 8, 19), span.getEndCalendar());
+        Assertions.assertEquals(construct(2006, 8, 18), span.getBeginCalendar());
+        Assertions.assertEquals(construct(2006, 8, 19), span.getEndCalendar());
 
         span = parse_now("november", new Options().setGuess(false));
-        assertEquals(construct(2006, 11), span.getBeginCalendar());
-        assertEquals(construct(2006, 12), span.getEndCalendar());
+        Assertions.assertEquals(construct(2006, 11), span.getBeginCalendar());
+        Assertions.assertEquals(construct(2006, 12), span.getEndCalendar());
 
         Options options = new Options().setNow(time_2006_08_16_14_00_00).setGuess(false);
         span = Chronic.parse("weekend", options);
-        assertEquals(construct(2006, 8, 19), span.getBeginCalendar());
-        assertEquals(construct(2006, 8, 21), span.getEndCalendar());
+        Assertions.assertEquals(construct(2006, 8, 19), span.getBeginCalendar());
+        Assertions.assertEquals(construct(2006, 8, 21), span.getEndCalendar());
     }
 
     @Test
     public void test_parse_words() {
-        assertEquals(parse_now("33 days from now"), parse_now("thirty-three days from now"));
-        assertEquals(parse_now("2867532 seconds from now"), parse_now("two million eight hundred and sixty seven thousand five hundred and thirty two seconds from now"));
-        assertEquals(parse_now("may 10th"), parse_now("may tenth"));
+        Assertions.assertEquals(parse_now("33 days from now"), parse_now("thirty-three days from now"));
+        Assertions.assertEquals(parse_now("2867532 seconds from now"), parse_now("two million eight hundred and sixty seven thousand five hundred and thirty two seconds from now"));
+        Assertions.assertEquals(parse_now("may 10th"), parse_now("may tenth"));
     }
 
     @Test
@@ -683,5 +683,4 @@ public class ParserTest extends Assert {
         }
         return null;
     }
-
 }

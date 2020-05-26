@@ -1,16 +1,14 @@
 package org.xbib.time.pretty;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Locale;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 public class PrettyTimeI18n_FR_Test {
 
@@ -18,8 +16,8 @@ public class PrettyTimeI18n_FR_Test {
 
     private Locale locale;
 
-    @Before
-    public void setUp() throws Exception {
+    @BeforeEach
+    public void setUp() {
         defaultLocale = Locale.getDefault();
         locale = Locale.FRENCH;
         Locale.setDefault(locale);
@@ -55,9 +53,8 @@ public class PrettyTimeI18n_FR_Test {
         }
     }
 
-    @After
-    public void tearDown() throws Exception {
+    @AfterEach
+    public void tearDown() {
         Locale.setDefault(defaultLocale);
     }
-
 }

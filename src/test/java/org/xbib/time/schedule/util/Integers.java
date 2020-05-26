@@ -1,4 +1,4 @@
-package org.xbib.time.schedule;
+package org.xbib.time.schedule.util;
 
 import com.google.common.collect.ForwardingSet;
 import java.util.HashSet;

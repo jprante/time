@@ -1,11 +1,11 @@
 package org.xbib.time.schedule;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import static org.xbib.time.schedule.DateTimes.nthOfMonth;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+import static org.xbib.time.schedule.util.DateTimes.nthOfMonth;
+import org.junit.jupiter.api.Test;
 import java.text.ParseException;
 import java.time.DayOfWeek;
 import java.time.ZonedDateTime;
@@ -14,7 +14,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class WhatQuartzDoesNotSupport {
+public class WhatQuartzDoesNotSupportTest {
+
     @Test
     public void multipleNthDayOfWeek() {
         try {

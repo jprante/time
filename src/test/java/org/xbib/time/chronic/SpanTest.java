@@ -1,12 +1,11 @@
 package org.xbib.time.chronic;
 
-import org.junit.Assert;
-import org.junit.Test;
-
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
-public class SpanTest extends Assert {
+public class SpanTest {
 
     private final static ZoneId ZONE_ID = ZoneId.of("GMT");
 

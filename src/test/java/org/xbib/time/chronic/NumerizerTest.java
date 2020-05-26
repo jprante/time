@@ -1,13 +1,13 @@
 package org.xbib.time.chronic;
 
-import org.junit.Assert;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
 import org.xbib.time.chronic.numerizer.Numerizer;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class NumerizerTest extends Assert {
+public class NumerizerTest {
 
     @Test
     public void testStraightParsing() {

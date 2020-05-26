@@ -1,17 +1,18 @@
 package org.xbib.time.chronic;
 
-import org.junit.Assert;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
 import org.xbib.time.chronic.repeaters.RepeaterMonthName;
 import org.xbib.time.chronic.tags.Pointer;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
-public class RepeaterMonthNameTest extends Assert {
+public class RepeaterMonthNameTest {
 
     private final static ZoneId ZONE_ID = ZoneId.of("GMT");
-    private ZonedDateTime now = construct(2006, 8, 16, 14, 0, 0);
+
+    private final ZonedDateTime now = construct(2006, 8, 16, 14, 0, 0);
 
     public static ZonedDateTime construct(int year, int month) {
         return ZonedDateTime.of(year, month, 1, 0, 0, 0, 0, ZONE_ID);

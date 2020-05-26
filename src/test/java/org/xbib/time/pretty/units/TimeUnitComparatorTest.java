@@ -1,13 +1,12 @@
 package org.xbib.time.pretty.units;
 
-import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
 
 public class TimeUnitComparatorTest {
 
     @Test
-    public void testComparingOrder() throws Exception {
+    public void testComparingOrder() {
         TimeUnitComparator comparator = new TimeUnitComparator();
         assertEquals(-1, comparator.compare(new Hour(), new Day()));
     }

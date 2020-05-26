@@ -153,8 +153,9 @@ public class PeriodFormatter {
      *
      * @param buf    the formatted period is appended to this buffer
      * @param period the period to format, not null
+     * @throws IOException if print fails
      */
-    public void printTo(StringBuilder buf, Period period) {
+    public void printTo(StringBuilder buf, Period period) throws IOException {
         checkPrinter();
         checkPeriod(period);
         getPrinter().printTo(buf, period, iLocale);
@@ -178,8 +179,9 @@ public class PeriodFormatter {
      *
      * @param period the period to format, not null
      * @return the printed result
+     * @throws IOException if print fails
      */
-    public String print(Period period) {
+    public String print(Period period) throws IOException {
         checkPrinter();
         checkPeriod(period);
         PeriodPrinter printer = getPrinter();

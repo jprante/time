@@ -1,7 +1,8 @@
 package org.xbib.time.schedule;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import com.google.common.base.Stopwatch;
+import org.xbib.time.schedule.util.DateTimes;
 import java.text.ParseException;
 import java.time.ZonedDateTime;
 import java.util.Arrays;
@@ -10,6 +11,7 @@ import java.util.Iterator;
 import java.util.concurrent.TimeUnit;
 
 public class CompareSpeedToQuartzTest extends CompareBehaviorToQuartzTest {
+
     @Override
     protected void check(final Iterable<ZonedDateTime> times) throws ParseException {
         final Iterable<Date> dates = DateTimes.toDates(times);
@@ -39,10 +41,7 @@ public class CompareSpeedToQuartzTest extends CompareBehaviorToQuartzTest {
                 (lessThanOrEqual ? "<=" : ">"),
                 quartzNano / 1000000d
         );
-        assertTrue(
-                "We took longer for expression '" + string + "'; " + localNano + " > " + quartzNano,
-                lessThanOrEqual
-        );
+        assertTrue(lessThanOrEqual, "We took longer for expression '" + string + "'; " + localNano + " > " + quartzNano);
     }
 
     private String nameOfTestMethod() {

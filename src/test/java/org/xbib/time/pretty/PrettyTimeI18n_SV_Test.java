@@ -1,15 +1,13 @@
 package org.xbib.time.pretty;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Locale;
-
-import static org.junit.Assert.assertEquals;
 
 public class PrettyTimeI18n_SV_Test {
 
@@ -17,8 +15,8 @@ public class PrettyTimeI18n_SV_Test {
 
     private Locale locale;
 
-    @Before
-    public void setUp() throws Exception {
+    @BeforeEach
+    public void setUp() {
         defaultLocale = Locale.getDefault();
         locale = new Locale("sv");
         Locale.setDefault(locale);
@@ -42,7 +40,7 @@ public class PrettyTimeI18n_SV_Test {
     }
 
     @Test
-    public void testCeilingInterval() throws Exception {
+    public void testCeilingInterval() {
         LocalDateTime then = LocalDateTime.of(2009, 5, 20, 0, 0);
         LocalDateTime ref = LocalDateTime.of(2009, 6, 17, 0, 0);
 
@@ -51,61 +49,61 @@ public class PrettyTimeI18n_SV_Test {
     }
 
     @Test
-    public void testRightNow() throws Exception {
+    public void testRightNow() {
         PrettyTime t = new PrettyTime(locale);
         assertEquals("om en stund", t.format(LocalDateTime.now()));
     }
 
     @Test
-    public void testRightNowVariance() throws Exception {
+    public void testRightNowVariance() {
         PrettyTime t = new PrettyTime((0), locale);
         assertEquals("om en stund", t.format((600)));
     }
 
     @Test
-    public void testMinutesFromNow() throws Exception {
+    public void testMinutesFromNow() {
         PrettyTime t = new PrettyTime((0), locale);
         assertEquals("om 12 minuter", t.format((1000 * 60 * 12)));
     }
 
     @Test
-    public void testHoursFromNow() throws Exception {
+    public void testHoursFromNow() {
         PrettyTime t = new PrettyTime((0), locale);
         assertEquals("om 3 timmar", t.format((1000 * 60 * 60 * 3)));
     }
 
     @Test
-    public void testDaysFromNow() throws Exception {
+    public void testDaysFromNow() {
         PrettyTime t = new PrettyTime((0), locale);
         assertEquals("om 3 dagar", t.format((1000 * 60 * 60 * 24 * 3)));
     }
 
     @Test
-    public void testWeeksFromNow() throws Exception {
+    public void testWeeksFromNow() {
         PrettyTime t = new PrettyTime((0), locale);
         assertEquals("om 3 veckor", t.format((1000 * 60 * 60 * 24 * 7 * 3)));
     }
 
     @Test
-    public void testMonthsFromNow() throws Exception {
+    public void testMonthsFromNow() {
         PrettyTime t = new PrettyTime((0), locale);
         assertEquals("om 3 månader", t.format((2629743830L * 3L)));
     }
 
     @Test
-    public void testYearsFromNow() throws Exception {
+    public void testYearsFromNow() {
         PrettyTime t = new PrettyTime((0), locale);
         assertEquals("om 3 år", t.format((2629743830L * 12L * 3L)));
     }
 
     @Test
-    public void testDecadesFromNow() throws Exception {
+    public void testDecadesFromNow() {
         PrettyTime t = new PrettyTime((0), locale);
         assertEquals("om 3 årtionden", t.format((315569259747L * 3L)));
     }
 
     @Test
-    public void testCenturiesFromNow() throws Exception {
+    public void testCenturiesFromNow() {
         PrettyTime t = new PrettyTime((0), locale);
         assertEquals("om 3 århundraden", t.format((3155692597470L * 3L)));
     }
@@ -114,61 +112,61 @@ public class PrettyTimeI18n_SV_Test {
      * Past
      */
     @Test
-    public void testMomentsAgo() throws Exception {
+    public void testMomentsAgo() {
         PrettyTime t = new PrettyTime((6000), locale);
         assertEquals("en stund sedan", t.format((0)));
     }
 
     @Test
-    public void testMinutesAgo() throws Exception {
+    public void testMinutesAgo() {
         PrettyTime t = new PrettyTime((1000 * 60 * 12), locale);
         assertEquals("12 minuter sedan", t.format((0)));
     }
 
     @Test
-    public void testHoursAgo() throws Exception {
+    public void testHoursAgo() {
         PrettyTime t = new PrettyTime((1000 * 60 * 60 * 3), locale);
         assertEquals("3 timmar sedan", t.format((0)));
     }
 
     @Test
-    public void testDaysAgo() throws Exception {
+    public void testDaysAgo() {
         PrettyTime t = new PrettyTime((1000 * 60 * 60 * 24 * 3), locale);
         assertEquals("3 dagar sedan", t.format((0)));
     }
 
     @Test
-    public void testWeeksAgo() throws Exception {
+    public void testWeeksAgo() {
         PrettyTime t = new PrettyTime((1000 * 60 * 60 * 24 * 7 * 3), locale);
         assertEquals("3 veckor sedan", t.format((0)));
     }
 
     @Test
-    public void testMonthsAgo() throws Exception {
+    public void testMonthsAgo() {
         PrettyTime t = new PrettyTime((2629743830L * 3L), locale);
         assertEquals("3 månader sedan", t.format((0)));
     }
 
     @Test
-    public void testYearsAgo() throws Exception {
+    public void testYearsAgo() {
         PrettyTime t = new PrettyTime((2629743830L * 12L * 3L), locale);
         assertEquals("3 år sedan", t.format((0)));
     }
 
     @Test
-    public void testDecadesAgo() throws Exception {
+    public void testDecadesAgo() {
         PrettyTime t = new PrettyTime((315569259747L * 3L), locale);
         assertEquals("3 årtionden sedan", t.format((0)));
     }
 
     @Test
-    public void testCenturiesAgo() throws Exception {
+    public void testCenturiesAgo() {
         PrettyTime t = new PrettyTime((3155692597470L * 3L), locale);
         assertEquals("3 århundraden sedan", t.format((0)));
     }
 
-    @After
-    public void tearDown() throws Exception {
+    @AfterEach
+    public void tearDown() {
         Locale.setDefault(defaultLocale);
     }
 }

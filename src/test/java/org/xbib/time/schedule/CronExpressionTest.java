@@ -1,15 +1,16 @@
 package org.xbib.time.schedule;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import static org.xbib.time.schedule.DateTimes.midnight;
-import static org.xbib.time.schedule.DateTimes.nearestWeekday;
-import static org.xbib.time.schedule.DateTimes.now;
-import static org.xbib.time.schedule.DateTimes.nthOfMonth;
-import static org.xbib.time.schedule.DateTimes.startOfHour;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+import static org.xbib.time.schedule.util.DateTimes.midnight;
+import static org.xbib.time.schedule.util.DateTimes.nearestWeekday;
+import static org.xbib.time.schedule.util.DateTimes.now;
+import static org.xbib.time.schedule.util.DateTimes.nthOfMonth;
+import static org.xbib.time.schedule.util.DateTimes.startOfHour;
+import org.junit.jupiter.api.Test;
+import org.xbib.time.schedule.util.DateTimes;
 import java.time.DayOfWeek;
 import java.time.Month;
 import java.time.ZonedDateTime;
@@ -336,9 +337,6 @@ public class CronExpressionTest {
     }
 
     private void assertMatches(ZonedDateTime time) {
-        assertTrue(
-                time.format(formatter).toUpperCase() + " doesn't match expression: " + expression,
-                expression.matches(time)
-        );
+        assertTrue(expression.matches(time), time.format(formatter).toUpperCase() + " doesn't match expression: " + expression);
     }
 }

@@ -89,10 +89,9 @@ class Separator implements PeriodPrinter, PeriodParser {
         return sum;
     }
 
-    public void printTo(StringBuilder buf, Period period, Locale locale) {
+    public void printTo(StringBuilder buf, Period period, Locale locale) throws IOException {
         PeriodPrinter before = iBeforePrinter;
         PeriodPrinter after = iAfterPrinter;
-
         before.printTo(buf, period, locale);
         if (iUseBefore) {
             if (before.countFieldsToPrint(period, 1, locale) > 0) {

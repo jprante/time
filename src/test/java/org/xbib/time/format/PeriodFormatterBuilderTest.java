@@ -1,15 +1,14 @@
 package org.xbib.time.format;
 
-import org.junit.Test;
-
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
+import java.io.IOException;
 import java.time.Period;
-
-import static org.junit.Assert.assertEquals;
 
 public class PeriodFormatterBuilderTest {
 
     @Test
-    public void test() {
+    public void test() throws IOException {
         PeriodFormatter yearsAndMonths = new PeriodFormatterBuilder()
                 .appendYears()
                 .appendSuffix(" year", " years")
@@ -17,8 +16,6 @@ public class PeriodFormatterBuilderTest {
                 .appendMonths()
                 .appendSuffix(" month", " months")
                 .toFormatter();
-
         assertEquals("3 years and 2 months", yearsAndMonths.print(Period.of(3, 2, 1)));
-
     }
 }

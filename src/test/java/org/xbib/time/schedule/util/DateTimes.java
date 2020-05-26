@@ -1,4 +1,4 @@
-package org.xbib.time.schedule;
+package org.xbib.time.schedule.util;
 
 import java.time.DayOfWeek;
 import java.time.Month;
@@ -11,16 +11,16 @@ import java.util.stream.StreamSupport;
 
 public class DateTimes {
 
-    static Iterable<Date> toDates(Iterable<ZonedDateTime> times) {
+    public static Iterable<Date> toDates(Iterable<ZonedDateTime> times) {
         return StreamSupport.stream(times.spliterator(), false)
                 .map(input -> Date.from(input.toInstant())).collect(Collectors.toList());
     }
 
-    static ZonedDateTime midnight() {
+    public static ZonedDateTime midnight() {
         return now().truncatedTo(ChronoUnit.DAYS);
     }
 
-    static ZonedDateTime startOfHour() {
+    public static ZonedDateTime startOfHour() {
         return now().truncatedTo(ChronoUnit.HOURS);
     }
 
@@ -28,7 +28,7 @@ public class DateTimes {
         return ZonedDateTime.now();
     }
 
-    static ZonedDateTime lastOfMonth(ZonedDateTime t, DayOfWeek dayOfWeek) {
+    public static ZonedDateTime lastOfMonth(ZonedDateTime t, DayOfWeek dayOfWeek) {
         ZonedDateTime day = t.with(TemporalAdjusters.lastDayOfMonth()).with(dayOfWeek);
         if (day.getMonth() != t.getMonth()) {
             day = day.minusWeeks(1);
@@ -36,7 +36,7 @@ public class DateTimes {
         return day;
     }
 
-    static ZonedDateTime nthOfMonth(ZonedDateTime t, DayOfWeek dayOfWeek, int desiredNumber) {
+    public static ZonedDateTime nthOfMonth(ZonedDateTime t, DayOfWeek dayOfWeek, int desiredNumber) {
         Month month = t.getMonth();
         t = t.withDayOfMonth(1).with(dayOfWeek);
         if (t.getMonth() != month) {
@@ -50,7 +50,7 @@ public class DateTimes {
         return t;
     }
 
-    static ZonedDateTime nearestWeekday(ZonedDateTime t) {
+    public static ZonedDateTime nearestWeekday(ZonedDateTime t) {
         if (t.getDayOfWeek() == DayOfWeek.SATURDAY) {
             return t.minusDays(1);
         } else if (t.getDayOfWeek() == DayOfWeek.SUNDAY) {
@@ -59,7 +59,7 @@ public class DateTimes {
         return t;
     }
 
-    static ZonedDateTime startOfYear() {
+    public static ZonedDateTime startOfYear() {
         return midnight().withDayOfYear(1);
     }
 }

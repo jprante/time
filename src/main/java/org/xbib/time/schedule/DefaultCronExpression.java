@@ -6,7 +6,6 @@ import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
 import java.util.Objects;
 import java.util.SortedSet;
-import java.util.logging.Logger;
 
 public class DefaultCronExpression extends CronExpression {
 

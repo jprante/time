@@ -1,6 +1,6 @@
 package org.xbib.time.schedule;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.logging.Level;

@@ -1,31 +1,27 @@
 package org.xbib.time.schedule;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Multiset;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class CronScheduleTest {
-
-    private static final Logger logger = Logger.getLogger(CronScheduleTest.class.getName());
 
     private CronSchedule<Void> schedule;
 
     private ScheduledExecutorService executor;
 
-    @Before
+    @BeforeEach
     public void before() {
         executor = Executors.newScheduledThreadPool(1);
     }
@@ -44,7 +40,6 @@ public class CronScheduleTest {
         schedule.start();
         Thread.sleep(TimeUnit.MINUTES.toMillis(2));
         assertTrue(run.get());
-        logger.log(Level.INFO, schedule.toString());
     }
 
     @Test
@@ -112,7 +107,7 @@ public class CronScheduleTest {
         assertEquals(1, counts.count("b"));
     }
 
-    @After
+    @AfterEach
     public void after() throws IOException {
         if (schedule != null) {
             schedule.close();

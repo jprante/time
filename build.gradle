@@ -1,134 +1,37 @@
 plugins {
-    id "com.github.spotbugs" version "2.0.0"
-    id "io.codearte.nexus-staging" version "0.11.0"
+    id "de.marcphilipp.nexus-publish" version "0.4.0"
+    id "io.codearte.nexus-staging" version "0.21.1"
 }
 
-apply plugin: 'java'
-apply plugin: 'pmd'
-apply plugin: 'checkstyle'
-apply plugin: "com.github.spotbugs"
-
-dependencies {
-    testCompile "junit:junit:${project.property('junit.version')}"
-    testCompile "org.quartz-scheduler:quartz:${project.property('quartz.version')}"
-    testCompile "com.google.caliper:caliper:${project.property('caliper.version')}"
-}
-
-compileJava {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
-}
-
-compileTestJava {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
-}
-
-tasks.withType(JavaCompile) {
-    options.compilerArgs << "-Xlint:all"
-}
-
-test {
-    testLogging {
-        showStandardStreams = true
-        exceptionFormat = 'full'
-    }
-}
-
-spotbugs {
-    toolVersion = '3.1.12'
-    sourceSets = [sourceSets.main]
-    ignoreFailures = true
-    effort = "max"
-    reportLevel = "high"
-}
-
-tasks.withType(Pmd) {
-    ignoreFailures = true
-    reports {
-        xml.enabled = true
-        html.enabled = true
-    }
-}
-
-tasks.withType(Checkstyle) {
-    ignoreFailures = true
-    reports {
-        xml.enabled = true
-        html.enabled = true
-    }
-}
-
-task sourcesJar(type: Jar, dependsOn: classes) {
-    classifier 'sources'
-    from sourceSets.main.allSource
-}
-
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier 'javadoc'
-}
-
-artifacts {
-    archives sourcesJar, javadocJar
+wrapper {
+    gradleVersion = "${project.property('gradle.wrapper.version')}"
+    distributionType = Wrapper.DistributionType.ALL
 }
 
 ext {
     user = 'xbib'
-    projectName = 'time'
-    projectDescription = 'A bundle of Chronic, Prettytime, and  org.joda.time.format optimized for Java 8 Time API'
-    scmUrl = 'https://github.com/xbib/time'
-    scmConnection = 'scm:git:git://github.com/xbib/time.git'
-    scmDeveloperConnection = 'scm:git:git://github.com/xbib/time.git'
+    name = 'time'
+    description = 'A bundle of Chronic, Prettytime, and  org.joda.time.format optimized for Java 8 Time API'
+    inceptionYear = '2016'
+    url = 'https://github.com/' + user + '/' + name
+    scmUrl = 'https://github.com/' + user + '/' + name
+    scmConnection = 'scm:git:git://github.com/' + user + '/' + name + '.git'
+    scmDeveloperConnection = 'scm:git:ssh://git@github.com:' + user + '/' + name + '.git'
+    issueManagementSystem = 'Github'
+    issueManagementUrl = ext.scmUrl + '/issues'
+    licenseName = 'The Apache License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
 }
 
-task sonatypeUpload(type: Upload) {
-    configuration = configurations.archives
-    uploadDescriptor = true
-    repositories {
-        if (project.hasProperty('ossrhUsername')) {
-            mavenDeployer {
-                beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
-                repository(url: uri(ossrhReleaseUrl)) {
-                    authentication(userName: ossrhUsername, password: ossrhPassword)
-                }
-                snapshotRepository(url: uri(ossrhSnapshotUrl)) {
-                    authentication(userName: ossrhUsername, password: ossrhPassword)
-                }
-                pom.project {
-                    name projectName
-                    description projectDescription
-                    packaging 'jar'
-                    inceptionYear '2016'
-                    url scmUrl
-                    organization {
-                        name 'xbib'
-                        url 'http://xbib.org'
-                    }
-                    developers {
-                        developer {
-                            id user
-                            name 'Jörg Prante'
-                            email 'joergprante@gmail.com'
-                            url 'https://github.com/jprante'
-                        }
-                    }
-                    scm {
-                        url scmUrl
-                        connection scmConnection
-                        developerConnection scmDeveloperConnection
-                    }
-                    licenses {
-                        license {
-                            name 'The Apache License, Version 2.0'
-                            url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                        }
-                    }
-                }
-            }
-        }
-    }
+apply plugin: 'java-library'
+
+dependencies {
+    testImplementation "org.quartz-scheduler:quartz:${project.property('quartz.version')}"
+    testImplementation "com.google.caliper:caliper:${project.property('caliper.version')}"
 }
 
-nexusStaging {
-    packageGroup = "org.xbib"
-}
+apply from: rootProject.file('gradle/ide/idea.gradle')
+apply from: rootProject.file('gradle/compile/java.gradle')
+apply from: rootProject.file('gradle/test/junit5.gradle')
+apply from: rootProject.file('gradle/publishing/publication.gradle')
+apply from: rootProject.file('gradle/publishing/sonatype.gradle')

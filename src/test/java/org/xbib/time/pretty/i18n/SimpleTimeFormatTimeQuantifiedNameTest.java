@@ -1,9 +1,9 @@
 package org.xbib.time.pretty.i18n;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.xbib.time.pretty.PrettyTime;
 
 import java.time.Instant;
@@ -15,73 +15,71 @@ public class SimpleTimeFormatTimeQuantifiedNameTest {
 
     private Locale defaultLocale;
 
-    private Locale locale;
-
-    @Before
-    public void setUp() throws Exception {
+    @BeforeEach
+    public void setUp() {
         defaultLocale = Locale.getDefault();
-        locale = new Locale("yy");
+        Locale locale = new Locale("yy");
         Locale.setDefault(locale);
     }
 
     @Test
-    public void testFuturePluralName() throws Exception {
+    public void testFuturePluralName() {
         LocalDateTime localDateTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(0), ZoneId.systemDefault());
         PrettyTime p = new PrettyTime(localDateTime);
-        Assert.assertEquals("2 days from now", p.format(1000 * 60 * 60 * 24 * 2));
+        assertEquals("2 days from now", p.format(1000 * 60 * 60 * 24 * 2));
     }
 
     @Test
-    public void testPastPluralName() throws Exception {
+    public void testPastPluralName() {
         LocalDateTime localDateTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(1000 * 60 * 60 * 24 * 2), ZoneId.systemDefault());
         PrettyTime p = new PrettyTime(localDateTime);
-        Assert.assertEquals("2 days ago", p.format(0));
+        assertEquals("2 days ago", p.format(0));
     }
 
     @Test
-    public void testFutureSingularName() throws Exception {
+    public void testFutureSingularName() {
         LocalDateTime localDateTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(0), ZoneId.systemDefault());
         PrettyTime p = new PrettyTime(localDateTime);
-        Assert.assertEquals("1 day from now", p.format(1000 * 60 * 60 * 24));
+        assertEquals("1 day from now", p.format(1000 * 60 * 60 * 24));
     }
 
     @Test
-    public void testPastSingularName() throws Exception {
+    public void testPastSingularName() {
         LocalDateTime localDateTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(1000 * 60 * 60 * 24), ZoneId.systemDefault());
         PrettyTime p = new PrettyTime(localDateTime);
-        Assert.assertEquals("1 day ago", p.format(0));
+        assertEquals("1 day ago", p.format(0));
     }
 
     @Test
-    public void testFuturePluralNameEmpty() throws Exception {
+    public void testFuturePluralNameEmpty() {
         LocalDateTime localDateTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(0), ZoneId.systemDefault());
         PrettyTime p = new PrettyTime(localDateTime);
-        Assert.assertEquals("2 hours from now", p.format(1000 * 60 * 60 * 2));
+        assertEquals("2 hours from now", p.format(1000 * 60 * 60 * 2));
     }
 
     @Test
-    public void testPastPluralNameMissing() throws Exception {
+    public void testPastPluralNameMissing() {
         LocalDateTime localDateTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(1000 * 60 * 60 * 2), ZoneId.systemDefault());
         PrettyTime p = new PrettyTime(localDateTime);
-        Assert.assertEquals("2 hours ago", p.format(LocalDateTime.ofInstant(Instant.ofEpochMilli(0), ZoneId.systemDefault())));
+        assertEquals("2 hours ago", p.format(LocalDateTime.ofInstant(Instant.ofEpochMilli(0), ZoneId.systemDefault())));
     }
 
     @Test
-    public void testFutureSingularNameCopy() throws Exception {
+    public void testFutureSingularNameCopy() {
         LocalDateTime localDateTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(0), ZoneId.systemDefault());
         PrettyTime p = new PrettyTime(localDateTime);
-        Assert.assertEquals("1 hour from now", p.format(1000 * 60 * 60));
+        assertEquals("1 hour from now", p.format(1000 * 60 * 60));
     }
 
     @Test
-    public void testPastSingularNameNull() throws Exception {
+    public void testPastSingularNameNull() {
         LocalDateTime localDateTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(1000 * 60 * 60), ZoneId.systemDefault());
         PrettyTime p = new PrettyTime(localDateTime);
-        Assert.assertEquals("1 hour ago", p.format(0));
+        assertEquals("1 hour ago", p.format(0));
     }
 
-    @After
-    public void tearDown() throws Exception {
+    @AfterEach
+    public void tearDown() {
         Locale.setDefault(defaultLocale);
     }
 }
