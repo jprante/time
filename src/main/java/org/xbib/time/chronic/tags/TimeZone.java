@@ -12,6 +12,7 @@ import java.util.regex.Pattern;
  *
  */
 public class TimeZone extends Tag<Object> {
+
     private static final Pattern TIMEZONE_PATTERN = Pattern.compile("[pmce][ds]t");
 
     private TimeZone() {

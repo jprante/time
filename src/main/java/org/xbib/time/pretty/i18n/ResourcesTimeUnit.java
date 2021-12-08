@@ -6,7 +6,9 @@ import org.xbib.time.pretty.TimeUnit;
  *
  */
 public abstract class ResourcesTimeUnit implements TimeUnit {
+
     private long maxQuantity = 0;
+
     private long millisPerUnit = 1;
 
     protected abstract String getResourceKeyPrefix();

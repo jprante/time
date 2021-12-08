@@ -3,6 +3,7 @@ package org.xbib.time.chronic.handlers;
 import org.xbib.time.chronic.Options;
 import org.xbib.time.chronic.Span;
 import org.xbib.time.chronic.Token;
+import org.xbib.time.chronic.repeaters.DayPortion;
 import org.xbib.time.chronic.repeaters.EnumRepeaterDayPortion;
 import org.xbib.time.chronic.repeaters.IntegerRepeaterDayPortion;
 import org.xbib.time.chronic.repeaters.Repeater;
@@ -14,7 +15,8 @@ import org.xbib.time.chronic.tags.Grabber;
 import org.xbib.time.chronic.tags.Ordinal;
 import org.xbib.time.chronic.tags.OrdinalDay;
 import org.xbib.time.chronic.tags.Pointer;
-import org.xbib.time.chronic.tags.Pointer.PointerType;
+import org.xbib.time.chronic.tags.PointerType;
+import org.xbib.time.chronic.tags.Relative;
 import org.xbib.time.chronic.tags.Scalar;
 import org.xbib.time.chronic.tags.ScalarDay;
 import org.xbib.time.chronic.tags.ScalarMonth;
@@ -202,7 +204,7 @@ public class Handler {
     }
 
     public static Span getAnchor(List<Token> tokens, Options options) {
-        Grabber grabber = new Grabber(Grabber.Relative.THIS);
+        Grabber grabber = new Grabber(Relative.THIS);
         PointerType pointer = PointerType.FUTURE;
 
         List<Repeater<?>> repeaters = getRepeaters(tokens);
@@ -219,16 +221,16 @@ public class Handler {
         head.setNow(options.getNow());
 
         Span outerSpan;
-        Grabber.Relative grabberType = grabber.getType();
-        if (grabberType == Grabber.Relative.LAST) {
+        Relative grabberType = grabber.getType();
+        if (grabberType == Relative.LAST) {
             outerSpan = head.nextSpan(PointerType.PAST);
-        } else if (grabberType == Grabber.Relative.THIS) {
+        } else if (grabberType == Relative.THIS) {
             if (!repeaters.isEmpty()) {
                 outerSpan = head.thisSpan(PointerType.NONE);
             } else {
                 outerSpan = head.thisSpan(options.getContext());
             }
-        } else if (grabberType == Grabber.Relative.NEXT) {
+        } else if (grabberType == Relative.NEXT) {
             outerSpan = head.nextSpan(PointerType.FUTURE);
         } else {
             throw new IllegalArgumentException("Invalid grabber type " + grabberType + ".");
@@ -296,14 +298,14 @@ public class Handler {
             Tag<RepeaterDayPortion<?>> t1Tag = t1.getTag(RepeaterDayPortion.class);
 
             Object t1TagType = t1Tag.getType();
-            if (RepeaterDayPortion.DayPortion.MORNING.equals(t1TagType)) {
+            if (DayPortion.MORNING.equals(t1TagType)) {
                 t1.untag(RepeaterDayPortion.class);
-                t1.tag(new EnumRepeaterDayPortion(RepeaterDayPortion.DayPortion.AM));
-            } else if (RepeaterDayPortion.DayPortion.AFTERNOON.equals(t1TagType) ||
-                    RepeaterDayPortion.DayPortion.EVENING.equals(t1TagType) ||
-                    RepeaterDayPortion.DayPortion.NIGHT.equals(t1TagType)) {
+                t1.tag(new EnumRepeaterDayPortion(DayPortion.AM));
+            } else if (DayPortion.AFTERNOON.equals(t1TagType) ||
+                    DayPortion.EVENING.equals(t1TagType) ||
+                    DayPortion.NIGHT.equals(t1TagType)) {
                 t1.untag(RepeaterDayPortion.class);
-                t1.tag(new EnumRepeaterDayPortion(RepeaterDayPortion.DayPortion.PM));
+                t1.tag(new EnumRepeaterDayPortion(DayPortion.PM));
             }
         }
 

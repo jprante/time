@@ -1,6 +1,6 @@
 package org.xbib.time.chronic;
 
-import org.xbib.time.chronic.tags.Pointer;
+import org.xbib.time.chronic.tags.PointerType;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -9,15 +9,21 @@ import java.time.ZonedDateTime;
  *
  */
 public class Options {
+
     private ZonedDateTime now;
+
     private ZoneId zoneId;
-    private Pointer.PointerType context;
+
+    private PointerType context;
+
     private boolean guess;
+
     private int ambiguousTimeRange;
+
     private boolean compatibilityMode;
 
     public Options() {
-        setContext(Pointer.PointerType.FUTURE);
+        setContext(PointerType.FUTURE);
         setNow(ZonedDateTime.now());
         setZoneId(ZoneId.of("GMT"));
         setGuess(true);
@@ -33,11 +39,11 @@ public class Options {
         return this;
     }
 
-    public Pointer.PointerType getContext() {
+    public PointerType getContext() {
         return context;
     }
 
-    public Options setContext(Pointer.PointerType context) {
+    public Options setContext(PointerType context) {
         this.context = context;
         return this;
     }

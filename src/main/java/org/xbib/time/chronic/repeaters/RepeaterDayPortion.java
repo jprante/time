@@ -3,7 +3,7 @@ package org.xbib.time.chronic.repeaters;
 import org.xbib.time.chronic.Range;
 import org.xbib.time.chronic.Span;
 import org.xbib.time.chronic.Token;
-import org.xbib.time.chronic.tags.Pointer.PointerType;
+import org.xbib.time.chronic.tags.PointerType;
 
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
@@ -18,14 +18,21 @@ import java.util.regex.Pattern;
 public abstract class RepeaterDayPortion<T> extends Repeater<T> {
 
     private static final Pattern AM_PATTERN = Pattern.compile("^ams?$");
+
     private static final Pattern PM_PATTERN = Pattern.compile("^pms?$");
+
     private static final Pattern MORNING_PATTERN = Pattern.compile("^mornings?$");
+
     private static final Pattern AFTERNOON_PATTERN = Pattern.compile("^afternoons?$");
+
     private static final Pattern EVENING_PATTERN = Pattern.compile("^evenings?$");
+
     private static final Pattern NIGHT_PATTERN = Pattern.compile("^(night|nite)s?$");
 
     private static final int FULL_DAY_SECONDS = 60 * 60 * 24;
-    private Range range;
+
+    private final Range range;
+
     private Span currentSpan;
 
     public RepeaterDayPortion(T type) {
@@ -149,10 +156,4 @@ public abstract class RepeaterDayPortion<T> extends Repeater<T> {
         return super.toString() + "-dayportion-" + getType();
     }
 
-    /**
-     *
-     */
-    public enum DayPortion {
-        AM, PM, MORNING, AFTERNOON, EVENING, NIGHT
-    }
 }

@@ -1,7 +1,7 @@
 package org.xbib.time.chronic.repeaters;
 
 import org.xbib.time.chronic.Span;
-import org.xbib.time.chronic.tags.Pointer.PointerType;
+import org.xbib.time.chronic.tags.PointerType;
 
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
@@ -10,6 +10,7 @@ import java.time.temporal.ChronoUnit;
  *
  */
 public class RepeaterFortnight extends RepeaterUnit {
+
     public static final int FORTNIGHT_SECONDS = 1209600; // (14 * 24 * 60 * 60)
 
     private ZonedDateTime currentFortnightStart;
@@ -23,12 +24,12 @@ public class RepeaterFortnight extends RepeaterUnit {
     protected Span internalNextSpan(PointerType pointer) {
         if (currentFortnightStart == null) {
             if (pointer == PointerType.FUTURE) {
-                RepeaterDayName sundayRepeater = new RepeaterDayName(RepeaterDayName.DayName.SUNDAY);
+                RepeaterDayName sundayRepeater = new RepeaterDayName(DayName.SUNDAY);
                 sundayRepeater.setNow(getNow());
                 Span nextSundaySpan = sundayRepeater.nextSpan(PointerType.FUTURE);
                 currentFortnightStart = nextSundaySpan.getBeginCalendar();
             } else if (pointer == PointerType.PAST) {
-                RepeaterDayName sundayRepeater = new RepeaterDayName(RepeaterDayName.DayName.SUNDAY);
+                RepeaterDayName sundayRepeater = new RepeaterDayName(DayName.SUNDAY);
                 sundayRepeater.setNow(getNow().plus(RepeaterDay.DAY_SECONDS, ChronoUnit.SECONDS));
                 sundayRepeater.nextSpan(PointerType.PAST);
                 sundayRepeater.nextSpan(PointerType.PAST);
@@ -55,7 +56,7 @@ public class RepeaterFortnight extends RepeaterUnit {
         Span span;
         if (pointer == PointerType.FUTURE) {
             ZonedDateTime thisFortnightStart = ymdh(getNow()).plus(RepeaterHour.HOUR_SECONDS, ChronoUnit.SECONDS);
-            RepeaterDayName sundayRepeater = new RepeaterDayName(RepeaterDayName.DayName.SUNDAY);
+            RepeaterDayName sundayRepeater = new RepeaterDayName(DayName.SUNDAY);
             sundayRepeater.setNow(getNow());
             sundayRepeater.thisSpan(PointerType.FUTURE);
             Span thisSundaySpan = sundayRepeater.thisSpan(PointerType.FUTURE);
@@ -63,7 +64,7 @@ public class RepeaterFortnight extends RepeaterUnit {
             span = new Span(thisFortnightStart, thisFortnightEnd);
         } else if (pointer == PointerType.PAST) {
             ZonedDateTime thisFortnightEnd = ymdh(getNow());
-            RepeaterDayName sundayRepeater = new RepeaterDayName(RepeaterDayName.DayName.SUNDAY);
+            RepeaterDayName sundayRepeater = new RepeaterDayName(DayName.SUNDAY);
             sundayRepeater.setNow(getNow());
             Span lastSundaySpan = sundayRepeater.nextSpan(PointerType.PAST);
             ZonedDateTime thisFortnightStart = lastSundaySpan.getBeginCalendar();

@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
  *
  */
 public class SeparatorComma extends Separator {
+
     private static final Pattern COMMA_PATTERN = Pattern.compile("^,$");
 
     private SeparatorComma(SeparatorType type) {

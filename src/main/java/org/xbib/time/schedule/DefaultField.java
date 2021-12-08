@@ -10,13 +10,9 @@ public class DefaultField implements TimeField {
 
     private final NavigableSet<Integer> numbers;
 
-    DefaultField(Builder b) {
+    protected DefaultField(Builder b) {
         fullRange = b.fullRange;
         numbers = fullRange ? null : b.numbers;
-    }
-
-    public static DefaultField parse(Tokens s, int min, int max) {
-        return new Builder(min, max).parse(s).build();
     }
 
     @Override
@@ -32,6 +28,10 @@ public class DefaultField implements TimeField {
     @Override
     public boolean isFullRange() {
         return fullRange;
+    }
+
+    public static DefaultField parse(Tokens s, int min, int max) {
+        return new Builder(min, max).parse(s).build();
     }
 
     @Override
@@ -71,7 +71,7 @@ public class DefaultField implements TimeField {
 
         private boolean fullRange;
 
-        Builder(int min, int max) {
+        protected Builder(int min, int max) {
             this.min = min;
             this.max = max;
             numbers = new TreeSet<>();
@@ -137,18 +137,18 @@ public class DefaultField implements TimeField {
             return false;
         }
 
-        int nextNumber(Tokens tokens) {
+        protected int nextNumber(Tokens tokens) {
             if (tokens.next() == Token.NUMBER) {
                 return tokens.number();
             }
             throw new IllegalStateException("Expected number");
         }
 
-        private boolean endOfField(Token token) {
+        protected boolean endOfField(Token token) {
             return token == Token.FIELD_SEPARATOR || token == Token.END_OF_INPUT;
         }
 
-        void rangeSkip(int first, int last, int skip) {
+        protected void rangeSkip(int first, int last, int skip) {
             for (int i = first; i <= last; i++) {
                 if ((i - min) % skip == 0) {
                     add(i);
@@ -170,7 +170,7 @@ public class DefaultField implements TimeField {
             numbers.add(value);
         }
 
-        public DefaultField build() {
+        protected DefaultField build() {
             return new DefaultField(this);
         }
     }

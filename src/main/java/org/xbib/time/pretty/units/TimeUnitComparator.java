@@ -9,6 +9,7 @@ import java.util.Comparator;
  */
 public class TimeUnitComparator implements Comparator<TimeUnit> {
 
+    @Override
     public int compare(final TimeUnit left, final TimeUnit right) {
         if (left.getMillisPerUnit() < right.getMillisPerUnit()) {
             return -1;

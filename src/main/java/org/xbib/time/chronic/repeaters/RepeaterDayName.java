@@ -2,7 +2,7 @@ package org.xbib.time.chronic.repeaters;
 
 import org.xbib.time.chronic.Span;
 import org.xbib.time.chronic.Token;
-import org.xbib.time.chronic.tags.Pointer.PointerType;
+import org.xbib.time.chronic.tags.PointerType;
 
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoField;
@@ -14,18 +14,30 @@ import java.util.regex.Pattern;
 /**
  *
  */
-public class RepeaterDayName extends Repeater<RepeaterDayName.DayName> {
+public class RepeaterDayName extends Repeater<DayName> {
+
     private static final int DAY_SECONDS = 86400;
+
     private static final Pattern MON_PATTERN = Pattern.compile("^m[ou]n(day)?$");
+
     private static final Pattern TUE_PATTERN = Pattern.compile("^t(ue|eu|oo|u|)s(day)?$");
+
     private static final Pattern TUE_PATTERN_1 = Pattern.compile("^tue$");
+
     private static final Pattern WED_PATTERN_1 = Pattern.compile("^we(dnes|nds|nns)day$");
+
     private static final Pattern WED_PATTERN_2 = Pattern.compile("^wed$");
+
     private static final Pattern THU_PATTERN_1 = Pattern.compile("^th(urs|ers)day$");
+
     private static final Pattern THU_PATTERN_2 = Pattern.compile("^thu$");
+
     private static final Pattern FRI_PATTERN = Pattern.compile("^fr[iy](day)?$");
+
     private static final Pattern SAT_PATTERN = Pattern.compile("^sat(t?[ue]rday)?$");
+
     private static final Pattern SUN_PATTERN = Pattern.compile("^su[nm](day)?$");
+
     private ZonedDateTime currentDayStart;
 
     public RepeaterDayName(DayName type) {
@@ -106,10 +118,4 @@ public class RepeaterDayName extends Repeater<RepeaterDayName.DayName> {
         return super.toString() + "-dayname-" + getType();
     }
 
-    /**
-     *
-     */
-    public enum DayName {
-        MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY
-    }
 }

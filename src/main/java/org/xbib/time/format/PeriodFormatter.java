@@ -75,7 +75,7 @@ public class PeriodFormatter {
      * @param parser  the internal parser, null if cannot parse
      * @param locale  the locale to use
      */
-    PeriodFormatter(PeriodPrinter printer, PeriodParser parser, Locale locale) {
+    public PeriodFormatter(PeriodPrinter printer, PeriodParser parser, Locale locale) {
         super();
         iPrinter = printer;
         iParser = parser;

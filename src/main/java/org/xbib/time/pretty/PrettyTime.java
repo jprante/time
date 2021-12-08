@@ -51,7 +51,7 @@ public class PrettyTime {
 
     private Locale locale;
 
-    private Map<TimeUnit, TimeFormat> units = new LinkedHashMap<>();
+    private final Map<TimeUnit, TimeFormat> units = new LinkedHashMap<>();
 
     public PrettyTime() {
         this(LocalDateTime.now());
@@ -118,8 +118,7 @@ public class PrettyTime {
 
     public TimeUnitQuantity calculateDuration(final long difference) {
         long absoluteDifference = Math.abs(difference);
-        List<TimeUnit> units = new ArrayList<>();
-        units.addAll(getUnits());
+        List<TimeUnit> units = new ArrayList<>(getUnits());
         TimeUnitQuantity result = new TimeUnitQuantity();
         for (int i = 0; i < units.size(); i++) {
             TimeUnit unit = units.get(i);
@@ -394,7 +393,6 @@ public class PrettyTime {
         if (unit == null) {
             throw new IllegalArgumentException("Unit to remove must not be null.");
         }
-
         return units.remove(unit);
     }
 

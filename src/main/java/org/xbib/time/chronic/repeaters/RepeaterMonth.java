@@ -1,7 +1,7 @@
 package org.xbib.time.chronic.repeaters;
 
 import org.xbib.time.chronic.Span;
-import org.xbib.time.chronic.tags.Pointer.PointerType;
+import org.xbib.time.chronic.tags.PointerType;
 
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
@@ -10,6 +10,7 @@ import java.time.temporal.ChronoUnit;
  *
  */
 public class RepeaterMonth extends RepeaterUnit {
+
     private static final int MONTH_SECONDS = 2592000; // 30 * 24 * 60 * 60
 
     private ZonedDateTime currentMonthStart;

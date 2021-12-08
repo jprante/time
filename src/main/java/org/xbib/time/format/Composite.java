@@ -11,27 +11,25 @@ import java.util.Locale;
 /**
  * Composite implementation that merges other fields to create a full pattern.
  */
-class Composite implements PeriodPrinter, PeriodParser {
+public class Composite implements PeriodPrinter, PeriodParser {
 
     private final PeriodPrinter[] iPrinters;
+
     private final PeriodParser[] iParsers;
 
-    Composite(List<Object> elementPairs) {
-        List<Object> printerList = new ArrayList<>();
-        List<Object> parserList = new ArrayList<>();
-
+    public Composite(List<Object> elementPairs) {
+        List<PeriodPrinter> printerList = new ArrayList<>();
+        List<PeriodParser> parserList = new ArrayList<>();
         decompose(elementPairs, printerList, parserList);
-
         if (printerList.isEmpty()) {
             iPrinters = null;
         } else {
-            iPrinters = printerList.toArray(new PeriodPrinter[printerList.size()]);
+            iPrinters = printerList.toArray(new PeriodPrinter[0]);
         }
-
         if (parserList.isEmpty()) {
             iParsers = null;
         } else {
-            iParsers = parserList.toArray(new PeriodParser[parserList.size()]);
+            iParsers = parserList.toArray(new PeriodParser[0]);
         }
     }
 
@@ -83,32 +81,31 @@ class Composite implements PeriodPrinter, PeriodParser {
         return position;
     }
 
-    private void decompose(List<Object> elementPairs, List<Object> printerList, List<Object> parserList) {
+    private void decompose(List<Object> elementPairs, List<PeriodPrinter> printerList, List<PeriodParser> parserList) {
         int size = elementPairs.size();
         for (int i = 0; i < size; i += 2) {
             Object element = elementPairs.get(i);
             if (element instanceof PeriodPrinter) {
                 if (element instanceof Composite) {
-                    addArrayToList(printerList, ((Composite) element).iPrinters);
+                    PeriodPrinter[] periodPrinters = ((Composite) element).iPrinters;
+                    if (periodPrinters != null) {
+                        Collections.addAll(printerList, periodPrinters);
+                    }
                 } else {
-                    printerList.add(element);
+                    printerList.add((PeriodPrinter) element);
                 }
             }
-
             element = elementPairs.get(i + 1);
             if (element instanceof PeriodParser) {
                 if (element instanceof Composite) {
-                    addArrayToList(parserList, ((Composite) element).iParsers);
+                    PeriodParser[] periodParsers = ((Composite) element).iParsers;
+                    if (periodParsers != null) {
+                        Collections.addAll(parserList, periodParsers);
+                    }
                 } else {
-                    parserList.add(element);
+                    parserList.add((PeriodParser) element);
                 }
             }
-        }
-    }
-
-    private void addArrayToList(List<Object> list, Object[] array) {
-        if (array != null) {
-            Collections.addAll(list, array);
         }
     }
 }

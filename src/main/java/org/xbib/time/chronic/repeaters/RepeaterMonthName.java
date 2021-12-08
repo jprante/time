@@ -2,7 +2,7 @@ package org.xbib.time.chronic.repeaters;
 
 import org.xbib.time.chronic.Span;
 import org.xbib.time.chronic.Token;
-import org.xbib.time.chronic.tags.Pointer.PointerType;
+import org.xbib.time.chronic.tags.PointerType;
 
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
@@ -13,21 +13,34 @@ import java.util.regex.Pattern;
 /**
  *
  */
-public class RepeaterMonthName extends Repeater<RepeaterMonthName.MonthName> {
+public class RepeaterMonthName extends Repeater<MonthName> {
+
     private static final Pattern JAN_PATTERN = Pattern.compile("^jan\\.?(uary)?$");
+
     private static final Pattern FEB_PATTERN = Pattern.compile("^feb\\.?(ruary)?$");
+
     private static final Pattern MAR_PATTERN = Pattern.compile("^mar\\.?(ch)?$");
+
     private static final Pattern APR_PATTERN = Pattern.compile("^apr\\.?(il)?$");
+
     private static final Pattern MAY_PATTERN = Pattern.compile("^may$");
+
     private static final Pattern JUN_PATTERN = Pattern.compile("^jun\\.?e?$");
+
     private static final Pattern JUL_PATTERN = Pattern.compile("^jul\\.?y?$");
+
     private static final Pattern AUG_PATTERN = Pattern.compile("^aug\\.?(ust)?$");
+
     private static final Pattern SEP_PATTERN = Pattern.compile("^sep\\.?(t\\.?|tember)?$");
+
     private static final Pattern OCT_PATTERN = Pattern.compile("^oct\\.?(ober)?$");
+
     private static final Pattern NOV_PATTERN = Pattern.compile("^nov\\.?(ember)?$");
+
     private static final Pattern DEC_PATTERN = Pattern.compile("^dec\\.?(ember)?$");
 
     private static final int MONTH_SECONDS = 2592000; // 30 * 24 * 60 * 60
+
     private ZonedDateTime currentMonthBegin;
 
     public RepeaterMonthName(MonthName type) {
@@ -144,14 +157,6 @@ public class RepeaterMonthName extends Repeater<RepeaterMonthName.MonthName> {
     @Override
     public String toString() {
         return super.toString() + "-monthname-" + getType();
-    }
-
-    /**
-     *
-     */
-    public enum MonthName {
-        ZEROMONTH_DO_NOT_REMOVE,
-        JANUARY, FEBRUARY, MARCH, APRIL, MAY, JUNE, JULY, AUGUST, SEPTEMBER, OCTOBER, NOVEMBER, DECEMBER
     }
 
 }

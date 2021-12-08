@@ -3,10 +3,10 @@ package org.xbib.time.chronic;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 import org.xbib.time.chronic.handlers.Handler;
+import org.xbib.time.chronic.repeaters.DayPortion;
 import org.xbib.time.chronic.repeaters.EnumRepeaterDayPortion;
 import org.xbib.time.chronic.repeaters.RepeaterDayName;
-import org.xbib.time.chronic.repeaters.RepeaterDayName.DayName;
-import org.xbib.time.chronic.repeaters.RepeaterDayPortion;
+import org.xbib.time.chronic.repeaters.DayName;
 import org.xbib.time.chronic.repeaters.RepeaterTime;
 
 import java.time.ZoneId;
@@ -46,13 +46,13 @@ public class ChronicTest {
         tokens.add(new Token("5:00"));
         tokens.add(new Token("morning"));
         tokens.get(0).tag(new RepeaterTime("5:00"));
-        tokens.get(1).tag(new EnumRepeaterDayPortion(RepeaterDayPortion.DayPortion.MORNING));
+        tokens.get(1).tag(new EnumRepeaterDayPortion(DayPortion.MORNING));
 
-        assertEquals(RepeaterDayPortion.DayPortion.MORNING, tokens.get(1).getTags().get(0).getType());
+        assertEquals(DayPortion.MORNING, tokens.get(1).getTags().get(0).getType());
 
         tokens = Handler.dealiasAndDisambiguateTimes(tokens, new Options());
 
-        assertEquals(RepeaterDayPortion.DayPortion.AM, tokens.get(1).getTags().get(0).getType());
+        assertEquals(DayPortion.AM, tokens.get(1).getTags().get(0).getType());
         assertEquals(2, tokens.size());
 
         // don't affect unwanted patterns
@@ -60,13 +60,13 @@ public class ChronicTest {
         tokens.add(new Token("friday"));
         tokens.add(new Token("morning"));
         tokens.get(0).tag(new RepeaterDayName(DayName.FRIDAY));
-        tokens.get(1).tag(new EnumRepeaterDayPortion(RepeaterDayPortion.DayPortion.MORNING));
+        tokens.get(1).tag(new EnumRepeaterDayPortion(DayPortion.MORNING));
 
-        assertEquals(RepeaterDayPortion.DayPortion.MORNING, tokens.get(1).getTags().get(0).getType());
+        assertEquals(DayPortion.MORNING, tokens.get(1).getTags().get(0).getType());
 
         tokens = Handler.dealiasAndDisambiguateTimes(tokens, new Options());
 
-        assertEquals(RepeaterDayPortion.DayPortion.MORNING, tokens.get(1).getTags().get(0).getType());
+        assertEquals(DayPortion.MORNING, tokens.get(1).getTags().get(0).getType());
         assertEquals(2, tokens.size());
     }
 

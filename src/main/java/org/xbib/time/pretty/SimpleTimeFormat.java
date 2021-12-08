@@ -4,21 +4,37 @@ package org.xbib.time.pretty;
  * Represents a simple method of formatting a specific {@link TimeUnitQuantity} of time.
  */
 public class SimpleTimeFormat implements TimeFormat {
+
     private static final String SIGN = "%s";
+
     private static final String QUANTITY = "%n";
+
     private static final String UNIT = "%u";
+
     private static final String NEGATIVE = "-";
+
     private String singularName = "";
+
     private String pluralName = "";
+
     private String futureSingularName = "";
+
     private String futurePluralName = "";
+
     private String pastSingularName = "";
+
     private String pastPluralName = "";
+
     private String pattern = "";
+
     private String futurePrefix = "";
+
     private String futureSuffix = "";
+
     private String pastPrefix = "";
+
     private String pastSuffix = "";
+
     private int roundingTolerance = 50;
 
     @Override

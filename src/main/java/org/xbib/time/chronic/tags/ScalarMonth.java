@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
  *
  */
 public class ScalarMonth extends Scalar {
+
     private static final Pattern MONTH_PATTERN = Pattern.compile("^\\d\\d?$");
 
     public ScalarMonth(Integer type) {

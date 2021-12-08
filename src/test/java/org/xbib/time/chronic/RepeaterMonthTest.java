@@ -3,7 +3,7 @@ package org.xbib.time.chronic;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 import org.xbib.time.chronic.repeaters.RepeaterMonth;
-import org.xbib.time.chronic.tags.Pointer;
+import org.xbib.time.chronic.tags.PointerType;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -32,12 +32,12 @@ public class RepeaterMonthTest {
         Span span = new Span(now, ChronoUnit.SECONDS, 60);
 
         Span offsetSpan;
-        offsetSpan = new RepeaterMonth().getOffset(span, 1, Pointer.PointerType.FUTURE);
+        offsetSpan = new RepeaterMonth().getOffset(span, 1, PointerType.FUTURE);
 
         assertEquals(construct(2006, 9, 16, 14), offsetSpan.getBeginCalendar());
         assertEquals(construct(2006, 9, 16, 14, 1), offsetSpan.getEndCalendar());
 
-        offsetSpan = new RepeaterMonth().getOffset(span, 1, Pointer.PointerType.PAST);
+        offsetSpan = new RepeaterMonth().getOffset(span, 1, PointerType.PAST);
 
         assertEquals(construct(2006, 7, 16, 14), offsetSpan.getBeginCalendar());
         assertEquals(construct(2006, 7, 16, 14, 1), offsetSpan.getEndCalendar());

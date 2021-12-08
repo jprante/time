@@ -53,7 +53,6 @@ public class FormatUtils {
                     appenadble.append('0');
                 }
                 appenadble.append(Long.toString(Integer.MIN_VALUE));
-                        //.append("" + -(long) Integer.MIN_VALUE)
                 return;
             }
         }

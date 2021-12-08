@@ -6,7 +6,8 @@ import java.util.Set;
 /**
  * An affix that can be ignored.
  */
-abstract class IgnorableAffix implements PeriodFieldAffix {
+public abstract class IgnorableAffix implements PeriodFieldAffix {
+
     private volatile String[] iOtherAffixes;
 
     public void finish(Set<PeriodFieldAffix> periodFieldAffixesToIgnore) {
@@ -20,7 +21,6 @@ abstract class IgnorableAffix implements PeriodFieldAffix {
                     shortestAffix = affix;
                 }
             }
-
             // Pick only affixes that are longer than the shortest affix in this instance.
             // This will reduce the number of parse operations and thus speed up the PeriodFormatter.
             // also need to pick affixes that differ only in case (but not those that are identical)

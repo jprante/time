@@ -33,12 +33,13 @@ import java.util.List;
 public class PeriodFormatterBuilder {
 
     private int iMinPrintedDigits;
+
     private int iMaxParsedDigits;
+
     private boolean iRejectSignedValues;
 
     private PeriodFieldAffix iPrefix;
 
-    // List of Printers and Parsers used to build a final formatter.
     private List<Object> iElementPairs;
     /**
      * Set to true if the formatter is not a printer.
@@ -48,9 +49,6 @@ public class PeriodFormatterBuilder {
      * Set to true if the formatter is not a parser.
      */
     private boolean iNotParser;
-
-    // Last PeriodFormatter appended of each field type.
-    //private FieldFormatter[] iFieldFormatters;
 
     public PeriodFormatterBuilder() {
         clear();
@@ -80,15 +78,11 @@ public class PeriodFormatterBuilder {
     }
 
     private static Object[] createComposite(List<Object> elementPairs) {
-        switch (elementPairs.size()) {
-            case 0:
-                return new Object[]{Literal.EMPTY, Literal.EMPTY};
-            case 1:
-                return new Object[]{elementPairs.get(0), elementPairs.get(1)};
-            default:
-                Composite comp = new Composite(elementPairs);
-                return new Object[]{comp, comp};
+        if (elementPairs.size() == 0) {
+            return new Object[]{Literal.EMPTY, Literal.EMPTY};
         }
+        Composite comp = new Composite(elementPairs);
+        return new Object[]{comp, comp};
     }
 
     /**
@@ -108,8 +102,7 @@ public class PeriodFormatterBuilder {
      * @throws IllegalStateException if the builder can produce neither a printer nor a parser
      */
     public PeriodFormatter toFormatter() {
-        PeriodFormatter formatter = toFormatter(iElementPairs, iNotPrinter, iNotParser);
-        return formatter;
+        return toFormatter(iElementPairs, iNotPrinter, iNotParser);
     }
 
     /**
@@ -155,7 +148,6 @@ public class PeriodFormatterBuilder {
      */
     public void clear() {
         iMinPrintedDigits = 1;
-        //iPrintZeroSetting = PRINT_ZERO_RARELY_LAST;
         iMaxParsedDigits = 10;
         iRejectSignedValues = false;
         iPrefix = null;
@@ -451,16 +443,6 @@ public class PeriodFormatterBuilder {
         return this;
     }
 
-    private void appendField(ChronoUnit unit) {
-        appendField(unit, iMinPrintedDigits);
-    }
-
-    private void appendField(ChronoUnit unit, int minPrinted) {
-        FieldFormatter field = new FieldFormatter(minPrinted,
-                iMaxParsedDigits, iRejectSignedValues, unit, iPrefix, null);
-        append0(field, field);
-        iPrefix = null;
-    }
 
     /**
      * Append a field suffix which applies only to the last appended field. If
@@ -536,39 +518,6 @@ public class PeriodFormatterBuilder {
             throw new IllegalArgumentException();
         }
         return appendSuffix(new RegExAffix(regularExpressions, suffixes));
-    }
-
-    /**
-     * Append a field suffix which applies only to the last appended field. If
-     * the field is not printed, neither is the suffix.
-     *
-     * @param suffix custom suffix
-     * @return this PeriodFormatterBuilder
-     * @throws IllegalStateException if no field exists to append to
-     * @see #appendPrefix
-     */
-    private PeriodFormatterBuilder appendSuffix(PeriodFieldAffix suffix) {
-        final Object originalPrinter;
-        final Object originalParser;
-        if (!iElementPairs.isEmpty()) {
-            originalPrinter = iElementPairs.get(iElementPairs.size() - 2);
-            originalParser = iElementPairs.get(iElementPairs.size() - 1);
-        } else {
-            originalPrinter = null;
-            originalParser = null;
-        }
-
-        if (originalPrinter == null || originalParser == null ||
-                originalPrinter != originalParser ||
-                !(originalPrinter instanceof FieldFormatter)) {
-            throw new IllegalStateException("No field to apply suffix to");
-        }
-
-        clearPrefix();
-        FieldFormatter newField = new FieldFormatter((FieldFormatter) originalPrinter, suffix);
-        iElementPairs.set(iElementPairs.size() - 2, newField);
-        iElementPairs.set(iElementPairs.size() - 1, newField);
-        return this;
     }
 
     /**
@@ -670,10 +619,7 @@ public class PeriodFormatterBuilder {
         if (text == null || finalText == null) {
             throw new IllegalArgumentException();
         }
-
         clearPrefix();
-
-        // optimise zero formatter case
         List<Object> pairs = iElementPairs;
         if (pairs.isEmpty()) {
             if (useAfter && !useBefore) {
@@ -683,8 +629,6 @@ public class PeriodFormatterBuilder {
             }
             return this;
         }
-
-        // find the last separator added
         int i;
         Separator lastSeparator = null;
         for (i = pairs.size(); --i >= 0; ) {
@@ -693,10 +637,8 @@ public class PeriodFormatterBuilder {
                 pairs = pairs.subList(i + 1, pairs.size());
                 break;
             }
-            i--;  // element pairs
+            i--;
         }
-
-        // merge formatters
         if (lastSeparator != null && pairs.isEmpty()) {
             throw new IllegalStateException("Cannot have two adjacent separators");
         } else {
@@ -709,7 +651,6 @@ public class PeriodFormatterBuilder {
             pairs.add(separator);
             pairs.add(separator);
         }
-
         return this;
     }
 
@@ -717,7 +658,6 @@ public class PeriodFormatterBuilder {
         if (iPrefix != null) {
             throw new IllegalStateException("Prefix not followed by field");
         }
-        iPrefix = null;
     }
 
     private PeriodFormatterBuilder append0(PeriodPrinter printer, PeriodParser parser) {
@@ -725,6 +665,46 @@ public class PeriodFormatterBuilder {
         iElementPairs.add(parser);
         iNotPrinter |= (printer == null);
         iNotParser |= (parser == null);
+        return this;
+    }
+
+    private void appendField(ChronoUnit unit) {
+        appendField(unit, iMinPrintedDigits);
+    }
+
+    private void appendField(ChronoUnit unit, int minPrinted) {
+        FieldFormatter field = new FieldFormatter(minPrinted,
+                iMaxParsedDigits, iRejectSignedValues, unit, iPrefix, null);
+        append0(field, field);
+        iPrefix = null;
+    }
+
+    /**
+     * Append a field suffix which applies only to the last appended field. If
+     * the field is not printed, neither is the suffix.
+     *
+     * @param suffix custom suffix
+     * @return this PeriodFormatterBuilder
+     * @throws IllegalStateException if no field exists to append to
+     * @see #appendPrefix
+     */
+    private PeriodFormatterBuilder appendSuffix(PeriodFieldAffix suffix) {
+        final Object originalPrinter;
+        final Object originalParser;
+        if (!iElementPairs.isEmpty()) {
+            originalPrinter = iElementPairs.get(iElementPairs.size() - 2);
+            originalParser = iElementPairs.get(iElementPairs.size() - 1);
+        } else {
+            originalPrinter = null;
+            originalParser = null;
+        }
+        if (originalPrinter != originalParser || !(originalPrinter instanceof FieldFormatter)) {
+            throw new IllegalStateException("No field to apply suffix to");
+        }
+        clearPrefix();
+        FieldFormatter newField = new FieldFormatter((FieldFormatter) originalPrinter, suffix);
+        iElementPairs.set(iElementPairs.size() - 2, newField);
+        iElementPairs.set(iElementPairs.size() - 1, newField);
         return this;
     }
 }

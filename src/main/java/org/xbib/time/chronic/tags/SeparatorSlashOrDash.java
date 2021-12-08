@@ -11,7 +11,9 @@ import java.util.regex.Pattern;
  *
  */
 public class SeparatorSlashOrDash extends Separator {
+
     private static final Pattern SLASH_PATTERN = Pattern.compile("^/$");
+
     private static final Pattern DASH_PATTERN = Pattern.compile("^-$");
 
     public SeparatorSlashOrDash(SeparatorType type) {

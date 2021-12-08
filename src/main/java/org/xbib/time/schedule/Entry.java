@@ -3,19 +3,19 @@ package org.xbib.time.schedule;
 import java.time.ZonedDateTime;
 import java.util.concurrent.Callable;
 
-class Entry<T> {
+public class Entry<T> {
 
-    private String name;
+    private final String name;
 
-    private CronExpression cronExpression;
+    private final CronExpression cronExpression;
 
-    private Callable<T> callable;
+    private final Callable<T> callable;
 
     private ZonedDateTime lastCalled;
 
     private ZonedDateTime nextCall;
 
-    Entry(String name, CronExpression cronExpression, Callable<T> callable) {
+    public Entry(String name, CronExpression cronExpression, Callable<T> callable) {
         this.name = name;
         this.cronExpression = cronExpression;
         this.callable = callable;

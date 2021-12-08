@@ -18,6 +18,7 @@ public abstract class MapResourceBundle extends ResourceBundle {
     public MapResourceBundle() {
     }
 
+    @Override
     public final Object handleGetObject(String key) {
         if (lookup == null) {
             loadLookup();
@@ -25,6 +26,7 @@ public abstract class MapResourceBundle extends ResourceBundle {
         return lookup.get(key);
     }
 
+    @Override
     public Enumeration<String> getKeys() {
         if (lookup == null) {
             loadLookup();
@@ -33,6 +35,7 @@ public abstract class MapResourceBundle extends ResourceBundle {
         return new ResourceBundleEnumeration(lookup.keySet(), parent != null ? parent.getKeys() : null);
     }
 
+    @Override
     protected Set<String> handleKeySet() {
         if (lookup == null) {
             loadLookup();
@@ -60,10 +63,14 @@ public abstract class MapResourceBundle extends ResourceBundle {
     }
 
     private static class ResourceBundleEnumeration implements Enumeration<String> {
-        private Set<String> set;
-        private Iterator<String> iterator;
-        private Enumeration<String> enumeration;
-        private String next = null;
+
+        private final Set<String> set;
+
+        private final Iterator<String> iterator;
+
+        private final Enumeration<String> enumeration;
+
+        private String next;
 
         ResourceBundleEnumeration(Set<String> var1, Enumeration<String> var2) {
             this.set = var1;

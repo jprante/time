@@ -13,8 +13,9 @@ import java.util.regex.Pattern;
  *
  */
 public class Scalar extends Tag<Integer> {
-    static final Set<String> TIMES =
-            new HashSet<>(Arrays.asList("am", "pm", "morning", "afternoon", "evening", "night"));
+
+    protected static final Set<String> TIMES = new HashSet<>(Arrays.asList("am", "pm", "morning", "afternoon", "evening", "night"));
+
     private static final Pattern SCALAR_PATTERN = Pattern.compile("^\\d*$");
 
     public Scalar(Integer type) {

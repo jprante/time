@@ -2,7 +2,8 @@ package org.xbib.time.schedule;
 
 import java.util.Arrays;
 
-final class Keywords {
+public final class Keywords {
+
     private final int[][][] keywords = new int[26][26][26];
 
     public Keywords() {

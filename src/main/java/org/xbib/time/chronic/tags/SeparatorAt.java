@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
  *
  */
 public class SeparatorAt extends Separator {
+
     private static final Pattern AT_PATTERN = Pattern.compile("^(at|@)$");
 
     private SeparatorAt(SeparatorType type) {

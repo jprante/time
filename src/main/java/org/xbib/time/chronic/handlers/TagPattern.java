@@ -7,7 +7,8 @@ import org.xbib.time.chronic.tags.Tag;
  */
 @SuppressWarnings("rawtypes")
 public class TagPattern extends HandlerPattern {
-    private Class<? extends Tag> tagClass;
+
+    private final Class<? extends Tag> tagClass;
 
     public TagPattern(Class<? extends Tag> tagClass) {
         this(tagClass, false);

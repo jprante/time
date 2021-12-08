@@ -3,7 +3,7 @@ package org.xbib.time.chronic;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 import org.xbib.time.chronic.repeaters.RepeaterWeekend;
-import org.xbib.time.chronic.tags.Pointer;
+import org.xbib.time.chronic.tags.PointerType;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -28,7 +28,7 @@ public class RepeaterWeekendTest {
         RepeaterWeekend weekends = new RepeaterWeekend();
         weekends.setNow(now);
 
-        Span nextWeekend = weekends.nextSpan(Pointer.PointerType.FUTURE);
+        Span nextWeekend = weekends.nextSpan(PointerType.FUTURE);
         assertEquals(construct(2006, 8, 19), nextWeekend.getBeginCalendar());
         assertEquals(construct(2006, 8, 21), nextWeekend.getEndCalendar());
     }
@@ -37,7 +37,7 @@ public class RepeaterWeekendTest {
     public void testNextPast() {
         RepeaterWeekend weekends = new RepeaterWeekend();
         weekends.setNow(now);
-        Span lastWeekend = weekends.nextSpan(Pointer.PointerType.PAST);
+        Span lastWeekend = weekends.nextSpan(PointerType.PAST);
         assertEquals(construct(2006, 8, 12), lastWeekend.getBeginCalendar());
         assertEquals(construct(2006, 8, 14), lastWeekend.getEndCalendar());
     }
@@ -47,7 +47,7 @@ public class RepeaterWeekendTest {
         RepeaterWeekend weekends = new RepeaterWeekend();
         weekends.setNow(now);
 
-        Span thisWeekend = weekends.thisSpan(Pointer.PointerType.FUTURE);
+        Span thisWeekend = weekends.thisSpan(PointerType.FUTURE);
         assertEquals(construct(2006, 8, 19), thisWeekend.getBeginCalendar());
         assertEquals(construct(2006, 8, 21), thisWeekend.getEndCalendar());
     }
@@ -57,7 +57,7 @@ public class RepeaterWeekendTest {
         RepeaterWeekend weekends = new RepeaterWeekend();
         weekends.setNow(now);
 
-        Span thisWeekend = weekends.thisSpan(Pointer.PointerType.PAST);
+        Span thisWeekend = weekends.thisSpan(PointerType.PAST);
         assertEquals(construct(2006, 8, 12), thisWeekend.getBeginCalendar());
         assertEquals(construct(2006, 8, 14), thisWeekend.getEndCalendar());
     }
@@ -67,7 +67,7 @@ public class RepeaterWeekendTest {
         RepeaterWeekend weekends = new RepeaterWeekend();
         weekends.setNow(now);
 
-        Span thisWeekend = weekends.thisSpan(Pointer.PointerType.FUTURE);
+        Span thisWeekend = weekends.thisSpan(PointerType.FUTURE);
         assertEquals(construct(2006, 8, 19), thisWeekend.getBeginCalendar());
         assertEquals(construct(2006, 8, 21), thisWeekend.getEndCalendar());
     }
@@ -78,15 +78,15 @@ public class RepeaterWeekendTest {
 
         Span offsetSpan;
 
-        offsetSpan = new RepeaterWeekend().getOffset(span, 3, Pointer.PointerType.FUTURE);
+        offsetSpan = new RepeaterWeekend().getOffset(span, 3, PointerType.FUTURE);
         assertEquals(construct(2006, 9, 2), offsetSpan.getBeginCalendar());
         assertEquals(construct(2006, 9, 2, 0, 0, 1), offsetSpan.getEndCalendar());
 
-        offsetSpan = new RepeaterWeekend().getOffset(span, 1, Pointer.PointerType.PAST);
+        offsetSpan = new RepeaterWeekend().getOffset(span, 1, PointerType.PAST);
         assertEquals(construct(2006, 8, 12), offsetSpan.getBeginCalendar());
         assertEquals(construct(2006, 8, 12, 0, 0, 1), offsetSpan.getEndCalendar());
 
-        offsetSpan = new RepeaterWeekend().getOffset(span, 0, Pointer.PointerType.FUTURE);
+        offsetSpan = new RepeaterWeekend().getOffset(span, 0, PointerType.FUTURE);
         assertEquals(construct(2006, 8, 12), offsetSpan.getBeginCalendar());
         assertEquals(construct(2006, 8, 12, 0, 0, 1), offsetSpan.getEndCalendar());
     }

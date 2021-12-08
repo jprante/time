@@ -6,6 +6,7 @@ import org.xbib.time.chronic.Range;
  *
  */
 public class IntegerRepeaterDayPortion extends RepeaterDayPortion<Integer> {
+
     public IntegerRepeaterDayPortion(Integer type) {
         super(type);
     }

@@ -7,6 +7,7 @@ import java.util.Map;
  *
  */
 public class Resources extends MapResourceBundle {
+
     private static final Map<String, Object> map = new HashMap<>();
 
     static {

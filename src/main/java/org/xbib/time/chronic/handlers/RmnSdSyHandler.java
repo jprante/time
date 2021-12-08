@@ -30,5 +30,4 @@ public class RmnSdSyHandler implements IHandler {
         }
         return span;
     }
-
 }

@@ -6,6 +6,7 @@ import org.xbib.time.chronic.Span;
 import org.xbib.time.chronic.Token;
 import org.xbib.time.chronic.repeaters.Repeater;
 import org.xbib.time.chronic.tags.Pointer;
+import org.xbib.time.chronic.tags.PointerType;
 import org.xbib.time.chronic.tags.Scalar;
 
 import java.text.ParseException;
@@ -19,7 +20,7 @@ public class SRPHandler implements IHandler {
     public Span handle(List<Token> tokens, Span span, Options options) {
         int distance = tokens.get(0).getTag(Scalar.class).getType();
         Repeater<?> repeater = tokens.get(1).getTag(Repeater.class);
-        Pointer.PointerType pointer = tokens.get(2).getTag(Pointer.class).getType();
+        PointerType pointer = tokens.get(2).getTag(Pointer.class).getType();
         return repeater.getOffset(span, distance, pointer);
     }
 

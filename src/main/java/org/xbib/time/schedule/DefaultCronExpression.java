@@ -25,7 +25,7 @@ public class DefaultCronExpression extends CronExpression {
 
     private final DayOfMonthField dayOfMonth;
 
-    DefaultCronExpression(String string, boolean seconds, boolean oneBasedDayOfWeek, boolean allowBothDayFields) {
+    public DefaultCronExpression(String string, boolean seconds, boolean oneBasedDayOfWeek, boolean allowBothDayFields) {
         this.string = string;
         if (string.isEmpty()) {
             throw new IllegalArgumentException("empty spec not allowed");

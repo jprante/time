@@ -21,5 +21,4 @@ public class SdRmnSyHandler extends RmnSdSyHandler {
         newTokens.addAll(tokens.subList(3, tokens.size()));
         return super.handle(newTokens, options);
     }
-
 }

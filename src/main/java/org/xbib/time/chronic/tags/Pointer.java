@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 /**
  *
  */
-public class Pointer extends Tag<Pointer.PointerType> {
+public class Pointer extends Tag<PointerType> {
 
     private static final Pattern IN_PATTERN = Pattern.compile("\\bin\\b");
 
@@ -52,10 +52,4 @@ public class Pointer extends Tag<Pointer.PointerType> {
         return "pointer-" + getType();
     }
 
-    /**
-     *
-     */
-    public enum PointerType {
-        PAST, FUTURE, NONE
-    }
 }

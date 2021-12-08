@@ -48,7 +48,7 @@ public class Numerizer {
         directNums.add(new DirectNum("nine(\\W|$)", "9$1"));
         directNums.add(new DirectNum("ten", "10"));
         directNums.add(new DirectNum("\\ba\\b", "1"));
-        DIRECT_NUMS = directNums.toArray(new DirectNum[directNums.size()]);
+        DIRECT_NUMS = directNums.toArray(new DirectNum[0]);
 
         List<TenPrefix> tenPrefixes = new LinkedList<>();
         tenPrefixes.add(new TenPrefix("twenty", 20));
@@ -60,7 +60,7 @@ public class Numerizer {
         tenPrefixes.add(new TenPrefix("eighty", 80));
         tenPrefixes.add(new TenPrefix("ninety", 90));
         tenPrefixes.add(new TenPrefix("ninty", 90));
-        TEN_PREFIXES = tenPrefixes.toArray(new TenPrefix[tenPrefixes.size()]);
+        TEN_PREFIXES = tenPrefixes.toArray(new TenPrefix[0]);
 
         List<BigPrefix> bigPrefixes = new LinkedList<>();
         bigPrefixes.add(new BigPrefix("hundred", 100L));
@@ -68,7 +68,7 @@ public class Numerizer {
         bigPrefixes.add(new BigPrefix("million", 1000000L));
         bigPrefixes.add(new BigPrefix("billion", 1000000000L));
         bigPrefixes.add(new BigPrefix("trillion", 1000000000000L));
-        BIG_PREFIXES = bigPrefixes.toArray(new BigPrefix[bigPrefixes.size()]);
+        BIG_PREFIXES = bigPrefixes.toArray(new BigPrefix[0]);
     }
 
     public static String numerize(String str) {
@@ -81,7 +81,7 @@ public class Numerizer {
         for (Prefix tp : Numerizer.TEN_PREFIXES) {
             Matcher matcher = tp.getName().matcher(numerizedStr);
             if (matcher.find()) {
-                StringBuffer matcherBuffer = new StringBuffer();
+                StringBuilder matcherBuffer = new StringBuilder();
                 do {
                     if (matcher.group(1) == null) {
                         matcher.appendReplacement(matcherBuffer, String.valueOf(tp.getNumber()));
@@ -97,7 +97,7 @@ public class Numerizer {
         for (Prefix bp : Numerizer.BIG_PREFIXES) {
             Matcher matcher = bp.getName().matcher(numerizedStr);
             if (matcher.find()) {
-                StringBuffer matcherBuffer = new StringBuffer();
+                StringBuilder matcherBuffer = new StringBuilder();
                 do {
                     if (matcher.group(1) == null) {
                         matcher.appendReplacement(matcherBuffer, String.valueOf(bp.getNumber()));
@@ -113,7 +113,7 @@ public class Numerizer {
         }
         Matcher matcher = Numerizer.DEHAALFER.matcher(numerizedStr);
         if (matcher.find()) {
-            StringBuffer matcherBuffer = new StringBuffer();
+            StringBuilder matcherBuffer = new StringBuilder();
             do {
                 matcher.appendReplacement(matcherBuffer,
                         String.valueOf(Float.parseFloat(matcher.group(1).trim()) + 0.5f));
@@ -142,8 +142,10 @@ public class Numerizer {
      *
      */
     private static class DirectNum {
-        private Pattern name;
-        private String number;
+
+        private final Pattern name;
+
+        private final String number;
 
         DirectNum(String name, String number) {
             this.name = Pattern.compile(name, Pattern.CASE_INSENSITIVE);
@@ -163,8 +165,10 @@ public class Numerizer {
      *
      */
     static class Prefix {
-        private Pattern name;
-        private long number;
+
+        private final Pattern name;
+
+        private final long number;
 
         Prefix(Pattern name, long number) {
             this.name = name;

@@ -11,9 +11,12 @@ import java.util.regex.Pattern;
 /**
  *
  */
-public class Grabber extends Tag<Grabber.Relative> {
+public class Grabber extends Tag<Relative> {
+
     private static final Pattern THIS_PATTERN = Pattern.compile("this");
+
     private static final Pattern NEXT_PATTERN = Pattern.compile("next");
+
     private static final Pattern LAST_PATTERN = Pattern.compile("last");
 
     public Grabber(Relative type) {
@@ -49,10 +52,4 @@ public class Grabber extends Tag<Grabber.Relative> {
         return "grabber-" + getType();
     }
 
-    /**
-     *
-     */
-    public enum Relative {
-        LAST, NEXT, THIS
-    }
 }

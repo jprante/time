@@ -2,8 +2,9 @@ package org.xbib.time.chronic;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
+import org.xbib.time.chronic.repeaters.MonthName;
 import org.xbib.time.chronic.repeaters.RepeaterMonthName;
-import org.xbib.time.chronic.tags.Pointer;
+import org.xbib.time.chronic.tags.PointerType;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -24,42 +25,42 @@ public class RepeaterMonthNameTest {
 
     @Test
     public void testNext() {
-        RepeaterMonthName mays = new RepeaterMonthName(RepeaterMonthName.MonthName.MAY);
+        RepeaterMonthName mays = new RepeaterMonthName(MonthName.MAY);
         mays.setNow(now);
 
-        Span nextMay = mays.nextSpan(Pointer.PointerType.FUTURE);
+        Span nextMay = mays.nextSpan(PointerType.FUTURE);
         assertEquals(construct(2007, 5), nextMay.getBeginCalendar());
         assertEquals(construct(2007, 6), nextMay.getEndCalendar());
 
-        Span nextNextMay = mays.nextSpan(Pointer.PointerType.FUTURE);
+        Span nextNextMay = mays.nextSpan(PointerType.FUTURE);
         assertEquals(construct(2008, 5), nextNextMay.getBeginCalendar());
         assertEquals(construct(2008, 6), nextNextMay.getEndCalendar());
 
-        RepeaterMonthName decembers = new RepeaterMonthName(RepeaterMonthName.MonthName.DECEMBER);
+        RepeaterMonthName decembers = new RepeaterMonthName(MonthName.DECEMBER);
         decembers.setNow(now);
 
-        Span nextDecember = decembers.nextSpan(Pointer.PointerType.FUTURE);
+        Span nextDecember = decembers.nextSpan(PointerType.FUTURE);
         assertEquals(construct(2006, 12), nextDecember.getBeginCalendar());
         assertEquals(construct(2007, 1), nextDecember.getEndCalendar());
 
-        mays = new RepeaterMonthName(RepeaterMonthName.MonthName.MAY);
+        mays = new RepeaterMonthName(MonthName.MAY);
         mays.setNow(now);
 
-        assertEquals(construct(2006, 5), mays.nextSpan(Pointer.PointerType.PAST).getBeginCalendar());
-        assertEquals(construct(2005, 5), mays.nextSpan(Pointer.PointerType.PAST).getBeginCalendar());
+        assertEquals(construct(2006, 5), mays.nextSpan(PointerType.PAST).getBeginCalendar());
+        assertEquals(construct(2005, 5), mays.nextSpan(PointerType.PAST).getBeginCalendar());
     }
 
 
     @Test
     public void testThis() {
-        RepeaterMonthName octobers = new RepeaterMonthName(RepeaterMonthName.MonthName.MAY);
+        RepeaterMonthName octobers = new RepeaterMonthName(MonthName.MAY);
         octobers.setNow(now);
 
-        Span nextMay = octobers.nextSpan(Pointer.PointerType.FUTURE);
+        Span nextMay = octobers.nextSpan(PointerType.FUTURE);
         assertEquals(construct(2007, 5), nextMay.getBeginCalendar());
         assertEquals(construct(2007, 6), nextMay.getEndCalendar());
 
-        Span nextNextMay = octobers.nextSpan(Pointer.PointerType.FUTURE);
+        Span nextNextMay = octobers.nextSpan(PointerType.FUTURE);
         assertEquals(construct(2008, 5), nextNextMay.getBeginCalendar());
         assertEquals(construct(2008, 6), nextNextMay.getEndCalendar());
     }

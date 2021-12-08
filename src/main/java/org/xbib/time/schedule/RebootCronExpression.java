@@ -6,11 +6,11 @@ import java.util.concurrent.atomic.AtomicBoolean;
 /**
  * Matches once only.
  */
-final class RebootCronExpression extends CronExpression {
+public final class RebootCronExpression extends CronExpression {
 
     private final AtomicBoolean matchOnce;
 
-    RebootCronExpression() {
+    public RebootCronExpression() {
         matchOnce = new AtomicBoolean(true);
     }
 

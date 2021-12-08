@@ -1,7 +1,7 @@
 package org.xbib.time.chronic.repeaters;
 
 import org.xbib.time.chronic.Span;
-import org.xbib.time.chronic.tags.Pointer.PointerType;
+import org.xbib.time.chronic.tags.PointerType;
 
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
@@ -10,6 +10,7 @@ import java.time.temporal.ChronoUnit;
  *
  */
 public class RepeaterSecond extends RepeaterUnit {
+
     private static final int SECOND_SECONDS = 1;
 
     private ZonedDateTime secondStart;
@@ -22,7 +23,6 @@ public class RepeaterSecond extends RepeaterUnit {
         } else {
             secondStart = secondStart.plus(direction, ChronoUnit.SECONDS);
         }
-
         return new Span(secondStart, ChronoUnit.SECONDS, 1);
     }
 

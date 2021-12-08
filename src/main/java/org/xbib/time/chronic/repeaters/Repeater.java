@@ -3,7 +3,7 @@ package org.xbib.time.chronic.repeaters;
 import org.xbib.time.chronic.Options;
 import org.xbib.time.chronic.Span;
 import org.xbib.time.chronic.Token;
-import org.xbib.time.chronic.tags.Pointer;
+import org.xbib.time.chronic.tags.PointerType;
 import org.xbib.time.chronic.tags.Tag;
 
 import java.util.List;
@@ -65,25 +65,25 @@ public abstract class Repeater<T> extends Tag<T> implements Comparable<Repeater<
      * @param pointer pointer
      * @return span
      */
-    public Span nextSpan(Pointer.PointerType pointer) {
+    public Span nextSpan(PointerType pointer) {
         if (getNow() == null) {
             throw new IllegalStateException("Start point must be set before calling #next");
         }
         return internalNextSpan(pointer);
     }
 
-    protected abstract Span internalNextSpan(Pointer.PointerType pointer);
+    protected abstract Span internalNextSpan(PointerType pointer);
 
-    public Span thisSpan(Pointer.PointerType pointer) {
+    public Span thisSpan(PointerType pointer) {
         if (getNow() == null) {
             throw new IllegalStateException("Start point must be set before calling #this");
         }
         return internalThisSpan(pointer);
     }
 
-    protected abstract Span internalThisSpan(Pointer.PointerType pointer);
+    protected abstract Span internalThisSpan(PointerType pointer);
 
-    public abstract Span getOffset(Span span, int amount, Pointer.PointerType pointer);
+    public abstract Span getOffset(Span span, int amount, PointerType pointer);
 
     @Override
     public int hashCode() {

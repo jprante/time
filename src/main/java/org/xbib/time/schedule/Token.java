@@ -1,6 +1,6 @@
 package org.xbib.time.schedule;
 
-enum Token {
+public enum Token {
     END_OF_INPUT,
     FIELD_SEPARATOR,
     LAST,

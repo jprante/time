@@ -7,14 +7,17 @@ import org.xbib.time.chronic.handlers.DummyHandler;
 import org.xbib.time.chronic.handlers.Handler;
 import org.xbib.time.chronic.handlers.HandlerTypePattern;
 import org.xbib.time.chronic.handlers.TagPattern;
+import org.xbib.time.chronic.repeaters.DayName;
+import org.xbib.time.chronic.repeaters.DayPortion;
 import org.xbib.time.chronic.repeaters.EnumRepeaterDayPortion;
+import org.xbib.time.chronic.repeaters.MonthName;
 import org.xbib.time.chronic.repeaters.Repeater;
 import org.xbib.time.chronic.repeaters.RepeaterDayName;
-import org.xbib.time.chronic.repeaters.RepeaterDayPortion;
 import org.xbib.time.chronic.repeaters.RepeaterMonthName;
 import org.xbib.time.chronic.repeaters.RepeaterTime;
 import org.xbib.time.chronic.repeaters.RepeaterYear;
 import org.xbib.time.chronic.tags.Pointer;
+import org.xbib.time.chronic.tags.PointerType;
 import org.xbib.time.chronic.tags.Scalar;
 import org.xbib.time.chronic.tags.ScalarDay;
 
@@ -28,10 +31,10 @@ public class HandlerTest {
         Handler handler = new Handler(new DummyHandler(), new TagPattern(Repeater.class));
         List<Token> tokens = new LinkedList<>();
         tokens.add(new Token("friday"));
-        tokens.get(0).tag(new RepeaterDayName(RepeaterDayName.DayName.FRIDAY));
+        tokens.get(0).tag(new RepeaterDayName(DayName.FRIDAY));
         assertTrue(handler.match(tokens, Handler.definitions()));
         tokens.add(new Token("afternoon"));
-        tokens.get(1).tag(new EnumRepeaterDayPortion(RepeaterDayPortion.DayPortion.AFTERNOON));
+        tokens.get(1).tag(new EnumRepeaterDayPortion(DayPortion.AFTERNOON));
         assertFalse(handler.match(tokens, Handler.definitions()));
     }
 
@@ -40,13 +43,13 @@ public class HandlerTest {
         Handler handler = new Handler(new DummyHandler(), new TagPattern(Repeater.class), new TagPattern(Repeater.class, true));
         List<Token> tokens = new LinkedList<>();
         tokens.add(new Token("friday"));
-        tokens.get(0).tag(new RepeaterDayName(RepeaterDayName.DayName.FRIDAY));
+        tokens.get(0).tag(new RepeaterDayName(DayName.FRIDAY));
         assertTrue(handler.match(tokens, Handler.definitions()));
         tokens.add(new Token("afternoon"));
-        tokens.get(1).tag(new EnumRepeaterDayPortion(RepeaterDayPortion.DayPortion.AFTERNOON));
+        tokens.get(1).tag(new EnumRepeaterDayPortion(DayPortion.AFTERNOON));
         assertTrue(handler.match(tokens, Handler.definitions()));
         tokens.add(new Token("afternoon"));
-        tokens.get(2).tag(new EnumRepeaterDayPortion(RepeaterDayPortion.DayPortion.AFTERNOON));
+        tokens.get(2).tag(new EnumRepeaterDayPortion(DayPortion.AFTERNOON));
         assertFalse(handler.match(tokens, Handler.definitions()));
     }
 
@@ -55,10 +58,10 @@ public class HandlerTest {
         Handler handler = new Handler(new DummyHandler(), new TagPattern(Repeater.class), new HandlerTypePattern(Handler.HandlerType.TIME, true));
         List<Token> tokens = new LinkedList<>();
         tokens.add(new Token("friday"));
-        tokens.get(0).tag(new RepeaterDayName(RepeaterDayName.DayName.FRIDAY));
+        tokens.get(0).tag(new RepeaterDayName(DayName.FRIDAY));
         assertTrue(handler.match(tokens, Handler.definitions()));
         tokens.add(new Token("afternoon"));
-        tokens.get(1).tag(new EnumRepeaterDayPortion(RepeaterDayPortion.DayPortion.AFTERNOON));
+        tokens.get(1).tag(new EnumRepeaterDayPortion(DayPortion.AFTERNOON));
         assertFalse(handler.match(tokens, Handler.definitions()));
     }
 
@@ -67,7 +70,7 @@ public class HandlerTest {
         Handler handler = new Handler(new DummyHandler(), new TagPattern(RepeaterMonthName.class), new TagPattern(ScalarDay.class), new HandlerTypePattern(Handler.HandlerType.TIME, true));
         List<Token> tokens = new LinkedList<>();
         tokens.add(new Token("may"));
-        tokens.get(0).tag(new RepeaterMonthName(RepeaterMonthName.MonthName.MAY));
+        tokens.get(0).tag(new RepeaterMonthName(MonthName.MAY));
         assertFalse(handler.match(tokens, Handler.definitions()));
         tokens.add(new Token("27"));
         tokens.get(1).tag(new ScalarDay(27));
@@ -79,13 +82,13 @@ public class HandlerTest {
         Handler handler = new Handler(new DummyHandler(), new TagPattern(Repeater.class), new HandlerTypePattern(Handler.HandlerType.TIME, true));
         List<Token> tokens = new LinkedList<>();
         tokens.add(new Token("friday"));
-        tokens.get(0).tag(new RepeaterDayName(RepeaterDayName.DayName.FRIDAY));
+        tokens.get(0).tag(new RepeaterDayName(DayName.FRIDAY));
         assertTrue(handler.match(tokens, Handler.definitions()));
         tokens.add(new Token("5:00"));
         tokens.get(1).tag(new RepeaterTime("5:00"));
         assertTrue(handler.match(tokens, Handler.definitions()));
         tokens.add(new Token("pm"));
-        tokens.get(2).tag(new EnumRepeaterDayPortion(RepeaterDayPortion.DayPortion.PM));
+        tokens.get(2).tag(new EnumRepeaterDayPortion(DayPortion.PM));
         assertTrue(handler.match(tokens, Handler.definitions()));
     }
 
@@ -98,7 +101,7 @@ public class HandlerTest {
         tokens.add(new Token("past"));
         tokens.get(0).tag(new Scalar(3));
         tokens.get(1).tag(new RepeaterYear());
-        tokens.get(2).tag(new Pointer(Pointer.PointerType.PAST));
+        tokens.get(2).tag(new Pointer(PointerType.PAST));
         assertTrue(handler.match(tokens, Handler.definitions()));
     }
 }

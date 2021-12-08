@@ -8,7 +8,7 @@ import java.util.Set;
  * Defines a formatted field's prefix or suffix text.
  * This can be used for fields such as 'n hours' or 'nH' or 'Hour:n'.
  */
-interface PeriodFieldAffix {
+public interface PeriodFieldAffix {
 
     int calculatePrintedLength(int value);
 
@@ -17,11 +17,15 @@ interface PeriodFieldAffix {
     void printTo(Writer out, int value) throws IOException;
 
     /**
+     * @param periodStr period string
+     * @param position position
      * @return new position after parsing affix, or ~position of failure
      */
     int parse(String periodStr, int position);
 
     /**
+     * @param periodStr period string
+     * @param position position
      * @return position where affix starts, or original ~position if not found
      */
     int scan(String periodStr, int position);

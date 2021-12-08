@@ -4,8 +4,10 @@ package org.xbib.time.chronic;
  *
  */
 public class Tick {
+
     private int time;
-    private boolean ambiguous;
+
+    private final boolean ambiguous;
 
     public Tick(int time, boolean ambiguous) {
         this.time = time;

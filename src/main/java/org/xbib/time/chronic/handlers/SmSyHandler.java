@@ -29,5 +29,4 @@ public class SmSyHandler implements IHandler {
         }
         return span;
     }
-
 }

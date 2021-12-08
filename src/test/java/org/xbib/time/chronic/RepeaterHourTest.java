@@ -3,7 +3,7 @@ package org.xbib.time.chronic;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 import org.xbib.time.chronic.repeaters.RepeaterHour;
-import org.xbib.time.chronic.tags.Pointer;
+import org.xbib.time.chronic.tags.PointerType;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -31,11 +31,11 @@ public class RepeaterHourTest {
         RepeaterHour hours = new RepeaterHour();
         hours.setNow(now);
 
-        Span nextHour = hours.nextSpan(Pointer.PointerType.FUTURE);
+        Span nextHour = hours.nextSpan(PointerType.FUTURE);
         assertEquals(construct(2006, 8, 16, 15), nextHour.getBeginCalendar());
         assertEquals(construct(2006, 8, 16, 16), nextHour.getEndCalendar());
 
-        Span nextNextHour = hours.nextSpan(Pointer.PointerType.FUTURE);
+        Span nextNextHour = hours.nextSpan(PointerType.FUTURE);
         assertEquals(construct(2006, 8, 16, 16), nextNextHour.getBeginCalendar());
         assertEquals(construct(2006, 8, 16, 17), nextNextHour.getEndCalendar());
     }
@@ -44,11 +44,11 @@ public class RepeaterHourTest {
     public void testNextPast() {
         RepeaterHour hours = new RepeaterHour();
         hours.setNow(now);
-        Span lastHour = hours.nextSpan(Pointer.PointerType.PAST);
+        Span lastHour = hours.nextSpan(PointerType.PAST);
         assertEquals(construct(2006, 8, 16, 13), lastHour.getBeginCalendar());
         assertEquals(construct(2006, 8, 16, 14), lastHour.getEndCalendar());
 
-        Span lastLastHour = hours.nextSpan(Pointer.PointerType.PAST);
+        Span lastLastHour = hours.nextSpan(PointerType.PAST);
         assertEquals(construct(2006, 8, 16, 12), lastLastHour.getBeginCalendar());
         assertEquals(construct(2006, 8, 16, 13), lastLastHour.getEndCalendar());
     }
@@ -61,11 +61,11 @@ public class RepeaterHourTest {
         hours.setNow(now);
 
         Span thisHour;
-        thisHour = hours.thisSpan(Pointer.PointerType.FUTURE);
+        thisHour = hours.thisSpan(PointerType.FUTURE);
         assertEquals(construct(2006, 8, 16, 14, 31), thisHour.getBeginCalendar());
         assertEquals(construct(2006, 8, 16, 15), thisHour.getEndCalendar());
 
-        thisHour = hours.thisSpan(Pointer.PointerType.PAST);
+        thisHour = hours.thisSpan(PointerType.PAST);
         assertEquals(construct(2006, 8, 16, 14), thisHour.getBeginCalendar());
         assertEquals(construct(2006, 8, 16, 14, 30), thisHour.getEndCalendar());
     }
@@ -75,12 +75,12 @@ public class RepeaterHourTest {
         Span span = new Span(now, ChronoUnit.SECONDS, 1);
 
         Span offsetSpan;
-        offsetSpan = new RepeaterHour().getOffset(span, 3, Pointer.PointerType.FUTURE);
+        offsetSpan = new RepeaterHour().getOffset(span, 3, PointerType.FUTURE);
 
         assertEquals(construct(2006, 8, 16, 17), offsetSpan.getBeginCalendar());
         assertEquals(construct(2006, 8, 16, 17, 0, 1), offsetSpan.getEndCalendar());
 
-        offsetSpan = new RepeaterHour().getOffset(span, 24, Pointer.PointerType.PAST);
+        offsetSpan = new RepeaterHour().getOffset(span, 24, PointerType.PAST);
 
         assertEquals(construct(2006, 8, 15, 14), offsetSpan.getBeginCalendar());
         assertEquals(construct(2006, 8, 15, 14, 0, 1), offsetSpan.getEndCalendar());

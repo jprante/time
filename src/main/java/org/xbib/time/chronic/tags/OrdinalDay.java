@@ -8,7 +8,8 @@ import java.util.regex.Matcher;
  *
  */
 public class OrdinalDay extends Ordinal {
-    public OrdinalDay(Integer type) {
+
+    private OrdinalDay(Integer type) {
         super(type);
     }
 

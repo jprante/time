@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
  *
  */
 public class ScalarDay extends Scalar {
+
     private static final Pattern DAY_PATTERN = Pattern.compile("^\\d\\d?$");
 
     public ScalarDay(Integer type) {

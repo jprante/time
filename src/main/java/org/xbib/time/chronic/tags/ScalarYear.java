@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
  *
  */
 public class ScalarYear extends Scalar {
+
     private static final Pattern YEAR_PATTERN = Pattern.compile("^([1-9]\\d)?\\d\\d?$");
 
     private ScalarYear(Integer type) {

@@ -29,5 +29,4 @@ public class RmnSyHandler implements IHandler {
         }
         return span;
     }
-
 }

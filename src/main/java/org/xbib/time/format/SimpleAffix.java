@@ -6,25 +6,30 @@ import java.io.Writer;
 /**
  * Implements an affix where the text does not vary by the amount.
  */
-class SimpleAffix extends IgnorableAffix {
+public class SimpleAffix extends IgnorableAffix {
+
     private final String iText;
 
-    SimpleAffix(String text) {
+    public SimpleAffix(String text) {
         iText = text;
     }
 
+    @Override
     public int calculatePrintedLength(int value) {
         return iText.length();
     }
 
+    @Override
     public void printTo(StringBuilder buf, int value) {
         buf.append(iText);
     }
 
+    @Override
     public void printTo(Writer out, int value) throws IOException {
         out.write(iText);
     }
 
+    @Override
     public int parse(String periodStr, int position) {
         String text = iText;
         int textLength = text.length();
@@ -35,6 +40,7 @@ class SimpleAffix extends IgnorableAffix {
         return ~position;
     }
 
+    @Override
     public int scan(String periodStr, final int position) {
         String text = iText;
         int textLength = text.length();
@@ -69,6 +75,7 @@ class SimpleAffix extends IgnorableAffix {
         return ~position;
     }
 
+    @Override
     public String[] getAffixes() {
         return new String[]{iText};
     }

@@ -13,7 +13,7 @@ import java.util.Map;
  */
 public class PeriodAmount implements TemporalAmount {
 
-    private Map<TemporalUnit, Long> amounts = new HashMap<>();
+    private final Map<TemporalUnit, Long> amounts = new HashMap<>();
 
     public void set(TemporalUnit unit, Long value) {
         amounts.put(unit, value);

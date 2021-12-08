@@ -1,7 +1,5 @@
 package org.xbib.time.pretty;
 
-/**
- */
 public interface TimeFormat {
     /**
      * Given a populated {@link TimeUnitQuantity} object. Apply formatting (with rounding) and output the result.

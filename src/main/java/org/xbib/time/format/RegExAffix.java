@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
  * Implements an affix where the text varies by the amount of the field.
  * Different amounts are supported based on the provided parameters.
  */
-class RegExAffix extends IgnorableAffix {
+public class RegExAffix extends IgnorableAffix {
 
     private static final ConcurrentMap<String, Pattern> PATTERNS = new ConcurrentHashMap<>();
 
@@ -25,7 +25,7 @@ class RegExAffix extends IgnorableAffix {
     // Otherwise it might consume not enough characters.
     private final String[] iSuffixesSortedDescByLength;
 
-    RegExAffix(String[] regExes, String[] texts) {
+    public RegExAffix(String[] regExes, String[] texts) {
         iSuffixes = texts.clone();
         iPatterns = new Pattern[regExes.length];
         for (int i = 0; i < regExes.length; i++) {

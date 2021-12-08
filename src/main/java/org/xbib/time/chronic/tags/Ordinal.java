@@ -14,7 +14,7 @@ public class Ordinal extends Tag<Integer> {
 
     static final Pattern ORDINAL_PATTERN = Pattern.compile("^(\\d*)(st|nd|rd|th)$");
 
-    Ordinal(Integer type) {
+    protected Ordinal(Integer type) {
         super(type);
     }
 

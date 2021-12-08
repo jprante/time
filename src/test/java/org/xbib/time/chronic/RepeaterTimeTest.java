@@ -3,7 +3,7 @@ package org.xbib.time.chronic;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 import org.xbib.time.chronic.repeaters.RepeaterTime;
-import org.xbib.time.chronic.tags.Pointer;
+import org.xbib.time.chronic.tags.PointerType;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -33,20 +33,20 @@ public class RepeaterTimeTest {
         t = new RepeaterTime("4:00");
         t.setNow(now);
 
-        assertEquals(construct(2006, 8, 16, 16), t.nextSpan(Pointer.PointerType.FUTURE).getBeginCalendar());
-        assertEquals(construct(2006, 8, 17, 4), t.nextSpan(Pointer.PointerType.FUTURE).getBeginCalendar());
+        assertEquals(construct(2006, 8, 16, 16), t.nextSpan(PointerType.FUTURE).getBeginCalendar());
+        assertEquals(construct(2006, 8, 17, 4), t.nextSpan(PointerType.FUTURE).getBeginCalendar());
 
         t = new RepeaterTime("13:00");
         t.setNow(now);
 
-        assertEquals(construct(2006, 8, 17, 13), t.nextSpan(Pointer.PointerType.FUTURE).getBeginCalendar());
-        assertEquals(construct(2006, 8, 18, 13), t.nextSpan(Pointer.PointerType.FUTURE).getBeginCalendar());
+        assertEquals(construct(2006, 8, 17, 13), t.nextSpan(PointerType.FUTURE).getBeginCalendar());
+        assertEquals(construct(2006, 8, 18, 13), t.nextSpan(PointerType.FUTURE).getBeginCalendar());
 
         t = new RepeaterTime("0400");
         t.setNow(now);
 
-        assertEquals(construct(2006, 8, 17, 4), t.nextSpan(Pointer.PointerType.FUTURE).getBeginCalendar());
-        assertEquals(construct(2006, 8, 18, 4), t.nextSpan(Pointer.PointerType.FUTURE).getBeginCalendar());
+        assertEquals(construct(2006, 8, 17, 4), t.nextSpan(PointerType.FUTURE).getBeginCalendar());
+        assertEquals(construct(2006, 8, 18, 4), t.nextSpan(PointerType.FUTURE).getBeginCalendar());
     }
 
     @Test
@@ -55,14 +55,14 @@ public class RepeaterTimeTest {
         t = new RepeaterTime("4:00");
         t.setNow(now);
 
-        assertEquals(construct(2006, 8, 16, 4), t.nextSpan(Pointer.PointerType.PAST).getBeginCalendar());
-        assertEquals(construct(2006, 8, 15, 16), t.nextSpan(Pointer.PointerType.PAST).getBeginCalendar());
+        assertEquals(construct(2006, 8, 16, 4), t.nextSpan(PointerType.PAST).getBeginCalendar());
+        assertEquals(construct(2006, 8, 15, 16), t.nextSpan(PointerType.PAST).getBeginCalendar());
 
         t = new RepeaterTime("13:00");
         t.setNow(now);
 
-        assertEquals(construct(2006, 8, 16, 13), t.nextSpan(Pointer.PointerType.PAST).getBeginCalendar());
-        assertEquals(construct(2006, 8, 15, 13), t.nextSpan(Pointer.PointerType.PAST).getBeginCalendar());
+        assertEquals(construct(2006, 8, 16, 13), t.nextSpan(PointerType.PAST).getBeginCalendar());
+        assertEquals(construct(2006, 8, 15, 13), t.nextSpan(PointerType.PAST).getBeginCalendar());
     }
 
     @Test

@@ -16,5 +16,4 @@ public class RHandler implements IHandler {
         List<Token> ddTokens = Handler.dealiasAndDisambiguateTimes(tokens, options);
         return Handler.getAnchor(ddTokens, options);
     }
-
 }

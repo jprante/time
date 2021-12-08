@@ -4,8 +4,10 @@ package org.xbib.time.chronic;
  *
  */
 public class Range {
-    private Long begin;
-    private Long end;
+
+    private final Long begin;
+
+    private final Long end;
 
     public Range(long begin, long end) {
         this.begin = begin;

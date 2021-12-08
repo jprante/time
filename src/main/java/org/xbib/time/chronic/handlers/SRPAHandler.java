@@ -16,5 +16,4 @@ public class SRPAHandler extends SRPHandler {
         Span anchorSpan = Handler.getAnchor(tokens.subList(3, tokens.size()), options);
         return super.handle(tokens, anchorSpan, options);
     }
-
 }

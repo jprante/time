@@ -2,7 +2,7 @@ package org.xbib.time.chronic;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.xbib.time.chronic.tags.Pointer;
+import org.xbib.time.chronic.tags.PointerType;
 
 import java.text.ParseException;
 import java.time.ZoneId;
@@ -48,16 +48,16 @@ public class ParserTest {
         time = parse_now("may 27");
         assertEquals(construct(2007, 5, 27, 12), time);
 
-        time = parse_now("may 28", new Options().setContext(Pointer.PointerType.PAST));
+        time = parse_now("may 28", new Options().setContext(PointerType.PAST));
         assertEquals(construct(2006, 5, 28, 12), time);
 
-        time = parse_now("may 28 5pm", new Options().setContext(Pointer.PointerType.PAST));
+        time = parse_now("may 28 5pm", new Options().setContext(PointerType.PAST));
         assertEquals(construct(2006, 5, 28, 17), time);
 
-        time = parse_now("may 28 at 5pm", new Options().setContext(Pointer.PointerType.PAST));
+        time = parse_now("may 28 at 5pm", new Options().setContext(PointerType.PAST));
         assertEquals(construct(2006, 5, 28, 17), time);
 
-        time = parse_now("may 28 at 5:32.19pm", new Options().setContext(Pointer.PointerType.PAST));
+        time = parse_now("may 28 at 5:32.19pm", new Options().setContext(PointerType.PAST));
         assertEquals(construct(2006, 5, 28, 17, 32, 19), time);
 
         // rm_od
@@ -65,13 +65,13 @@ public class ParserTest {
         time = parse_now("may 27th");
         assertEquals(construct(2007, 5, 27, 12), time);
 
-        time = parse_now("may 27th", new Options().setContext(Pointer.PointerType.PAST));
+        time = parse_now("may 27th", new Options().setContext(PointerType.PAST));
         assertEquals(construct(2006, 5, 27, 12), time);
 
-        time = parse_now("may 27th 5:00 pm", new Options().setContext(Pointer.PointerType.PAST));
+        time = parse_now("may 27th 5:00 pm", new Options().setContext(PointerType.PAST));
         assertEquals(construct(2006, 5, 27, 17), time);
 
-        time = parse_now("may 27th at 5pm", new Options().setContext(Pointer.PointerType.PAST));
+        time = parse_now("may 27th at 5pm", new Options().setContext(PointerType.PAST));
         assertEquals(construct(2006, 5, 27, 17), time);
 
         time = parse_now("may 27th at 5", new Options().setAmbiguousTimeRange(0));
@@ -300,7 +300,7 @@ public class ParserTest {
         //assertEquals(construct(2006, 10, 24, 12, 30), time);
         assertEquals(construct(2006, 10, 24, 12), time);
 
-        time = parse_now("this year", new Options().setContext(Pointer.PointerType.PAST));
+        time = parse_now("this year", new Options().setContext(PointerType.PAST));
         //assertEquals(construct(2006, 4, 24, 12, 30), time);
         assertEquals(construct(2006, 4, 24, 12), time);
 
@@ -309,7 +309,7 @@ public class ParserTest {
         time = parse_now("this month");
         assertEquals(construct(2006, 8, 24, 12), time);
 
-        time = parse_now("this month", new Options().setContext(Pointer.PointerType.PAST));
+        time = parse_now("this month", new Options().setContext(PointerType.PAST));
         assertEquals(construct(2006, 8, 8, 12), time);
 
         Options options = new Options();
@@ -328,7 +328,7 @@ public class ParserTest {
         time = parse_now("this fortnight");
         assertEquals(construct(2006, 8, 21, 19, 30), time);
 
-        time = parse_now("this fortnight", new Options().setContext(Pointer.PointerType.PAST));
+        time = parse_now("this fortnight", new Options().setContext(PointerType.PAST));
         assertEquals(construct(2006, 8, 14, 19), time);
 
         // week
@@ -336,7 +336,7 @@ public class ParserTest {
         time = parse_now("this week");
         assertEquals(construct(2006, 8, 18, 7, 30), time);
 
-        time = parse_now("this week", new Options().setContext(Pointer.PointerType.PAST));
+        time = parse_now("this week", new Options().setContext(PointerType.PAST));
         assertEquals(construct(2006, 8, 14, 19), time);
 
         // week
@@ -344,7 +344,7 @@ public class ParserTest {
         time = parse_now("this weekend");
         assertEquals(construct(2006, 8, 20), time);
 
-        time = parse_now("this weekend", new Options().setContext(Pointer.PointerType.PAST));
+        time = parse_now("this weekend", new Options().setContext(PointerType.PAST));
         assertEquals(construct(2006, 8, 13), time);
 
         time = parse_now("last weekend");
@@ -355,7 +355,7 @@ public class ParserTest {
         time = parse_now("this day");
         assertEquals(construct(2006, 8, 16, 19, 30), time);
 
-        time = parse_now("this day", new Options().setContext(Pointer.PointerType.PAST));
+        time = parse_now("this day", new Options().setContext(PointerType.PAST));
         assertEquals(construct(2006, 8, 16, 7), time);
 
         time = parse_now("today");
@@ -405,7 +405,7 @@ public class ParserTest {
         time = parse_now("this second");
         assertEquals(construct(2006, 8, 16, 14), time);
 
-        time = parse_now("this second", new Options().setContext(Pointer.PointerType.PAST));
+        time = parse_now("this second", new Options().setContext(PointerType.PAST));
         assertEquals(construct(2006, 8, 16, 14), time);
 
         time = parse_now("next second");

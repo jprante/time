@@ -13,7 +13,9 @@ import java.util.ResourceBundle;
  * Represents a simple method of formatting a specific {@link TimeUnitQuantity} of time.
  */
 public class ResourcesTimeFormat extends SimpleTimeFormat implements TimeFormat, LocaleAware<ResourcesTimeFormat> {
+
     private final ResourcesTimeUnit unit;
+
     private TimeFormat override;
 
     public ResourcesTimeFormat(ResourcesTimeUnit unit) {
@@ -31,17 +33,14 @@ public class ResourcesTimeFormat extends SimpleTimeFormat implements TimeFormat,
         } else {
             override = null;
         }
-
         if (override == null) {
             setPattern(bundle.getString(unit.getResourceKeyPrefix() + "Pattern"));
             setFuturePrefix(bundle.getString(unit.getResourceKeyPrefix() + "FuturePrefix"));
             setFutureSuffix(bundle.getString(unit.getResourceKeyPrefix() + "FutureSuffix"));
             setPastPrefix(bundle.getString(unit.getResourceKeyPrefix() + "PastPrefix"));
             setPastSuffix(bundle.getString(unit.getResourceKeyPrefix() + "PastSuffix"));
-
             setSingularName(bundle.getString(unit.getResourceKeyPrefix() + "SingularName"));
             setPluralName(bundle.getString(unit.getResourceKeyPrefix() + "PluralName"));
-
             String key = unit.getResourceKeyPrefix() + "FuturePluralName";
             if (bundle.containsKey(key)) {
                 setFuturePluralName(bundle.getString(key));

@@ -12,32 +12,37 @@ import java.util.TreeSet;
  * Handles a separator, that splits the fields into multiple parts.
  * For example, the 'T' in the ISO8601 standard.
  */
-class Separator implements PeriodPrinter, PeriodParser {
+public class Separator implements PeriodPrinter, PeriodParser {
+
     private final String iText;
+
     private final String iFinalText;
+
     private final String[] iParsedForms;
 
     private final boolean iUseBefore;
+
     private final boolean iUseAfter;
 
     private final PeriodPrinter iBeforePrinter;
-    private final PeriodParser iBeforeParser;
-    volatile PeriodPrinter iAfterPrinter;
-    volatile PeriodParser iAfterParser;
 
-    Separator(String text, String finalText, String[] variants,
-              PeriodPrinter beforePrinter, PeriodParser beforeParser,
-              boolean useBefore, boolean useAfter) {
+    private final PeriodParser iBeforeParser;
+
+    protected volatile PeriodPrinter iAfterPrinter;
+
+    protected volatile PeriodParser iAfterParser;
+
+    public Separator(String text, String finalText, String[] variants,
+                     PeriodPrinter beforePrinter, PeriodParser beforeParser,
+                     boolean useBefore, boolean useAfter) {
         iText = text;
         iFinalText = finalText;
-
         if ((finalText == null || text.equals(finalText)) &&
                 (variants == null || variants.length == 0)) {
 
             iParsedForms = new String[]{text};
         } else {
-            // Filter and reverse sort the parsed forms.
-            TreeSet<String> parsedSet = new TreeSet<String>(String.CASE_INSENSITIVE_ORDER);
+            TreeSet<String> parsedSet = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
             parsedSet.add(text);
             parsedSet.add(finalText);
             if (variants != null) {
@@ -47,9 +52,8 @@ class Separator implements PeriodPrinter, PeriodParser {
             }
             ArrayList<String> parsedList = new ArrayList<String>(parsedSet);
             Collections.reverse(parsedList);
-            iParsedForms = parsedList.toArray(new String[parsedList.size()]);
+            iParsedForms = parsedList.toArray(new String[0]);
         }
-
         iBeforePrinter = beforePrinter;
         iBeforeParser = beforeParser;
         iUseBefore = useBefore;
@@ -67,10 +71,8 @@ class Separator implements PeriodPrinter, PeriodParser {
     public int calculatePrintedLength(Period period, Locale locale) {
         PeriodPrinter before = iBeforePrinter;
         PeriodPrinter after = iAfterPrinter;
-
         int sum = before.calculatePrintedLength(period, locale)
                 + after.calculatePrintedLength(period, locale);
-
         if (iUseBefore) {
             if (before.countFieldsToPrint(period, 1, locale) > 0) {
                 if (iUseAfter) {
@@ -85,7 +87,6 @@ class Separator implements PeriodPrinter, PeriodParser {
         } else if (iUseAfter && after.countFieldsToPrint(period, 1, locale) > 0) {
             sum += iText.length();
         }
-
         return sum;
     }
 
@@ -113,7 +114,6 @@ class Separator implements PeriodPrinter, PeriodParser {
     public void printTo(Writer out, Period period, Locale locale) throws IOException {
         PeriodPrinter before = iBeforePrinter;
         PeriodPrinter after = iAfterPrinter;
-
         before.printTo(out, period, locale);
         if (iUseBefore) {
             if (before.countFieldsToPrint(period, 1, locale) > 0) {
@@ -132,8 +132,7 @@ class Separator implements PeriodPrinter, PeriodParser {
         after.printTo(out, period, locale);
     }
 
-    public int parseInto(PeriodAmount period, String periodStr,
-                         int pos, Locale locale) {
+    public int parseInto(PeriodAmount period, String periodStr, int pos, Locale locale) {
         int position = pos;
         int oldPos = position;
         position = iBeforeParser.parseInto(period, periodStr, position, locale);
@@ -162,16 +161,14 @@ class Separator implements PeriodPrinter, PeriodParser {
             // Separator should not have been supplied.
             return ~oldPos;
         }
-
         if (position > oldPos && !found && !iUseBefore) {
             // Separator was required.
             return ~oldPos;
         }
-
         return position;
     }
 
-    Separator finish(PeriodPrinter afterPrinter, PeriodParser afterParser) {
+    protected Separator finish(PeriodPrinter afterPrinter, PeriodParser afterParser) {
         iAfterPrinter = afterPrinter;
         iAfterParser = afterParser;
         return this;

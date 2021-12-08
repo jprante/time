@@ -3,7 +3,7 @@ package org.xbib.time.chronic;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 import org.xbib.time.chronic.repeaters.RepeaterYear;
-import org.xbib.time.chronic.tags.Pointer;
+import org.xbib.time.chronic.tags.PointerType;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -32,11 +32,11 @@ public class RepeaterYearTest {
         RepeaterYear years = new RepeaterYear();
         years.setNow(now);
 
-        Span nextYear = years.nextSpan(Pointer.PointerType.FUTURE);
+        Span nextYear = years.nextSpan(PointerType.FUTURE);
         assertEquals(construct(2007, 1, 1), nextYear.getBeginCalendar());
         assertEquals(construct(2008, 1, 1), nextYear.getEndCalendar());
 
-        Span nextNextYear = years.nextSpan(Pointer.PointerType.FUTURE);
+        Span nextNextYear = years.nextSpan(PointerType.FUTURE);
         assertEquals(construct(2008, 1, 1), nextNextYear.getBeginCalendar());
         assertEquals(construct(2009, 1, 1), nextNextYear.getEndCalendar());
     }
@@ -45,11 +45,11 @@ public class RepeaterYearTest {
     public void testNextPast() {
         RepeaterYear years = new RepeaterYear();
         years.setNow(now);
-        Span lastYear = years.nextSpan(Pointer.PointerType.PAST);
+        Span lastYear = years.nextSpan(PointerType.PAST);
         assertEquals(construct(2005, 1, 1), lastYear.getBeginCalendar());
         assertEquals(construct(2006, 1, 1), lastYear.getEndCalendar());
 
-        Span lastLastYear = years.nextSpan(Pointer.PointerType.PAST);
+        Span lastLastYear = years.nextSpan(PointerType.PAST);
         assertEquals(construct(2004, 1, 1), lastLastYear.getBeginCalendar());
         assertEquals(construct(2005, 1, 1), lastLastYear.getEndCalendar());
     }
@@ -60,11 +60,11 @@ public class RepeaterYearTest {
         years.setNow(now);
 
         Span thisYear;
-        thisYear = years.thisSpan(Pointer.PointerType.FUTURE);
+        thisYear = years.thisSpan(PointerType.FUTURE);
         assertEquals(construct(2006, 8, 17), thisYear.getBeginCalendar());
         assertEquals(construct(2007, 1, 1), thisYear.getEndCalendar());
 
-        thisYear = years.thisSpan(Pointer.PointerType.PAST);
+        thisYear = years.thisSpan(PointerType.PAST);
         assertEquals(construct(2006, 1, 1), thisYear.getBeginCalendar());
         assertEquals(construct(2006, 8, 16), thisYear.getEndCalendar());
     }
@@ -74,12 +74,12 @@ public class RepeaterYearTest {
         Span span = new Span(now, ChronoUnit.SECONDS, 1);
 
         Span offsetSpan;
-        offsetSpan = new RepeaterYear().getOffset(span, 3, Pointer.PointerType.FUTURE);
+        offsetSpan = new RepeaterYear().getOffset(span, 3, PointerType.FUTURE);
 
         assertEquals(construct(2009, 8, 16, 14), offsetSpan.getBeginCalendar());
         assertEquals(construct(2009, 8, 16, 14, 0, 1), offsetSpan.getEndCalendar());
 
-        offsetSpan = new RepeaterYear().getOffset(span, 10, Pointer.PointerType.PAST);
+        offsetSpan = new RepeaterYear().getOffset(span, 10, PointerType.PAST);
 
         assertEquals(construct(1996, 8, 16, 14), offsetSpan.getBeginCalendar());
         assertEquals(construct(1996, 8, 16, 14, 0, 1), offsetSpan.getEndCalendar());

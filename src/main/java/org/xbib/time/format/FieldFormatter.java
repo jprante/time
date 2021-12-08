@@ -11,10 +11,12 @@ import java.util.Set;
 /**
  * Formats the numeric value of a field, potentially with prefix/suffix.
  */
-class FieldFormatter implements PeriodPrinter, PeriodParser {
+public class FieldFormatter implements PeriodPrinter, PeriodParser {
+
     private final int iMinPrintedDigits;
-    //private final int iPrintZeroSetting;
+
     private final int iMaxParsedDigits;
+
     private final boolean iRejectSignedValues;
 
     /**
@@ -30,10 +32,10 @@ class FieldFormatter implements PeriodPrinter, PeriodParser {
     private final PeriodFieldAffix iPrefix;
     private final PeriodFieldAffix iSuffix;
 
-    FieldFormatter(int minPrintedDigits,
-                   int maxParsedDigits, boolean rejectSignedValues,
-                   ChronoUnit chronoUnit,
-                   PeriodFieldAffix prefix, PeriodFieldAffix suffix) {
+    public FieldFormatter(int minPrintedDigits,
+                          int maxParsedDigits, boolean rejectSignedValues,
+                          ChronoUnit chronoUnit,
+                          PeriodFieldAffix prefix, PeriodFieldAffix suffix) {
         iMinPrintedDigits = minPrintedDigits;
         iMaxParsedDigits = maxParsedDigits;
         iRejectSignedValues = rejectSignedValues;
@@ -42,7 +44,7 @@ class FieldFormatter implements PeriodPrinter, PeriodParser {
         iSuffix = suffix;
     }
 
-    FieldFormatter(FieldFormatter field, PeriodFieldAffix periodFieldAffix) {
+    public FieldFormatter(FieldFormatter field, PeriodFieldAffix periodFieldAffix) {
         PeriodFieldAffix suffix = periodFieldAffix;
         iMinPrintedDigits = field.iMinPrintedDigits;
         iMaxParsedDigits = field.iMaxParsedDigits;
@@ -91,17 +93,14 @@ class FieldFormatter implements PeriodPrinter, PeriodParser {
         if (valueLong == Long.MAX_VALUE) {
             return 0;
         }
-
         int sum = Math.max(FormatUtils.calculateDigitCount(valueLong), iMinPrintedDigits);
         int value = (int) valueLong;
-
         if (iPrefix != null) {
             sum += iPrefix.calculatePrintedLength(value);
         }
         if (iSuffix != null) {
             sum += iSuffix.calculatePrintedLength(value);
         }
-
         return sum;
     }
 
@@ -152,7 +151,6 @@ class FieldFormatter implements PeriodPrinter, PeriodParser {
         if (position >= text.length()) {
             return ~position;
         }
-
         if (iPrefix != null) {
             position = iPrefix.parse(text, position);
             if (position < 0) {
@@ -187,7 +185,6 @@ class FieldFormatter implements PeriodPrinter, PeriodParser {
             }
             length++;
         }
-
         if (!hasDigits) {
             return ~position;
         }
@@ -236,7 +233,7 @@ class FieldFormatter implements PeriodPrinter, PeriodParser {
     /**
      * @return Long.MAX_VALUE if nothing to print, otherwise value
      */
-    long getFieldValue(Period period) {
+    private long getFieldValue(Period period) {
         long value;
         switch (unit) {
             default:
@@ -270,7 +267,7 @@ class FieldFormatter implements PeriodPrinter, PeriodParser {
         return value;
     }
 
-    void setFieldValue(PeriodAmount period, ChronoUnit field, long value) {
+    private void setFieldValue(PeriodAmount period, ChronoUnit field, long value) {
         switch (field) {
             default:
                 break;
@@ -299,9 +296,5 @@ class FieldFormatter implements PeriodPrinter, PeriodParser {
                 period.set(ChronoUnit.MILLIS, value);
                 break;
         }
-    }
-
-    ChronoUnit getFieldType() {
-        return unit;
     }
 }

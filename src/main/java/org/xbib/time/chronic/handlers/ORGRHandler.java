@@ -16,5 +16,4 @@ public class ORGRHandler extends ORRHandler {
         Span outerSpan = Handler.getAnchor(tokens.subList(2, 4), options);
         return handle(tokens.subList(0, 2), outerSpan, options);
     }
-
 }

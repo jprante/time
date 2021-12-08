@@ -8,30 +8,31 @@ import java.util.Set;
 /**
  * Builds a composite affix by merging two other affix implementations.
  */
-class CompositeAffix extends IgnorableAffix {
+public class CompositeAffix extends IgnorableAffix {
+
     private final PeriodFieldAffix iLeft;
+
     private final PeriodFieldAffix iRight;
+
     private final String[] iLeftRightCombinations;
 
-    CompositeAffix(PeriodFieldAffix left, PeriodFieldAffix right) {
+    public CompositeAffix(PeriodFieldAffix left, PeriodFieldAffix right) {
         iLeft = left;
         iRight = right;
-
         // We need to construct all possible combinations of left and right.
         // We are doing it once in constructor so that getAffixes() is quicker.
-        Set<String> result = new HashSet<String>();
+        Set<String> result = new HashSet<>();
         for (String leftText : iLeft.getAffixes()) {
             for (String rightText : iRight.getAffixes()) {
                 result.add(leftText + rightText);
             }
         }
-        iLeftRightCombinations = result.toArray(new String[result.size()]);
+        iLeftRightCombinations = result.toArray(new String[0]);
     }
 
     @Override
     public int calculatePrintedLength(int value) {
-        return iLeft.calculatePrintedLength(value)
-                + iRight.calculatePrintedLength(value);
+        return iLeft.calculatePrintedLength(value) + iRight.calculatePrintedLength(value);
     }
 
     @Override

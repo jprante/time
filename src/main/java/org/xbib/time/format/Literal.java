@@ -8,11 +8,13 @@ import java.util.Locale;
 /**
  * Handles a simple literal piece of text.
  */
-class Literal implements PeriodPrinter, PeriodParser {
-    static final Literal EMPTY = new Literal("");
+public class Literal implements PeriodPrinter, PeriodParser {
+
+    public static final Literal EMPTY = new Literal("");
+
     private final String iText;
 
-    Literal(String text) {
+    public Literal(String text) {
         iText = text;
     }
 

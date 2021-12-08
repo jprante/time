@@ -10,8 +10,10 @@ import java.util.List;
  *
  */
 public class Token {
-    private String word;
-    private List<Tag<?>> tags;
+
+    private final String word;
+
+    private final List<Tag<?>> tags;
 
     public Token(String word) {
         this.word = word;
@@ -35,13 +37,7 @@ public class Token {
      * @param tagClass tag class
      */
     public void untag(Class<?> tagClass) {
-        Iterator<Tag<?>> tagIter = tags.iterator();
-        while (tagIter.hasNext()) {
-            Tag<?> tag = tagIter.next();
-            if (tagClass.isInstance(tag)) {
-                tagIter.remove();
-            }
-        }
+        tags.removeIf(tagClass::isInstance);
     }
 
     /**
@@ -58,7 +54,6 @@ public class Token {
      * @param <T> type parameter
      * @return tag
      */
-    @SuppressWarnings("unchecked")
     public <T extends Tag<?>> T getTag(Class<T> tagClass) {
         List<T> matches = getTags(tagClass);
         T matchingTag = null;

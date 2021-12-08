@@ -23,5 +23,4 @@ public class SmSdHandler implements IHandler {
         ZonedDateTime end = start.plus(1, ChronoUnit.MONTHS);
         return new Span(start, end);
     }
-
 }

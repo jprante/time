@@ -8,9 +8,9 @@ import java.util.List;
 /**
  *
  */
-public class Separator extends Tag<Separator.SeparatorType> {
+public class Separator extends Tag<SeparatorType> {
 
-    Separator(SeparatorType type) {
+    public Separator(SeparatorType type) {
         super(type);
     }
 
@@ -42,10 +42,4 @@ public class Separator extends Tag<Separator.SeparatorType> {
         return "separator";
     }
 
-    /**
-     *
-     */
-    enum SeparatorType {
-        COMMA, DASH, SLASH, AT, IN
-    }
 }

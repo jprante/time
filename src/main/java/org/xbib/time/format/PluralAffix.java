@@ -7,11 +7,13 @@ import java.io.Writer;
  * Implements an affix where the text varies by the amount of the field.
  * Only singular (1) and plural (not 1) are supported.
  */
-class PluralAffix extends IgnorableAffix {
+public class PluralAffix extends IgnorableAffix {
+
     private final String iSingularText;
+
     private final String iPluralText;
 
-    PluralAffix(String singularText, String pluralText) {
+    public PluralAffix(String singularText, String pluralText) {
         iSingularText = singularText;
         iPluralText = pluralText;
     }

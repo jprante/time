@@ -1,6 +1,10 @@
 package org.xbib.time.schedule;
 
-final class Tokens {
+public final class Tokens {
+
+    private final String source;
+
+    private final int length;
 
     private int number;
 
@@ -8,8 +12,6 @@ final class Tokens {
 
     private Keywords keywords;
 
-    private final String source;
-    private final int length;
     private int position;
 
     public Tokens(String s) {

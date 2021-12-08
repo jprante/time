@@ -4,7 +4,8 @@ package org.xbib.time.chronic.handlers;
  *
  */
 public class HandlerTypePattern extends HandlerPattern {
-    private Handler.HandlerType type;
+
+    private final Handler.HandlerType type;
 
     public HandlerTypePattern(Handler.HandlerType type) {
         this(type, false);

@@ -20,7 +20,7 @@ public class DayOfWeekField extends DefaultField {
 
     private final boolean unspecified;
 
-    private DayOfWeekField(Builder b) {
+    protected DayOfWeekField(Builder b) {
         super(b);
         this.nth = b.nth;
         hasNth = !nth.isEmpty();
@@ -38,7 +38,6 @@ public class DayOfWeekField extends DefaultField {
             return true;
         }
         final DayOfWeek dayOfWeek = time.getDayOfWeek();
-        //int number = dayOfWeek.getValue() % 7;
         int number = dayOfWeek.getValue();
         if (hasLast) {
             return last.contains(number) && time.getMonth() != time.plusWeeks(1).getMonth();
@@ -53,10 +52,6 @@ public class DayOfWeekField extends DefaultField {
             }
         }
         return contains(number);
-    }
-
-    private int number(int dayOfWeek) {
-        return dayOfWeek % 7;
     }
 
     @Override
@@ -98,7 +93,8 @@ public class DayOfWeekField extends DefaultField {
     }
 
     public static class Builder extends DefaultField.Builder {
-        static final Keywords KEYWORDS = new Keywords();
+
+        protected static final Keywords KEYWORDS = new Keywords();
 
         static {
             KEYWORDS.put("MON", 1);
@@ -110,7 +106,7 @@ public class DayOfWeekField extends DefaultField {
             KEYWORDS.put("SUN", 7);
         }
 
-        private boolean oneBased;
+        private final boolean oneBased;
 
         private boolean unspecified;
 
@@ -118,7 +114,7 @@ public class DayOfWeekField extends DefaultField {
 
         private final MultiMap<Integer, Integer> nth;
 
-        Builder(boolean oneBased) {
+        protected Builder(boolean oneBased) {
             super(1, 7);
             this.oneBased = oneBased;
             last = new LinkedHashSet<>();
@@ -166,7 +162,7 @@ public class DayOfWeekField extends DefaultField {
         }
 
         @Override
-        public DayOfWeekField build() {
+        protected DayOfWeekField build() {
             return new DayOfWeekField(this);
         }
     }

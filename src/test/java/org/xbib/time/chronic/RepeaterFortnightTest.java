@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 import org.xbib.time.chronic.repeaters.RepeaterFortnight;
 import org.xbib.time.chronic.repeaters.RepeaterWeek;
-import org.xbib.time.chronic.tags.Pointer;
+import org.xbib.time.chronic.tags.PointerType;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -37,11 +37,11 @@ public class RepeaterFortnightTest {
         RepeaterFortnight fortnights = new RepeaterFortnight();
         fortnights.setNow(now);
 
-        Span nextFortnight = fortnights.nextSpan(Pointer.PointerType.FUTURE);
+        Span nextFortnight = fortnights.nextSpan(PointerType.FUTURE);
         assertEquals(construct(2006, 8, 20), nextFortnight.getBeginCalendar());
         assertEquals(construct(2006, 9, 3), nextFortnight.getEndCalendar());
 
-        Span nextNextFortnight = fortnights.nextSpan(Pointer.PointerType.FUTURE);
+        Span nextNextFortnight = fortnights.nextSpan(PointerType.FUTURE);
         assertEquals(construct(2006, 9, 3), nextNextFortnight.getBeginCalendar());
         assertEquals(construct(2006, 9, 17), nextNextFortnight.getEndCalendar());
     }
@@ -50,11 +50,11 @@ public class RepeaterFortnightTest {
     public void testNextPast() {
         RepeaterFortnight fortnights = new RepeaterFortnight();
         fortnights.setNow(now);
-        Span lastFortnight = fortnights.nextSpan(Pointer.PointerType.PAST);
+        Span lastFortnight = fortnights.nextSpan(PointerType.PAST);
         assertEquals(construct(2006, 7, 30), lastFortnight.getBeginCalendar());
         assertEquals(construct(2006, 8, 13), lastFortnight.getEndCalendar());
 
-        Span lastLastFortnight = fortnights.nextSpan(Pointer.PointerType.PAST);
+        Span lastLastFortnight = fortnights.nextSpan(PointerType.PAST);
         assertEquals(construct(2006, 7, 16), lastLastFortnight.getBeginCalendar());
         assertEquals(construct(2006, 7, 30), lastLastFortnight.getEndCalendar());
     }
@@ -64,7 +64,7 @@ public class RepeaterFortnightTest {
         RepeaterFortnight fortnights = new RepeaterFortnight();
         fortnights.setNow(now);
 
-        Span thisFortnight = fortnights.thisSpan(Pointer.PointerType.FUTURE);
+        Span thisFortnight = fortnights.thisSpan(PointerType.FUTURE);
         assertEquals(construct(2006, 8, 16, 15), thisFortnight.getBeginCalendar());
         assertEquals(construct(2006, 8, 27), thisFortnight.getEndCalendar());
     }
@@ -74,7 +74,7 @@ public class RepeaterFortnightTest {
         RepeaterFortnight fortnights = new RepeaterFortnight();
         fortnights.setNow(now);
 
-        Span thisFortnight = fortnights.thisSpan(Pointer.PointerType.PAST);
+        Span thisFortnight = fortnights.thisSpan(PointerType.PAST);
         assertEquals(construct(2006, 8, 13, 0), thisFortnight.getBeginCalendar());
         assertEquals(construct(2006, 8, 16, 14), thisFortnight.getEndCalendar());
     }
@@ -83,7 +83,7 @@ public class RepeaterFortnightTest {
     public void testOffset() {
         Span span = new Span(now, ChronoUnit.SECONDS, 1);
 
-        Span offsetSpan = new RepeaterWeek().getOffset(span, 3, Pointer.PointerType.FUTURE);
+        Span offsetSpan = new RepeaterWeek().getOffset(span, 3, PointerType.FUTURE);
 
         assertEquals(construct(2006, 9, 6, 14), offsetSpan.getBeginCalendar());
         assertEquals(construct(2006, 9, 6, 14, 0, 1), offsetSpan.getEndCalendar());

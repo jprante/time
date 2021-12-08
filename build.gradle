@@ -9,7 +9,7 @@ wrapper {
 }
 
 ext {
-    user = 'xbib'
+    user = 'jprante'
     name = 'time'
     description = 'A bundle of Chronic, Prettytime, and  org.joda.time.format optimized for Java 8 Time API'
     inceptionYear = '2016'

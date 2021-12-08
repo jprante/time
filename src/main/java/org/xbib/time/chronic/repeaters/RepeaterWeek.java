@@ -1,7 +1,7 @@
 package org.xbib.time.chronic.repeaters;
 
 import org.xbib.time.chronic.Span;
-import org.xbib.time.chronic.tags.Pointer.PointerType;
+import org.xbib.time.chronic.tags.PointerType;
 
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
@@ -10,7 +10,9 @@ import java.time.temporal.ChronoUnit;
  *
  */
 public class RepeaterWeek extends RepeaterUnit {
+
     public static final int WEEK_SECONDS = 604800;
+
     public static final int WEEK_DAYS = 7;
 
     private ZonedDateTime currentWeekStart;
@@ -24,12 +26,12 @@ public class RepeaterWeek extends RepeaterUnit {
     protected Span internalNextSpan(PointerType pointer) {
         if (currentWeekStart == null) {
             if (pointer == PointerType.FUTURE) {
-                RepeaterDayName sundayRepeater = new RepeaterDayName(RepeaterDayName.DayName.SUNDAY);
+                RepeaterDayName sundayRepeater = new RepeaterDayName(DayName.SUNDAY);
                 sundayRepeater.setNow(getNow());
                 Span nextSundaySpan = sundayRepeater.nextSpan(PointerType.FUTURE);
                 currentWeekStart = nextSundaySpan.getBeginCalendar();
             } else if (pointer == PointerType.PAST) {
-                RepeaterDayName sundayRepeater = new RepeaterDayName(RepeaterDayName.DayName.SUNDAY);
+                RepeaterDayName sundayRepeater = new RepeaterDayName(DayName.SUNDAY);
                 sundayRepeater.setNow(getNow().plus(1, ChronoUnit.DAYS));
                 sundayRepeater.nextSpan(PointerType.PAST);
                 Span lastSundaySpan = sundayRepeater.nextSpan(PointerType.PAST);
@@ -52,20 +54,20 @@ public class RepeaterWeek extends RepeaterUnit {
         ZonedDateTime thisWeekEnd;
         if (pointer == PointerType.FUTURE) {
             thisWeekStart = ymdh(getNow()).plus(1, ChronoUnit.HOURS);
-            RepeaterDayName sundayRepeater = new RepeaterDayName(RepeaterDayName.DayName.SUNDAY);
+            RepeaterDayName sundayRepeater = new RepeaterDayName(DayName.SUNDAY);
             sundayRepeater.setNow(getNow());
             Span thisSundaySpan = sundayRepeater.thisSpan(PointerType.FUTURE);
             thisWeekEnd = thisSundaySpan.getBeginCalendar();
             thisWeekSpan = new Span(thisWeekStart, thisWeekEnd);
         } else if (pointer == PointerType.PAST) {
             thisWeekEnd = ymdh(getNow());
-            RepeaterDayName sundayRepeater = new RepeaterDayName(RepeaterDayName.DayName.SUNDAY);
+            RepeaterDayName sundayRepeater = new RepeaterDayName(DayName.SUNDAY);
             sundayRepeater.setNow(getNow());
             Span lastSundaySpan = sundayRepeater.nextSpan(PointerType.PAST);
             thisWeekStart = lastSundaySpan.getBeginCalendar();
             thisWeekSpan = new Span(thisWeekStart, thisWeekEnd);
         } else if (pointer == PointerType.NONE) {
-            RepeaterDayName sundayRepeater = new RepeaterDayName(RepeaterDayName.DayName.SUNDAY);
+            RepeaterDayName sundayRepeater = new RepeaterDayName(DayName.SUNDAY);
             sundayRepeater.setNow(getNow());
             Span lastSundaySpan = sundayRepeater.nextSpan(PointerType.PAST);
             thisWeekStart = lastSundaySpan.getBeginCalendar();

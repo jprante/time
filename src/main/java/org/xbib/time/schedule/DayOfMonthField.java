@@ -12,14 +12,14 @@ public class DayOfMonthField extends DefaultField {
 
     private final boolean unspecified;
 
-    private DayOfMonthField(Builder b) {
+    protected DayOfMonthField(Builder b) {
         super(b);
         this.lastDay = b.lastDay;
         this.nearestWeekday = b.nearestWeekday;
         this.unspecified = b.unspecified;
     }
 
-    boolean isUnspecified() {
+    public boolean isUnspecified() {
         return unspecified;
     }
 
@@ -80,13 +80,8 @@ public class DayOfMonthField extends DefaultField {
 
         private boolean unspecified;
 
-        Builder() {
+        protected Builder() {
             super(1, 31);
-        }
-
-        @Override
-        public DayOfMonthField build() {
-            return new DayOfMonthField(this);
         }
 
         @Override
@@ -117,6 +112,11 @@ public class DayOfMonthField extends DefaultField {
             } else {
                 return super.parseNumber(tokens, token, first, last);
             }
+        }
+
+        @Override
+        protected DayOfMonthField build() {
+            return new DayOfMonthField(this);
         }
     }
 }
