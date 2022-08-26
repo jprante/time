@@ -117,8 +117,8 @@ public class DayOfWeekField extends DefaultField {
         protected Builder(boolean oneBased) {
             super(1, 7);
             this.oneBased = oneBased;
-            last = new LinkedHashSet<>();
-            nth = new LinkedHashSetMultiMap<>();
+            this.last = new LinkedHashSet<>();
+            this.nth = new LinkedHashSetMultiMap<>();
         }
 
         @Override

@@ -9,5 +9,4 @@ module org.xbib.time {
     exports org.xbib.time.pretty.i18n;
     exports org.xbib.time.pretty.units;
     exports org.xbib.time.schedule;
-    exports org.xbib.time.util;
 }

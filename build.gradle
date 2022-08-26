@@ -4,7 +4,7 @@ plugins {
 }
 
 wrapper {
-    gradleVersion = "${project.property('gradle.wrapper.version')}"
+    gradleVersion = libs.versions.gradle.get()
     distributionType = Wrapper.DistributionType.ALL
 }
 
@@ -25,14 +25,15 @@ ext {
 
 apply plugin: 'java-library'
 
-dependencies {
-    testImplementation "org.quartz-scheduler:quartz:${project.property('quartz.version')}"
-    testImplementation "com.google.caliper:caliper:${project.property('caliper.version')}"
-}
-
 apply from: rootProject.file('gradle/ide/idea.gradle')
 apply from: rootProject.file('gradle/repositories/maven.gradle')
 apply from: rootProject.file('gradle/compile/java.gradle')
 apply from: rootProject.file('gradle/test/junit5.gradle')
 apply from: rootProject.file('gradle/publishing/publication.gradle')
 apply from: rootProject.file('gradle/publishing/sonatype.gradle')
+
+dependencies {
+    testImplementation libs.quartz
+    testImplementation libs.caliper
+}
+

@@ -26,9 +26,9 @@ public class PrettyTimeI18n_in_ID_Test {
 
     @Test
     public void testLocaleISOCorrectness() {
-        assertEquals("in", this.locale.getLanguage());
+        assertEquals("id", this.locale.getLanguage());
         assertEquals("ID", this.locale.getCountry());
-        assertEquals("Bahasa Indonesia", this.locale.getDisplayLanguage());
+        assertEquals("Indonesia", this.locale.getDisplayLanguage());
         assertEquals("Indonesia", this.locale.getDisplayCountry());
     }
 
