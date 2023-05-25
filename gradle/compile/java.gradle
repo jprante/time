@@ -3,16 +3,18 @@ apply plugin: 'java-library'
 
 java {
     modularity.inferModulePath.set(true)
+    withSourcesJar()
+    withJavadocJar()
 }
 
 compileJava {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
 compileTestJava {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
 jar {
@@ -21,18 +23,10 @@ jar {
     }
 }
 
-task sourcesJar(type: Jar) {
-    dependsOn classes
-    classifier 'sources'
-    from sourceSets.main.allSource
+tasks.withType(JavaCompile) {
+    options.compilerArgs << '-Xlint:all,-fallthrough'
 }
 
-task javadocJar(type: Jar) {
-    dependsOn javadoc
-    classifier 'javadoc'
-    from javadoc.destinationDir
-}
-
-artifacts {
-    archives sourcesJar, javadocJar
+javadoc {
+    options.addStringOption('Xdoclint:none', '-quiet')
 }
