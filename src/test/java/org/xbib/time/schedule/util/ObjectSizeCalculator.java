@@ -113,16 +113,12 @@ public class ObjectSizeCalculator {
     // added.
     private final int superclassFieldPadding;
 
-    private final LoadingCache<Class<?>, ClassSizeInfo> classSizeInfos =
-            CacheBuilder.newBuilder().build(new CacheLoader<Class<?>, ClassSizeInfo>() {
-                public ClassSizeInfo load(Class<?> clazz) {
-                    return new ClassSizeInfo(clazz);
-                }
-            });
+    private final LoadingCache<Class<?>, ClassSizeInfo> classSizeInfos;
 
+    private final Set<Object> alreadyVisited;
 
-    private final Set<Object> alreadyVisited = Sets.newIdentityHashSet();
-    private final Deque<Object> pending = new ArrayDeque<Object>(16 * 1024);
+    private final Deque<Object> pending;
+
     private long size;
 
     /**
@@ -138,6 +134,13 @@ public class ObjectSizeCalculator {
         objectPadding = memoryLayoutSpecification.getObjectPadding();
         referenceSize = memoryLayoutSpecification.getReferenceSize();
         superclassFieldPadding = memoryLayoutSpecification.getSuperclassFieldPadding();
+        classSizeInfos = CacheBuilder.newBuilder().build(new CacheLoader<>() {
+            public ClassSizeInfo load(Class<?> clazz) {
+                return new ClassSizeInfo(clazz);
+            }
+        });
+        alreadyVisited = Sets.newIdentityHashSet();
+        pending = new ArrayDeque<>(16 * 1024);
     }
 
     /**
@@ -262,7 +265,7 @@ public class ObjectSizeCalculator {
 
         public ClassSizeInfo(Class<?> clazz) {
             long fieldsSize = 0;
-            final List<Field> referenceFields = new LinkedList<Field>();
+            final List<Field> referenceFields = new LinkedList<>();
             for (Field f : clazz.getDeclaredFields()) {
                 if (Modifier.isStatic(f.getModifiers())) {
                     continue;
@@ -284,8 +287,7 @@ public class ObjectSizeCalculator {
             }
             this.fieldsSize = fieldsSize;
             this.objectSize = roundTo(objectHeaderSize + fieldsSize, objectPadding);
-            this.referenceFields = referenceFields.toArray(
-                    new Field[referenceFields.size()]);
+            this.referenceFields = referenceFields.toArray(new Field[0]);
         }
 
         void visit(Object obj, ObjectSizeCalculator calc) {
@@ -298,9 +300,7 @@ public class ObjectSizeCalculator {
                 try {
                     calc.enqueue(f.get(obj));
                 } catch (IllegalAccessException e) {
-                    final AssertionError ae = new AssertionError(
-                            "Unexpected denial of access to " + f, e);
-                    throw ae;
+                    throw new AssertionError("Unexpected denial of access to " + f, e);
                 }
             }
         }
@@ -327,10 +327,8 @@ public class ObjectSizeCalculator {
     static MemoryLayoutSpecification getEffectiveMemoryLayoutSpecification() {
         final String vmName = System.getProperty("java.vm.name");
         if (vmName == null || !(vmName.startsWith("Java HotSpot(TM) ") || vmName.startsWith("OpenJDK"))) {
-            throw new UnsupportedOperationException(
-                    "ObjectSizeCalculator only supported on HotSpot VM");
+            throw new UnsupportedOperationException("ObjectSizeCalculator only supported on HotSpot VM");
         }
-
         final String dataModel = System.getProperty("sun.arch.data.model");
         if ("32".equals(dataModel)) {
             // Running with 32-bit data model
@@ -364,10 +362,17 @@ public class ObjectSizeCalculator {
             throw new UnsupportedOperationException("Unrecognized value '" +
                     dataModel + "' of sun.arch.data.model system property");
         }
-
         final String strVmVersion = System.getProperty("java.vm.version");
-        final int vmVersion = Integer.parseInt(strVmVersion.substring(0,
-                strVmVersion.indexOf('.')));
+        if (strVmVersion == null) {
+            throw new UnsupportedOperationException("property java.vm.version does not exist");
+        }
+        int pos = strVmVersion.indexOf('.');
+        pos = pos > 0 ? pos : strVmVersion.length();
+        if (pos == strVmVersion.length()) {
+            pos = strVmVersion.indexOf('+');
+            pos = pos > 0 ? pos : strVmVersion.length();
+        }
+        final int vmVersion = Integer.parseInt(strVmVersion.substring(0, pos));
         if (vmVersion >= 17) {
             long maxMemory = 0;
             for (MemoryPoolMXBean mp : ManagementFactory.getMemoryPoolMXBeans()) {

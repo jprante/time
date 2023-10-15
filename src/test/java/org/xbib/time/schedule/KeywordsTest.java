@@ -53,7 +53,7 @@ public class KeywordsTest {
             keywords.put("", 0);
             fail("Expected exception");
         } catch (StringIndexOutOfBoundsException e) {
-            assertEquals("String index out of range: 0", e.getMessage());
+            assertEquals("Index 0 out of bounds for length 0", e.getMessage());
         }
     }
 
@@ -63,7 +63,7 @@ public class KeywordsTest {
             keywords.put("A", 0);
             fail("Expected exception");
         } catch (StringIndexOutOfBoundsException e) {
-            assertEquals("String index out of range: 1", e.getMessage());
+            assertEquals("Index 1 out of bounds for length 1", e.getMessage());
         }
     }
 

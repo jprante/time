@@ -1,16 +1,18 @@
 dependencyResolutionManagement {
     versionCatalogs {
         libs {
-            version('gradle', '8.1.1')
-            version('groovy', '3.0.15')
-            version('junit', '5.9.3')
+            version('gradle', '8.4')
+            version('groovy', '3.0.17')
+            version('junit', '5.10.0')
             library('junit-jupiter-api', 'org.junit.jupiter', 'junit-jupiter-api').versionRef('junit')
             library('junit-jupiter-params', 'org.junit.jupiter', 'junit-jupiter-params').versionRef('junit')
             library('junit-jupiter-engine', 'org.junit.jupiter', 'junit-jupiter-engine').versionRef('junit')
+            library('junit-jupiter-platform-launcher', 'org.junit.platform', 'junit-platform-launcher').version('1.10.0')
             library('hamcrest', 'org.hamcrest', 'hamcrest-library').version('2.2')
             library('junit4', 'junit', 'junit').version('4.13.2')
             library('quartz', 'org.quartz-scheduler', 'quartz').version('2.3.2')
             library('caliper',  'com.google.caliper', 'caliper').version('1.0-beta-3')
+            library('guava', 'com.google.guava', 'guava').version('32.1.3-jre')
         }
     }
 }
